@@ -1,15 +1,14 @@
 url: https://example.com/apis/loblob-openapi-openapi-v3-spec-for-lob-api.yml
 apis:
   - aid: lob:lob-api
-    name: LOB API
+    name: Lob API
     image: https://kinlane-productions2.s3.amazonaws.com/apis-json/apis-json-logo.jpg
     humanURL: https://docs.lob.com/
     description: >-
-      We're writing an OpenAPI v3 authored specification for the current Lob
-      API. This repo contains the spec as well as a growing set of tooling for
-      working with OpenAPI v3 specs. ~ https://github.com/lob/lob-openapi
+      Experience direct mail like never before, with unmatched personalization
+      and scalability  all in one intuitive platform.
 id: lob
-name: LOB
+name: Lob
 tags:
   - Bookmark
 image: >-
@@ -17,10 +16,13 @@ image: >-
 created: 2024/7/2
 modified: '2024-11-14'
 description: >-
-  We're writing an OpenAPI v3 authored specification for the current Lob API.
-  This repo contains the spec as well as a growing set of tooling for working
-  with OpenAPI v3 specs. ~ https://github.com/lob/lob-openapi
+
+  Experience direct mail like never before, with unmatched personalization and
+  scalability  all in one intuitive platform.
 maintainers:
   - FN: API Evangelist
     email: info@apievangelist.com
 specificationVersion: '0.16'
+type: Index
+position: Consumer
+access: 3rd-Party
