@@ -10,7 +10,7 @@ apis:
 id: lob
 name: Lob
 tags:
-  - Bookmark
+  - Direct Mail
 image: >-
   https://kinlane-productions2.s3.amazonaws.com/apis-json-icons/loblob-openapi-openapi-v3-spec-for-lob-api.png
 created: 2024/7/2
