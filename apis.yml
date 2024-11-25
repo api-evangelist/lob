@@ -5,23 +5,20 @@ apis:
     name: Lob API
     image: https://kinlane-productions2.s3.amazonaws.com/apis-json/apis-json-logo.jpg
     humanURL: https://docs.lob.com/
-    description: "Experience direct mail like never before, with unmatched
-      personalization and scalability \x14 all in one intuitive platform."
-id: lob
+    description: "Experience direct mail like never before, with unmatched personalization and scalability \x14 all in one intuitive platform."
+aid: lob
 name: Lob
 tags:
   - Direct Mail
 image: https://kinlane-productions2.s3.amazonaws.com/apis-json-icons/loblob-openapi-openapi-v3-spec-for-lob-api.png
 created: 2024/7/2
 modified: 2024-11-14
-description: "
-
-  Experience direct mail like never before, with unmatched personalization and
-  scalability \x14 all in one intuitive platform."
+description: "Experience direct mail like never before, with unmatched personalization and
+  scalability all in one intuitive platform."
 maintainers:
   - FN: API Evangelist
     email: info@apievangelist.com
-specificationVersion: "0.16"
+specificationVersion: "0.19"
 type: Index
 position: Consumer
 access: 3rd-Party
