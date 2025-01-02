@@ -1,11 +1,8 @@
 openapi: 3.0.3
 info:
-  title: Lob
+  title: Lob API
   version: 1.20.2
-  description: >
-    The Lob API is organized around REST. Our API is designed to have
-    predictable, resource-oriented URLs and uses HTTP response codes to indicate
-    any API errors. <p>
+  description: "Experience direct mail like never before, with unmatched personalization and scalability \x14 all in one intuitive platform."
   license:
     name: MIT
     url: https://mit-license.org/
@@ -3182,7 +3179,6 @@ paths:
       description: Returns the account's current balance of Lob Credits.
       tags:
         - Accounts
-        - Lob Credits
       responses:
         '200':
           description: Returns a lob_credits_balance object.
@@ -3977,7 +3973,8 @@ paths:
       summary: Verify
       description: Verify a bank account in order to create a check.
       tags:
-        - Bank Accounts
+        - Bank_id
+        - Verify
       requestBody:
         required: true
         content:
@@ -4173,7 +4170,7 @@ paths:
         the unique bank account identifier that was returned upon bank account
         creation.
       tags:
-        - Bank Accounts
+        - Bank_id
       responses:
         '200':
           description: Returns a bank account object
@@ -4303,7 +4300,7 @@ paths:
       summary: Delete
       description: Permanently deletes a bank account. It cannot be undone.
       tags:
-        - Bank Accounts
+        - Bank_id
       responses:
         '200':
           $ref: '#/components/responses/bank_account_deleted'
@@ -4415,7 +4412,7 @@ paths:
         sorted by creation date, with the most recently created bank accounts
         appearing first.
       tags:
-        - Bank Accounts
+        - Bank  Accounts
       parameters:
         - $ref: '#/components/parameters/limit'
         - $ref: '#/components/parameters/before_after'
@@ -4561,7 +4558,7 @@ paths:
         being able to send live checks. The deposits will appear in the bank
         account in 2-3 business days and have the description "VERIFICATION".
       tags:
-        - Bank Accounts
+        - Bank  Accounts
       requestBody:
         required: true
         content:
@@ -4800,7 +4797,7 @@ paths:
         the unique billing_group identifier that was returned upon billing_group
         creation.
       tags:
-        - Billing Groups
+        - Bg_id
       responses:
         '200':
           description: Returns a billing_group object.
@@ -4856,7 +4853,7 @@ paths:
       summary: Update
       description: Updates all editable attributes of the billing_group with the given id.
       tags:
-        - Billing Groups
+        - Bg_id
       requestBody:
         required: true
         content:
@@ -4939,7 +4936,7 @@ paths:
         sorted by creation date, with the most recently created billing_groups
         appearing first.
       tags:
-        - Billing Groups
+        - Billing  Groups
       parameters:
         - $ref: '#/components/parameters/limit'
         - $ref: '#/components/parameters/offset'
@@ -5042,7 +5039,7 @@ paths:
       summary: Create
       description: Creates a new billing_group with the provided properties.
       tags:
-        - Billing Groups
+        - Billing  Groups
       requestBody:
         required: true
         content:
@@ -5140,7 +5137,7 @@ paths:
         Retrieves the details of an existing booklet. You need to only supply
         the unique booklet identifier that was returned upon booklet creation.
       tags:
-        - Booklets
+        - Booklet_id
       responses:
         '200':
           description: Returns a booklet object
@@ -5230,7 +5227,7 @@ paths:
         the booklet's `send_date` has not yet passed. If the booklet is
         successfully canceled, you will not be charged for it.
       tags:
-        - Booklets
+        - Booklet_id
       responses:
         '200':
           $ref: '#/components/responses/booklet_deleted'
@@ -5250,8 +5247,7 @@ paths:
       description: >-
         Returns a list of your booklets. The booklets are returned sorted by
         creation date, with the most recently created booklets appearing first.
-      tags:
-        - Booklets
+      tags: []
       parameters:
         - $ref: '#/components/parameters/limit'
         - $ref: '#/components/parameters/before_after'
@@ -5278,8 +5274,7 @@ paths:
       operationId: booklet_create
       summary: Create
       description: Creates a new booklet.
-      tags:
-        - Booklets
+      tags: []
       parameters:
         - $ref: '#/components/parameters/idem-header'
         - $ref: '#/components/parameters/idem-query'
@@ -5450,8 +5445,7 @@ paths:
       description: >-
         Returns a list of your buckslips. The buckslips are returned sorted by
         creation date, with the most recently created buckslips appearing first.
-      tags:
-        - Buckslips
+      tags: []
       parameters:
         - $ref: '#/components/parameters/limit'
         - $ref: '#/components/parameters/before_after'
@@ -5528,8 +5522,7 @@ paths:
       operationId: buckslip_create
       summary: Create
       description: Creates a new buckslip given information
-      tags:
-        - Buckslips
+      tags: []
       requestBody:
         required: true
         content:
@@ -5639,7 +5632,7 @@ paths:
         Retrieves the details of an existing buckslip. You need only supply the
         unique customer identifier that was returned upon buckslip creation.
       tags:
-        - Buckslips
+        - Buckslip_id
       responses:
         '200':
           description: Returns a buckslip object
@@ -5708,7 +5701,7 @@ paths:
         Update the details of an existing buckslip. You need only supply the
         unique identifier that was returned upon buckslip creation.
       tags:
-        - Buckslips
+        - Buckslip_id
       requestBody:
         required: true
         content:
@@ -5800,7 +5793,7 @@ paths:
         Delete an existing buckslip. You need only supply the unique identifier
         that was returned upon buckslip creation.
       tags:
-        - Buckslips
+        - Buckslip_id
       responses:
         '200':
           $ref: '#/components/responses/buckslip_deleted'
@@ -5826,7 +5819,8 @@ paths:
       summary: Retrieve
       description: Retrieves the buckslip orders associated with the given buckslip id.
       tags:
-        - Buckslip Orders
+        - Buckslip_id
+        - Orders
       parameters:
         - $ref: '#/components/parameters/limit'
         - $ref: '#/components/parameters/offset'
@@ -5875,7 +5869,8 @@ paths:
       summary: Create
       description: Creates a new buckslip order given information
       tags:
-        - Buckslip Orders
+        - Buckslip_id
+        - Orders
       requestBody:
         required: true
         content:
@@ -5933,7 +5928,8 @@ paths:
         Requests to this endpoint with a test API key will return a dummy
         response based on the primary line you input.
       tags:
-        - US Verifications
+        - Bulk
+        - U S  Verifications
       parameters:
         - in: query
           name: case
@@ -6242,7 +6238,8 @@ paths:
         _with a live API key_. Requests to this endpoint with a test API key
         will return a dummy response based on the primary line you input.
       tags:
-        - Intl Verifications
+        - Bulk
+        - Intl  Verifications
       requestBody:
         required: true
         content:
@@ -6830,6 +6827,7 @@ paths:
         that was returned upon campaign creation.
       tags:
         - Campaigns
+        - Send
       responses:
         '200':
           description: Returns a campaign object
@@ -7649,7 +7647,8 @@ paths:
       summary: Retrieve
       description: Retrieves the card orders associated with the given card id.
       tags:
-        - Card Orders
+        - Cards
+        - Orders
       parameters:
         - $ref: '#/components/parameters/limit'
         - $ref: '#/components/parameters/offset'
@@ -7765,7 +7764,8 @@ paths:
       summary: Create
       description: Creates a new card order given information
       tags:
-        - Card Orders
+        - Cards
+        - Orders
       requestBody:
         required: true
         content:
@@ -8882,8 +8882,7 @@ paths:
       operationId: creative_create
       summary: Create
       description: Creates a new creative with the provided properties
-      tags:
-        - Creatives
+      tags: []
       parameters:
         - $ref: '#/components/parameters/lang_spec'
       requestBody:
@@ -8984,7 +8983,7 @@ paths:
         Retrieves the details of an existing creative. You need only supply the
         unique creative identifier that was returned upon creative creation.
       tags:
-        - Creatives
+        - Crv_id
       responses:
         '200':
           description: Returns a creative object
@@ -9030,7 +9029,7 @@ paths:
         Update the details of an existing creative. You need only supply the
         unique identifier that was returned upon creative creation.
       tags:
-        - Creatives
+        - Crv_id
       requestBody:
         required: true
         content:
@@ -9112,7 +9111,7 @@ paths:
       summary: Identity Validation
       description: Validates whether a given name is associated with an address.
       tags:
-        - Identity Validation
+        - Identity  Validation
       requestBody:
         required: true
         content:
@@ -9170,7 +9169,7 @@ paths:
       summary: List
       description: List Informed Delivery campaigns
       tags:
-        - Informed Delivery Campaign
+        - Informed  Delivery  Campaign
       responses:
         '200':
           $ref: '#/components/responses/all_informed_delivery_campaigns'
@@ -9185,7 +9184,7 @@ paths:
       summary: Create
       description: Creates a new Informed Delivery campaign
       tags:
-        - Informed Delivery Campaign
+        - Informed  Delivery  Campaign
       requestBody:
         required: true
         content:
@@ -9254,7 +9253,7 @@ paths:
         need only supply the `usps_campaign_id` returned in the campaign
         creation request.
       tags:
-        - Informed Delivery Campaign
+        - Usps_campaign_id
       responses:
         '200':
           description: Returns a informed delivery campaign object
@@ -9302,7 +9301,7 @@ paths:
         **NOTE:** you can only update a campaign in the `pending_approval`
         status.
       tags:
-        - Informed Delivery Campaign
+        - Usps_campaign_id
       requestBody:
         required: true
         content:
@@ -9360,7 +9359,7 @@ paths:
         live API key_. Requests to this endpoint with a test API key will return
         a dummy response based on the primary line you input.
       tags:
-        - Intl Verifications
+        - Intl  Verifications
       parameters:
         - $ref: '#/components/parameters/lang_spec'
       requestBody:
@@ -9616,7 +9615,7 @@ paths:
         Retrieves the details of an existing letter. You need only supply the
         unique letter identifier that was returned upon letter creation.
       tags:
-        - Letters
+        - Ltr_id
       responses:
         '200':
           description: Returns a letter object
@@ -9840,7 +9839,7 @@ paths:
         href="https://dashboard.lob.com/#/settings/editions"
         target="_blank">Print & Mail Edition</a> to gain access.
       tags:
-        - Letters
+        - Ltr_id
       responses:
         '200':
           $ref: '#/components/responses/letter_deleted'
@@ -9947,8 +9946,7 @@ paths:
       description: >-
         Returns a list of your letters. The letters are returned sorted by
         creation date, with the most recently created letters appearing first.
-      tags:
-        - Letters
+      tags: []
       parameters:
         - $ref: '#/components/parameters/limit'
         - $ref: '#/components/parameters/before_after'
@@ -10120,8 +10118,7 @@ paths:
       operationId: letter_create
       summary: Create
       description: Creates a new letter given information
-      tags:
-        - Letters
+      tags: []
       parameters:
         - $ref: '#/components/parameters/idem-header'
         - $ref: '#/components/parameters/idem-query'
@@ -10747,7 +10744,7 @@ paths:
         Retrieves the details of an existing postcard. You need only supply the
         unique customer identifier that was returned upon postcard creation.
       tags:
-        - Postcards
+        - Psc_id
       responses:
         '200':
           description: Returns a postcard object
@@ -10963,7 +10960,7 @@ paths:
         href="https://dashboard.lob.com/#/settings/editions"
         target="_blank">Print & Mail Edition</a> to gain access.
       tags:
-        - Postcards
+        - Psc_id
       responses:
         '200':
           $ref: '#/components/responses/postcard_deleted'
@@ -11071,8 +11068,7 @@ paths:
       description: >-
         Returns a list of your postcards. The addresses are returned sorted by
         creation date, with the most recently created addresses appearing first.
-      tags:
-        - Postcards
+      tags: []
       parameters:
         - $ref: '#/components/parameters/limit'
         - $ref: '#/components/parameters/before_after'
@@ -11250,8 +11246,7 @@ paths:
       operationId: postcard_create
       summary: Create
       description: Creates a new postcard given information
-      tags:
-        - Postcards
+      tags: []
       parameters:
         - $ref: '#/components/parameters/idem-header'
         - $ref: '#/components/parameters/idem-query'
@@ -11840,7 +11835,7 @@ paths:
         Returns a list of your QR codes. The QR codes are returned sorted by
         scan date, with the most recently scanned QR codes appearing first.
       tags:
-        - QR Codes
+        - Q R  Codes
       parameters:
         - $ref: '#/components/parameters/limit'
         - $ref: '#/components/parameters/offset'
@@ -11928,7 +11923,8 @@ paths:
       summary: Retrieve a domain
       description: Retrieve details for a single domain.
       tags:
-        - URL Shortener
+        - Domains
+        - U R L  Shortener
       responses:
         '200':
           description: Returns domain related details.
@@ -12043,7 +12039,8 @@ paths:
         Delete a registered domain. This operation can only be performed if all
         associated links with the domain are deleted.
       tags:
-        - URL Shortener
+        - Domains
+        - U R L  Shortener
       responses:
         '200':
           description: Returns the deleted link object.
@@ -12063,7 +12060,7 @@ paths:
       summary: Create Domain
       description: Add a new custom domain that can be used to create custom links.
       tags:
-        - URL Shortener
+        - Domains
       requestBody:
         required: true
         content:
@@ -12224,7 +12221,7 @@ paths:
       summary: List all domains
       description: Retrieve a list of all created domains.
       tags:
-        - URL Shortener
+        - Domains
       parameters:
         - $ref: '#/components/parameters/limit'
         - $ref: '#/components/parameters/before_after'
@@ -12367,7 +12364,8 @@ paths:
       summary: Retrieve a link
       description: Retrieves a single shortened link.
       tags:
-        - URL Shortener
+        - Links
+        - U R L  Shortener
       responses:
         '200':
           description: Returns a single link.
@@ -12392,7 +12390,8 @@ paths:
       summary: Update a Link
       description: Update any of the properties of a shortened link.
       tags:
-        - URL Shortener
+        - Links
+        - U R L  Shortener
       requestBody:
         required: true
         content:
@@ -12456,7 +12455,8 @@ paths:
       summary: Delete Link
       description: Delete the shortened link.
       tags:
-        - URL Shortener
+        - Links
+        - U R L  Shortener
       responses:
         '200':
           description: Returns the deleted short link object
@@ -12478,7 +12478,7 @@ paths:
         Given a long URL, shorten your URL either by using a custom domain or
         Lob's own short domain.
       tags:
-        - URL Shortener
+        - Links
       requestBody:
         required: true
         content:
@@ -12548,7 +12548,7 @@ paths:
         Retrieves a list of shortened links. The list is sorted by  creation
         date, with the most recently created appearing first.
       tags:
-        - URL Shortener
+        - Links
       parameters:
         - $ref: '#/components/parameters/limit'
         - $ref: '#/components/parameters/before_after'
@@ -12693,7 +12693,7 @@ paths:
         the unique self_mailer identifier that was returned upon self_mailer
         creation.
       tags:
-        - Self Mailers
+        - Sfm_id
       responses:
         '200':
           description: Returns a self_mailer object
@@ -12882,7 +12882,7 @@ paths:
         href="https://dashboard.lob.com/#/settings/editions"
         target="_blank">Print & Mail Edition</a> to gain access.
       tags:
-        - Self Mailers
+        - Sfm_id
       responses:
         '200':
           $ref: '#/components/responses/self_mailer_deleted'
@@ -12993,7 +12993,7 @@ paths:
         sorted by creation date, with the most recently created self_mailers
         appearing first.
       tags:
-        - Self Mailers
+        - Self  Mailers
       parameters:
         - $ref: '#/components/parameters/limit'
         - $ref: '#/components/parameters/before_after'
@@ -13166,7 +13166,7 @@ paths:
       summary: Create
       description: Creates a new self_mailer given information
       tags:
-        - Self Mailers
+        - Self  Mailers
       parameters:
         - $ref: '#/components/parameters/idem-header'
         - $ref: '#/components/parameters/idem-query'
@@ -13685,7 +13685,7 @@ paths:
         the unique snap_pack identifier that was returned upon snap_pack
         creation.
       tags:
-        - Snap Packs
+        - Snap_pack_id
       responses:
         '200':
           description: Returns a snap_pack object
@@ -13871,7 +13871,7 @@ paths:
         the snap pack's `send_date` has not yet passed. If the snap pack is
         successfully canceled, you will not be charged for it.
       tags:
-        - Snap Packs
+        - Snap_pack_id
       responses:
         '200':
           $ref: '#/components/responses/snap_pack_deleted'
@@ -13982,7 +13982,7 @@ paths:
         creation date, with the most recently created snap_packs appearing
         first.
       tags:
-        - Snap Packs
+        - Snap  Packs
       parameters:
         - $ref: '#/components/parameters/limit'
         - $ref: '#/components/parameters/before_after'
@@ -14147,7 +14147,7 @@ paths:
       summary: Create
       description: Creates a new snap_pack given information
       tags:
-        - Snap Packs
+        - Snap  Packs
       parameters:
         - $ref: '#/components/parameters/idem-header'
         - $ref: '#/components/parameters/idem-query'
@@ -14542,7 +14542,9 @@ paths:
       summary: Retrieve
       description: Retrieves the template version with the given template and version ids.
       tags:
-        - Template Versions
+        - Templates
+        - Versions
+        - Template  Versions
       responses:
         '200':
           description: >-
@@ -14661,7 +14663,9 @@ paths:
       summary: Update
       description: Updates the template version with the given template and version ids.
       tags:
-        - Template Versions
+        - Templates
+        - Versions
+        - Template  Versions
       requestBody:
         required: true
         content:
@@ -14822,7 +14826,9 @@ paths:
         Permanently deletes a template version. A template's `published_version`
         can not be deleted.
       tags:
-        - Template Versions
+        - Templates
+        - Versions
+        - Template  Versions
       responses:
         '200':
           $ref: '#/components/responses/template_version_deleted'
@@ -14918,7 +14924,8 @@ paths:
         template versions are sorted by creation date, with the most recently
         created appearing first.
       tags:
-        - Template Versions
+        - Templates
+        - Versions
       parameters:
         - in: path
           name: tmpl_id
@@ -15062,7 +15069,8 @@ paths:
       summary: Create
       description: Creates a new template version attached to the specified template.
       tags:
-        - Template Versions
+        - Templates
+        - Versions
       parameters:
         - in: path
           name: tmpl_id
@@ -16365,6 +16373,7 @@ paths:
         and associate it with an upload.
       tags:
         - Uploads
+        - Files
       requestBody:
         required: true
         content:
@@ -16425,6 +16434,7 @@ paths:
         Create an export file associated with an upload.
       tags:
         - Uploads
+        - Exports
       requestBody:
         required: true
         content:
@@ -16523,6 +16533,7 @@ paths:
         access to this API endpoint.
       tags:
         - Uploads
+        - Reports
       responses:
         '200':
           description: Returns an report object
@@ -16646,6 +16657,7 @@ paths:
         with `state = in_progress`.
       tags:
         - Uploads
+        - Exports
       responses:
         '200':
           description: Returns an export object
@@ -16753,7 +16765,7 @@ paths:
         be valid addresses; they'll need to be
         [verified](#operation/verification_us).
       tags:
-        - US Autocompletions
+        - U S  Autocompletions
       parameters:
         - in: query
           name: case
@@ -17002,7 +17014,7 @@ paths:
       summary: Reverse Geocode Lookup
       description: Reverse geocode a valid US location with a live API key.
       tags:
-        - Reverse Geocode Lookups
+        - Reverse  Geocode  Lookups
       parameters:
         - in: query
           name: size
@@ -17205,7 +17217,7 @@ paths:
         values are provided. See the [US Verifications Test
         Environment](#section/US-Verifications-Test-Env) for details.
       tags:
-        - US Verifications
+        - U S  Verifications
       parameters:
         - in: query
           name: case
@@ -17456,7 +17468,7 @@ paths:
       summary: Lookups
       description: Returns information about a ZIP code
       tags:
-        - Zip Lookups
+        - Zip  Lookups
       requestBody:
         required: true
         content:
