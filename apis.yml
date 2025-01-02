@@ -5,12 +5,14 @@ apis:
     name: Lob API
     image: https://kinlane-productions2.s3.amazonaws.com/apis-json/apis-json-logo.jpg
     humanURL: https://docs.lob.com/
-    description: "Experience direct mail like never before, with unmatched personalization and scalability \x14 all in one intuitive platform."
     properties:
-      - name: Lob API documentation
-        description: 'null'
-        url: https://docs.lob.com/
+      - url: https://docs.lob.com/
+        name: Lob API documentation
         type: Documentation
+        description: 'null'
+      - type: OpenAPI
+        url: properties/lob-api-openapi.yml
+    description: "Experience direct mail like never before, with unmatched personalization and scalability \x14 all in one intuitive platform."
 name: Lob
 tags:
   - Direct Mail
