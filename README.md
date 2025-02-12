@@ -1,14 +1,13 @@
 # Lob (lob)
+Lob is a software platform that automates the process of sending direct mail, allowing businesses to create, personalize, and track physical mail pieces at scale through a digital interface, essentially bringing the convenience of email marketing to traditional mail by integrating with existing CRM systems and automating printing, addressing, and postage processes. 
 
-Experience direct mail like never before, with unmatched personalization and
-scalability all in one intuitive platform.
 
 **URL:** [Visit APIs.json URL](https://example.com/apis/loblob-openapi-openapi-v3-spec-for-lob-api.yml)
 
 ## Scope
 
-- **Type:** Index 
-- **Position:** Consumer 
+- **Type:** Contract 
+- **Position:** Consuming 
 - **Access:** 3rd-Party 
 
 ## Tags:
@@ -18,7 +17,7 @@ scalability all in one intuitive platform.
 ## Timestamps
 
 - **Created:** 2024/7/2 
-- **Modified:** 2024-11-25 
+- **Modified:** 2025-01-11 
 
 ## APIs
 
@@ -28,6 +27,14 @@ Experience direct mail like never before, with unmatched personalization and sca
 **Human URL:** [https://docs.lob.com/](https://docs.lob.com/)
 
 
+#### Tags:
+
+ - Accounts, Addresses, Bank_id, Verify, Bank  Accounts, Bg_id, Billing  Groups, Booklet_id, Buckslip_id, Orders, Bulk, U S  Verifications, Intl  Verifications, Campaigns, Send, Cards, Checks, Crv_id, Identity  Validation, Informed  Delivery  Campaign, Usps_campaign_id, Ltr_id, Psc_id, Q R  Codes, Domains, U R L  Shortener, Links, Sfm_id, Self  Mailers, Snap_pack_id, Snap  Packs, Templates, Versions, Template  Versions, Uploads, Files, Exports, Reports, U S  Autocompletions, Reverse  Geocode  Lookups, Zip  Lookups
+
+#### Properties
+
+- [Documentation](https://docs.lob.com/)
+- [OpenAPI](properties/lob-api-openapi.yml)
 
 ## Common Properties
 
