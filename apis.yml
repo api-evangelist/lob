@@ -45,7 +45,8 @@ apis:
       - U S  Autocompletions
       - Reverse  Geocode  Lookups
       - Zip  Lookups
-    image: https://kinlane-productions2.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+    image: 
+      https://kinlane-productions2.s3.amazonaws.com/apis-json/apis-json-logo.jpg
     humanURL: https://docs.lob.com/
     properties:
       - url: https://docs.lob.com/
@@ -54,7 +55,8 @@ apis:
         description: 'null'
       - url: properties/lob-api-openapi.yml
         type: OpenAPI
-    description: "Experience direct mail like never before, with unmatched personalization and scalability \x14 all in one intuitive platform."
+    description: "Experience direct mail like never before, with unmatched personalization
+      and scalability \x14 all in one intuitive platform."
 name: Lob
 tags:
   - Direct Mail
@@ -108,12 +110,12 @@ common:
 created: 2024/7/2
 modified: '2026-03-16'
 position: Consuming
-description: >
-  Lob is a software platform that automates the process of sending direct mail,
-  allowing businesses to create, personalize, and track physical mail pieces at
-  scale through a digital interface, essentially bringing the convenience of
-  email marketing to traditional mail by integrating with existing CRM systems
-  and automating printing, addressing, and postage processes. 
+description: >-
+  Lob is a software platform that automates the process of sending direct mail, allowing
+  businesses to create, personalize, and track physical mail pieces at scale through
+  a digital interface, essentially bringing the convenience of email marketing to
+  traditional mail by integrating with existing CRM systems and automating printing,
+  addressing, and postage processes.
 maintainers:
   - FN: Kin Lane
     email: kin@apievangelist.com
