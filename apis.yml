@@ -6,47 +6,46 @@ apis:
     tags:
       - Accounts
       - Addresses
-      - Bank_id
-      - Verify
       - Bank  Accounts
+      - Bank_id
       - Bg_id
       - Billing  Groups
       - Booklet_id
       - Buckslip_id
-      - Orders
       - Bulk
-      - U S  Verifications
-      - Intl  Verifications
       - Campaigns
-      - Send
       - Cards
       - Checks
       - Crv_id
+      - Domains
+      - Exports
+      - Files
       - Identity  Validation
       - Informed  Delivery  Campaign
-      - Usps_campaign_id
+      - Intl  Verifications
+      - Links
       - Ltr_id
+      - Orders
       - Psc_id
       - Q R  Codes
-      - Domains
-      - U R L  Shortener
-      - Links
-      - Sfm_id
-      - Self  Mailers
-      - Snap_pack_id
-      - Snap  Packs
-      - Templates
-      - Versions
-      - Template  Versions
-      - Uploads
-      - Files
-      - Exports
       - Reports
-      - U S  Autocompletions
       - Reverse  Geocode  Lookups
+      - Self  Mailers
+      - Send
+      - Sfm_id
+      - Snap  Packs
+      - Snap_pack_id
+      - Template  Versions
+      - Templates
+      - U R L  Shortener
+      - U S  Autocompletions
+      - U S  Verifications
+      - Uploads
+      - Usps_campaign_id
+      - Verify
+      - Versions
       - Zip  Lookups
-    image: 
-      https://kinlane-productions2.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+    image: https://kinlane-productions2.s3.amazonaws.com/apis-json/apis-json-logo.jpg
     humanURL: https://docs.lob.com/
     properties:
       - url: https://docs.lob.com/
@@ -55,8 +54,7 @@ apis:
         description: 'null'
       - url: properties/lob-api-openapi.yml
         type: OpenAPI
-    description: "Experience direct mail like never before, with unmatched personalization
-      and scalability \x14 all in one intuitive platform."
+    description: "Experience direct mail like never before, with unmatched personalization and scalability \x14 all in one intuitive platform."
 name: Lob
 tags:
   - Direct Mail
