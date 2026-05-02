@@ -1,40 +1,39 @@
 # Lob (lob)
-Lob is a software platform that automates the process of sending direct mail, allowing businesses to create, personalize, and track physical mail pieces at scale through a digital interface, essentially bringing the convenience of email marketing to traditional mail by integrating with existing CRM systems and automating printing, addressing, and postage processes. 
 
+Lob is a software platform that automates the process of sending direct mail, allowing businesses to create, personalize, and track physical mail pieces at scale through a digital interface, bringing the convenience of email marketing to traditional mail by integrating with existing CRM systems and automating printing, addressing, and postage processes.
 
-**URL:** [Visit APIs.json URL](https://example.com/apis/loblob-openapi-openapi-v3-spec-for-lob-api.yml)
+**URL:** [Visit APIs.json URL](https://raw.githubusercontent.com/api-evangelist/lob/refs/heads/main/apis.yml)
 
 ## Scope
 
-- **Type:** Contract 
-- **Position:** Consuming 
-- **Access:** 3rd-Party 
+- **Type:** Contract
+- **Position:** Consuming
+- **Access:** 3rd-Party
 
 ## Tags:
 
- - Direct Mail
+ - Direct Mail, Print, Address Verification
 
 ## Timestamps
 
-- **Created:** 2024/7/2 
-- **Modified:** 2025-01-11 
+- **Created:** 2024-07-02
+- **Modified:** 2026-04-28
 
 ## APIs
 
 ### Lob API
-Experience direct mail like never before, with unmatched personalization and scalability  all in one intuitive platform.
+Send postcards, letters, checks, self mailers, snap packs, and verify US and international addresses via API.
 
 **Human URL:** [https://docs.lob.com/](https://docs.lob.com/)
 
-
 #### Tags:
 
- - Accounts, Addresses, Bank_id, Verify, Bank  Accounts, Bg_id, Billing  Groups, Booklet_id, Buckslip_id, Orders, Bulk, U S  Verifications, Intl  Verifications, Campaigns, Send, Cards, Checks, Crv_id, Identity  Validation, Informed  Delivery  Campaign, Usps_campaign_id, Ltr_id, Psc_id, Q R  Codes, Domains, U R L  Shortener, Links, Sfm_id, Self  Mailers, Snap_pack_id, Snap  Packs, Templates, Versions, Template  Versions, Uploads, Files, Exports, Reports, U S  Autocompletions, Reverse  Geocode  Lookups, Zip  Lookups
+ - Accounts, Addresses, Bank Accounts, Billing Groups, Postcards, Letters, Cards, Checks, Self Mailers, Snap Packs, Booklets, Buckslips, Templates, Template Versions, Campaigns, Uploads, Identity Validation, Informed Delivery, QR Codes, URL Shortener, US Verifications, International Verifications, US Autocompletions, Reverse Geocode Lookups, Zip Lookups
 
 #### Properties
 
 - [Documentation](https://docs.lob.com/)
-- [OpenAPI](properties/lob-api-openapi.yml)
+- [OpenAPI](openapi/lob-api-openapi.yml)
 
 ## Common Properties
 
@@ -44,7 +43,7 @@ Experience direct mail like never before, with unmatched personalization and sca
 - [Webhooks](https://docs.lob.com/#tag/Webhooks)
 - [Errors](https://docs.lob.com/#tag/Errors)
 - [RateLimits](https://docs.lob.com/#tag/Rate-Limiting)
-- [Beta Program](https://docs.lob.com/#tag/Beta-Program)
+- [BetaProgram](https://docs.lob.com/#tag/Beta-Program)
 - [ChangeLog](https://docs.lob.com/#tag/Versioning-and-Changelog)
 - [Pricing](https://www.lob.com/pricing)
 - [CaseStudies](https://www.lob.com/case-studies)
@@ -52,10 +51,10 @@ Experience direct mail like never before, with unmatched personalization and sca
 - [PrivacyPolicy](https://www.lob.com/privacy)
 - [TermsOfService](https://www.lob.com/terms)
 - [Blog](https://www.lob.com/blog)
+- [Website](https://www.lob.com)
 
 ## Maintainers
 
-**FN:** API Evangelist
+**FN:** Kin Lane
 
-**Email:** info@apievangelist.com
-
+**Email:** kin@apievangelist.com
