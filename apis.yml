@@ -89,6 +89,12 @@ common:
     url: https://www.lob.com/blog
   - type: Website
     url: https://www.lob.com
+  - type: Integrations
+    url: https://www.lob.com/integrations
+integrations:
+  - name: Braze
+  - name: Figma
+  - name: iterable
 maintainers:
   - FN: Kin Lane
     email: kin@apievangelist.com
