@@ -6,7 +6,7 @@ description: >-
   a digital interface, essentially bringing the convenience of email marketing to
   traditional mail by integrating with existing CRM systems and automating printing,
   addressing, and postage processes.
-type: Contract
+kind: contract
 image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
 url: https://raw.githubusercontent.com/api-evangelist/lob/refs/heads/main/apis.yml
 tags:
