@@ -59,6 +59,8 @@ apis:
       - type: OpenAPI
         url: openapi/lob-api-openapi.yml
 common:
+  - type: GitHubOrganization
+    url: https://github.com/lob
   - type: LinkedIn
     url: https://www.linkedin.com/company/lob
   - type: Authentication
