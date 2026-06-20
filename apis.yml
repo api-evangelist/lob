@@ -7,7 +7,7 @@ description: >-
   traditional mail by integrating with existing CRM systems and automating printing,
   addressing, and postage processes.
 kind: contract
-image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
 url: https://raw.githubusercontent.com/api-evangelist/lob/refs/heads/main/apis.yml
 tags:
   - Direct Mail
@@ -26,7 +26,7 @@ apis:
       scalability all in one intuitive platform. Send postcards, letters, checks,
       self mailers, snap packs, and verify US and international addresses via API.
     humanURL: https://docs.lob.com/
-    image: https://kinlane-productions2.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+    image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
     tags:
       - Accounts
       - Addresses
