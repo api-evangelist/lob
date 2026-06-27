@@ -71,7 +71,7 @@ common:
     url: https://docs.lob.com/#tag/SDKs-and-Tools
   - type: Webhooks
     url: https://docs.lob.com/#tag/Webhooks
-  - type: Errors
+  - type: ErrorCodes
     url: https://docs.lob.com/#tag/Errors
   - type: RateLimits
     url: https://docs.lob.com/#tag/Rate-Limiting

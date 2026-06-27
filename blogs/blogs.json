@@ -3,19 +3,12 @@
   "feeds": [
     {
       "source": "https://www.lob.com/blog",
-      "feed_url": "https://www.lob.com/blog",
-      "title": "",
+      "feed_url": "",
       "saved": 0,
-      "method": "none"
-    },
-    {
-      "source": "https://www.lob.com/terms",
-      "feed_url": "https://www.lob.com/terms",
-      "title": "",
-      "saved": 0,
-      "method": "none"
+      "method": "agent-scrape"
     }
   ],
-  "post_count": 2,
-  "fetched": "2026-06-14T20:42:17Z"
+  "post_count": 6,
+  "fetched": "2026-06-27T12:51:53Z",
+  "agent_pulled": "2026-06-27"
 }
