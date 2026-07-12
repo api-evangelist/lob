@@ -59,6 +59,10 @@ apis:
       - type: OpenAPI
         url: openapi/lob-api-openapi.yml
 common:
+  - type: TrustCenter
+    url: security/lob-trust-center.yml
+  - type: DomainSecurity
+    url: security/lob-domain-security.yml
   - type: GitHubOrganization
     url: https://github.com/lob
   - type: LinkedIn
