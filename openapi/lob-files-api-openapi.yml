@@ -1,0 +1,203 @@
+openapi: 3.0.3
+info:
+  title: Lob Files API
+  version: 1.20.2
+  description: "Experience direct mail like never before, with unmatched personalization and scalability \x14 all in one intuitive platform."
+  license:
+    name: MIT
+    url: https://mit-license.org/
+  contact:
+    name: Lob Developer Experience
+    url: https://support.lob.com/
+    email: lob-openapi@lob.com
+  termsOfService: https://www.lob.com/legal
+servers:
+- url: https://api.lob.com/v1
+  description: production
+security:
+- basicAuth: []
+tags:
+- name: Files
+paths:
+  /uploads/{upl_id}/file:
+    parameters:
+    - in: path
+      name: upl_id
+      description: ID of the upload
+      required: true
+      schema:
+        $ref: '#/components/schemas/upl_id'
+    post:
+      operationId: upload_file
+      summary: Upload file
+      description: Upload an [audience file](https://help.lob.com/print-and-mail/building-a-mail-strategy/campaign-or-triggered-sends/campaign-audience-guide) and associate it with an upload.
+      tags:
+      - Files
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                file:
+                  type: string
+                  format: binary
+      responses:
+        '202':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/upload_file'
+        '422':
+          $ref: '#/components/responses/upload_validation_error'
+      x-codeSamples:
+      - lang: Shell
+        source: "curl -X POST https://api.lob.com/v1/uploads/upl_71be866e430b11e9/file \\\n  -u <YOUR API KEY>: \\\n  -F file=@<YOUR FILE NAME HERE>\n"
+        label: CURL
+      - lang: Python
+        source: "with ApiClient(configuration) as api_client:\n  api = UploadsApi(api_client)\n\ntry:\n  res = api.upload_file(\"upl_71be866e430b11e9\", open(\"<PATH_TO_CSV>\", \"rb\"))\nexcept ApiException as e:\n  print(e)\n"
+        label: PYTHON
+components:
+  schemas:
+    upl_id:
+      type: string
+      description: Unique identifier prefixed with `upl_`.
+      pattern: ^upl_[a-zA-Z0-9]+$
+    upload_file:
+      type: object
+      required:
+      - message
+      - filename
+      properties:
+        message:
+          title: Message
+          enum:
+          - File uploaded successfully
+          type: string
+          default: File uploaded successfully
+        filename:
+          title: Filename
+          type: string
+  responses:
+    upload_validation_error:
+      description: Validation Error
+      content:
+        application/json:
+          schema:
+            title: HTTPValidationError
+            type: object
+            properties:
+              detail:
+                title: Detail
+                type: array
+                items:
+                  title: ValidationError
+                  required:
+                  - loc
+                  - msg
+                  - type
+                  type: object
+                  properties:
+                    loc:
+                      title: Location
+                      type: array
+                      items:
+                        anyOf:
+                        - type: string
+                        - type: integer
+                    msg:
+                      title: Message
+                      type: string
+                    type:
+                      title: Error Type
+                      type: string
+  securitySchemes:
+    basicAuth:
+      type: http
+      scheme: basic
+x-webhooks:
+  events:
+    post:
+      summary: Events
+      description: Information about an event
+      operationId: event
+      tags:
+      - Events
+      responses:
+        '200':
+          $ref: '#/components/responses/events'
+  tracking_events:
+    post:
+      summary: Tracking Events
+      description: Information about tracking events
+      operationId: tracking_event
+      tags:
+      - Tracking Events
+      responses:
+        '200':
+          $ref: '#/components/responses/tracking_events'
+x-tagGroups:
+- name: Overview
+  tags:
+  - Introduction
+  - Authentication
+  - Getting Started
+  - SDKs and Tools
+- name: Address Book
+  tags:
+  - Addresses
+  - National Change of Address
+- name: Print and Mail API
+  tags:
+  - Postcards
+  - Self Mailers
+  - Letters
+  - Checks
+  - Snap Packs
+  - Booklets
+  - Bank Accounts
+  - Templates
+  - Template Versions
+  - Template Design
+  - Manage Mail
+- name: Campaigns API (BETA)
+  tags:
+  - Campaigns
+  - Creatives
+  - Uploads
+- name: Informed Delivery Campaign API
+  tags:
+  - Informed Delivery Campaign
+- name: Address Verification API
+  tags:
+  - US Verifications
+  - US Verification Types
+  - US Autocompletions
+  - Reverse Geocode Lookups
+  - Zip Lookups
+  - Identity Validation
+  - Intl Verifications
+- name: Webhooks
+  tags:
+  - Webhooks
+  - Events
+  - Tracking Events
+- name: Special Features
+  tags:
+  - Billing Groups
+  - Buckslips
+  - Buckslip Orders
+  - Cards
+  - Card Orders
+  - QR Codes
+  - URL Shortener
+- name: Appendix
+  tags:
+  - Beta Program
+  - Errors
+  - Rate Limiting
+  - Requests and Responses
+  - Test and Live Environments
+  - Versioning and Changelog
