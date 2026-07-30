@@ -7,7 +7,19 @@ description: >-
   traditional mail by integrating with existing CRM systems and automating printing,
   addressing, and postage processes.
 kind: contract
-image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+accessModel:
+  pricing: freemium
+  onboarding: unknown
+  trial: false
+  try_now: false
+  public: false
+  label: Freemium
+  confidence: medium
+  source:
+  - plans
+  generated: '2026-07-22'
+  method: derived
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/lob.png
 url: https://raw.githubusercontent.com/api-evangelist/lob/refs/heads/main/apis.yml
 tags:
   - Direct Mail
@@ -19,45 +31,576 @@ created: '2024-07-02'
 modified: '2026-04-28'
 specificationVersion: '0.19'
 apis:
-  - aid: lob:lob-api
-    name: Lob API
-    description: >-
-      Experience direct mail like never before, with unmatched personalization and
-      scalability all in one intuitive platform. Send postcards, letters, checks,
-      self mailers, snap packs, and verify US and international addresses via API.
-    humanURL: https://docs.lob.com/
-    image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
-    tags:
-      - Accounts
-      - Addresses
-      - Bank Accounts
-      - Billing Groups
-      - Postcards
-      - Letters
-      - Cards
-      - Checks
-      - Self Mailers
-      - Snap Packs
-      - Booklets
-      - Buckslips
-      - Templates
-      - Template Versions
-      - Campaigns
-      - Uploads
-      - Identity Validation
-      - Informed Delivery
-      - QR Codes
-      - URL Shortener
-      - US Verifications
-      - International Verifications
-      - US Autocompletions
-      - Reverse Geocode Lookups
-      - Zip Lookups
-    properties:
-      - type: Documentation
-        url: https://docs.lob.com/
-      - type: OpenAPI
-        url: openapi/lob-api-openapi.yml
+- aid: lob:lob-accounts-api
+  name: Lob Accounts API
+  description: The Accounts API from Lob — 1 operation(s) for accounts.
+  humanURL: https://docs.lob.com/
+  tags:
+  - Accounts
+  properties:
+  - type: OpenAPI
+    url: openapi/lob-accounts-api-openapi.yml
+  - type: Documentation
+    url: https://docs.lob.com/
+- aid: lob:lob-addresses-api
+  name: Lob Addresses API
+  description: >-
+    To add an address to your address book, you create a new address object. You can retrieve and delete
+    individual
+
+    addresses as well as get a list of addresses. Addresses are identified by a unique random ID.
+
+    <div class="back-to-top" ><a href="#" onclick="toTopLink()">back to top</a></div>
+  humanURL: https://docs.lob.com/
+  tags:
+  - Addresses
+  properties:
+  - type: OpenAPI
+    url: openapi/lob-addresses-api-openapi.yml
+  - type: Documentation
+    url: https://docs.lob.com/
+- aid: lob:lob-bank-accounts-api
+  name: Lob Bank  Accounts API
+  description: The Bank  Accounts API from Lob — 1 operation(s) for bank  accounts.
+  humanURL: https://docs.lob.com/
+  tags:
+  - Bank  Accounts
+  properties:
+  - type: OpenAPI
+    url: openapi/lob-bank-accounts-api-openapi.yml
+  - type: Documentation
+    url: https://docs.lob.com/
+- aid: lob:lob-bank-id-api
+  name: Lob Bank_id API
+  description: The Bank_id API from Lob — 2 operation(s) for bank_id.
+  humanURL: https://docs.lob.com/
+  tags:
+  - Bank_id
+  properties:
+  - type: OpenAPI
+    url: openapi/lob-bank-id-api-openapi.yml
+  - type: Documentation
+    url: https://docs.lob.com/
+- aid: lob:lob-bg-id-api
+  name: Lob Bg_id API
+  description: The Bg_id API from Lob — 1 operation(s) for bg_id.
+  humanURL: https://docs.lob.com/
+  tags:
+  - Bg_id
+  properties:
+  - type: OpenAPI
+    url: openapi/lob-bg-id-api-openapi.yml
+  - type: Documentation
+    url: https://docs.lob.com/
+- aid: lob:lob-billing-groups-api
+  name: Lob Billing  Groups API
+  description: The Billing  Groups API from Lob — 1 operation(s) for billing  groups.
+  humanURL: https://docs.lob.com/
+  tags:
+  - Billing  Groups
+  properties:
+  - type: OpenAPI
+    url: openapi/lob-billing-groups-api-openapi.yml
+  - type: Documentation
+    url: https://docs.lob.com/
+- aid: lob:lob-booklet-id-api
+  name: Lob Booklet_id API
+  description: The Booklet_id API from Lob — 1 operation(s) for booklet_id.
+  humanURL: https://docs.lob.com/
+  tags:
+  - Booklet_id
+  properties:
+  - type: OpenAPI
+    url: openapi/lob-booklet-id-api-openapi.yml
+  - type: Documentation
+    url: https://docs.lob.com/
+- aid: lob:lob-booklets-api
+  name: Lob Booklets API
+  description: The Booklets API from Lob — 1 operation(s) for booklets.
+  humanURL: https://docs.lob.com/
+  tags:
+  - Booklets
+  properties:
+  - type: OpenAPI
+    url: openapi/lob-booklets-api-openapi.yml
+  - type: Documentation
+    url: https://docs.lob.com/
+- aid: lob:lob-buckslip-id-api
+  name: Lob Buckslip_id API
+  description: The Buckslip_id API from Lob — 2 operation(s) for buckslip_id.
+  humanURL: https://docs.lob.com/
+  tags:
+  - Buckslip_id
+  properties:
+  - type: OpenAPI
+    url: openapi/lob-buckslip-id-api-openapi.yml
+  - type: Documentation
+    url: https://docs.lob.com/
+- aid: lob:lob-buckslips-api
+  name: Lob Buckslips API
+  description: >-
+    The Buckslips endpoint allows you to easily create buckslips that can later be used as add-ons for
+    Letters Campaigns. Note that a Letter Campaign with Buckslip add-on requires a minimum send quantity
+    of 5,000 letters.
+
+    The API provides endpoints for creating buckslips, retrieving individual buckslips, creating buckslip
+    orders, and retrieving a list of buckslips.
+
+    <div class="back-to-top" ><a href="#" onclick="toTopLink()">back to top</a></div>
+  humanURL: https://docs.lob.com/
+  tags:
+  - Buckslips
+  properties:
+  - type: OpenAPI
+    url: openapi/lob-buckslips-api-openapi.yml
+  - type: Documentation
+    url: https://docs.lob.com/
+- aid: lob:lob-bulk-api
+  name: Lob Bulk API
+  description: The Bulk API from Lob — 2 operation(s) for bulk.
+  humanURL: https://docs.lob.com/
+  tags:
+  - Bulk
+  properties:
+  - type: OpenAPI
+    url: openapi/lob-bulk-api-openapi.yml
+  - type: Documentation
+    url: https://docs.lob.com/
+- aid: lob:lob-campaigns-api
+  name: Lob Campaigns API
+  description: >-
+    The campaigns endpoint allows you to create and view campaigns that can be used to send multiple letters
+    or postcards.
+
+    The API provides endpoints for creating campaigns, updating campaigns, retrieving individual campaigns,
+    listing campaigns, and deleting
+
+    campaigns.
+  humanURL: https://docs.lob.com/
+  tags:
+  - Campaigns
+  properties:
+  - type: OpenAPI
+    url: openapi/lob-campaigns-api-openapi.yml
+  - type: Documentation
+    url: https://docs.lob.com/
+- aid: lob:lob-cards-api
+  name: Lob Cards API
+  description: >-
+    The cards endpoint allows you to easily create cards that can later be affixed to Letters.
+
+    The API provides endpoints for creating cards, retrieving individual cards, creating card orders,
+    and retrieving a list of cards.
+
+    <div class="back-to-top" ><a href="#" onclick="toTopLink()">back to top</a></div>
+  humanURL: https://docs.lob.com/
+  tags:
+  - Cards
+  properties:
+  - type: OpenAPI
+    url: openapi/lob-cards-api-openapi.yml
+  - type: Documentation
+    url: https://docs.lob.com/
+- aid: lob:lob-checks-api
+  name: Lob Checks API
+  description: >-
+    Checks allow you to send payments via physical checks. The API provides endpoints
+
+    for creating checks, retrieving individual checks, canceling checks, and retrieving a list of checks.
+
+    <div class="back-to-top" ><a href="#" onclick="toTopLink()">back to top</a></div>
+  humanURL: https://docs.lob.com/
+  tags:
+  - Checks
+  properties:
+  - type: OpenAPI
+    url: openapi/lob-checks-api-openapi.yml
+  - type: Documentation
+    url: https://docs.lob.com/
+- aid: lob:lob-creatives-api
+  name: Lob Creatives API
+  description: >-
+    The creatives endpoint allows you to create and view creatives. Creatives are used to create
+
+    reusable letter and postcard templates. The API provides endpoints for creating creatives, updating
+    creatives,
+
+    retrieving individual creatives, and deleting creatives.
+  humanURL: https://docs.lob.com/
+  tags:
+  - Creatives
+  properties:
+  - type: OpenAPI
+    url: openapi/lob-creatives-api-openapi.yml
+  - type: Documentation
+    url: https://docs.lob.com/
+- aid: lob:lob-crv-id-api
+  name: Lob Crv_id API
+  description: The Crv_id API from Lob — 1 operation(s) for crv_id.
+  humanURL: https://docs.lob.com/
+  tags:
+  - Crv_id
+  properties:
+  - type: OpenAPI
+    url: openapi/lob-crv-id-api-openapi.yml
+  - type: Documentation
+    url: https://docs.lob.com/
+- aid: lob:lob-domains-api
+  name: Lob Domains API
+  description: The Domains API from Lob — 2 operation(s) for domains.
+  humanURL: https://docs.lob.com/
+  tags:
+  - Domains
+  properties:
+  - type: OpenAPI
+    url: openapi/lob-domains-api-openapi.yml
+  - type: Documentation
+    url: https://docs.lob.com/
+- aid: lob:lob-exports-api
+  name: Lob Exports API
+  description: The Exports API from Lob — 2 operation(s) for exports.
+  humanURL: https://docs.lob.com/
+  tags:
+  - Exports
+  properties:
+  - type: OpenAPI
+    url: openapi/lob-exports-api-openapi.yml
+  - type: Documentation
+    url: https://docs.lob.com/
+- aid: lob:lob-files-api
+  name: Lob Files API
+  description: The Files API from Lob — 1 operation(s) for files.
+  humanURL: https://docs.lob.com/
+  tags:
+  - Files
+  properties:
+  - type: OpenAPI
+    url: openapi/lob-files-api-openapi.yml
+  - type: Documentation
+    url: https://docs.lob.com/
+- aid: lob:lob-identity-validation-api
+  name: Lob Identity  Validation API
+  description: The Identity  Validation API from Lob — 1 operation(s) for identity  validation.
+  humanURL: https://docs.lob.com/
+  tags:
+  - Identity  Validation
+  properties:
+  - type: OpenAPI
+    url: openapi/lob-identity-validation-api-openapi.yml
+  - type: Documentation
+    url: https://docs.lob.com/
+- aid: lob:lob-informed-delivery-campaign-api
+  name: Lob Informed  Delivery  Campaign API
+  description: >-
+    The Informed  Delivery  Campaign API from Lob — 1 operation(s) for informed  delivery  campaign.
+  humanURL: https://docs.lob.com/
+  tags:
+  - Informed  Delivery  Campaign
+  properties:
+  - type: OpenAPI
+    url: openapi/lob-informed-delivery-campaign-api-openapi.yml
+  - type: Documentation
+    url: https://docs.lob.com/
+- aid: lob:lob-intl-verifications-api
+  name: Lob Intl  Verifications API
+  description: The Intl  Verifications API from Lob — 2 operation(s) for intl  verifications.
+  humanURL: https://docs.lob.com/
+  tags:
+  - Intl  Verifications
+  properties:
+  - type: OpenAPI
+    url: openapi/lob-intl-verifications-api-openapi.yml
+  - type: Documentation
+    url: https://docs.lob.com/
+- aid: lob:lob-letters-api
+  name: Lob Letters API
+  description: >-
+    The letters endpoint allows you to easily print and mail letters. The API provides endpoints for
+
+    creating letters, retrieving individual letters, canceling letters, and retrieving a list of letters.
+
+    <div class="back-to-top" ><a href="#" onclick="toTopLink()">back to top</a></div>
+  humanURL: https://docs.lob.com/
+  tags:
+  - Letters
+  properties:
+  - type: OpenAPI
+    url: openapi/lob-letters-api-openapi.yml
+  - type: Documentation
+    url: https://docs.lob.com/
+- aid: lob:lob-links-api
+  name: Lob Links API
+  description: The Links API from Lob — 2 operation(s) for links.
+  humanURL: https://docs.lob.com/
+  tags:
+  - Links
+  properties:
+  - type: OpenAPI
+    url: openapi/lob-links-api-openapi.yml
+  - type: Documentation
+    url: https://docs.lob.com/
+- aid: lob:lob-ltr-id-api
+  name: Lob Ltr_id API
+  description: The Ltr_id API from Lob — 1 operation(s) for ltr_id.
+  humanURL: https://docs.lob.com/
+  tags:
+  - Ltr_id
+  properties:
+  - type: OpenAPI
+    url: openapi/lob-ltr-id-api-openapi.yml
+  - type: Documentation
+    url: https://docs.lob.com/
+- aid: lob:lob-orders-api
+  name: Lob Orders API
+  description: The Orders API from Lob — 2 operation(s) for orders.
+  humanURL: https://docs.lob.com/
+  tags:
+  - Orders
+  properties:
+  - type: OpenAPI
+    url: openapi/lob-orders-api-openapi.yml
+  - type: Documentation
+    url: https://docs.lob.com/
+- aid: lob:lob-postcards-api
+  name: Lob Postcards API
+  description: >-
+    The postcards endpoint allows you to easily print and mail postcards. The API provides endpoints for
+    creating postcards,
+
+    retrieving individual postcards, canceling postcards, and retrieving a list of postcards.
+
+    <div class="back-to-top" ><a href="#" onclick="toTopLink()">back to top</a></div>
+  humanURL: https://docs.lob.com/
+  tags:
+  - Postcards
+  properties:
+  - type: OpenAPI
+    url: openapi/lob-postcards-api-openapi.yml
+  - type: Documentation
+    url: https://docs.lob.com/
+- aid: lob:lob-psc-id-api
+  name: Lob Psc_id API
+  description: The Psc_id API from Lob — 1 operation(s) for psc_id.
+  humanURL: https://docs.lob.com/
+  tags:
+  - Psc_id
+  properties:
+  - type: OpenAPI
+    url: openapi/lob-psc-id-api-openapi.yml
+  - type: Documentation
+    url: https://docs.lob.com/
+- aid: lob:lob-q-r-codes-api
+  name: Lob Q R  Codes API
+  description: The Q R  Codes API from Lob — 1 operation(s) for q r  codes.
+  humanURL: https://docs.lob.com/
+  tags:
+  - Q R  Codes
+  properties:
+  - type: OpenAPI
+    url: openapi/lob-q-r-codes-api-openapi.yml
+  - type: Documentation
+    url: https://docs.lob.com/
+- aid: lob:lob-reports-api
+  name: Lob Reports API
+  description: The Reports API from Lob — 1 operation(s) for reports.
+  humanURL: https://docs.lob.com/
+  tags:
+  - Reports
+  properties:
+  - type: OpenAPI
+    url: openapi/lob-reports-api-openapi.yml
+  - type: Documentation
+    url: https://docs.lob.com/
+- aid: lob:lob-reverse-geocode-lookups-api
+  name: Lob Reverse  Geocode  Lookups API
+  description: >-
+    The Reverse  Geocode  Lookups API from Lob — 1 operation(s) for reverse  geocode  lookups.
+  humanURL: https://docs.lob.com/
+  tags:
+  - Reverse  Geocode  Lookups
+  properties:
+  - type: OpenAPI
+    url: openapi/lob-reverse-geocode-lookups-api-openapi.yml
+  - type: Documentation
+    url: https://docs.lob.com/
+- aid: lob:lob-self-mailers-api
+  name: Lob Self  Mailers API
+  description: The Self  Mailers API from Lob — 1 operation(s) for self  mailers.
+  humanURL: https://docs.lob.com/
+  tags:
+  - Self  Mailers
+  properties:
+  - type: OpenAPI
+    url: openapi/lob-self-mailers-api-openapi.yml
+  - type: Documentation
+    url: https://docs.lob.com/
+- aid: lob:lob-send-api
+  name: Lob Send API
+  description: The Send API from Lob — 1 operation(s) for send.
+  humanURL: https://docs.lob.com/
+  tags:
+  - Send
+  properties:
+  - type: OpenAPI
+    url: openapi/lob-send-api-openapi.yml
+  - type: Documentation
+    url: https://docs.lob.com/
+- aid: lob:lob-sfm-id-api
+  name: Lob Sfm_id API
+  description: The Sfm_id API from Lob — 1 operation(s) for sfm_id.
+  humanURL: https://docs.lob.com/
+  tags:
+  - Sfm_id
+  properties:
+  - type: OpenAPI
+    url: openapi/lob-sfm-id-api-openapi.yml
+  - type: Documentation
+    url: https://docs.lob.com/
+- aid: lob:lob-snap-pack-id-api
+  name: Lob Snap_pack_id API
+  description: The Snap_pack_id API from Lob — 1 operation(s) for snap_pack_id.
+  humanURL: https://docs.lob.com/
+  tags:
+  - Snap_pack_id
+  properties:
+  - type: OpenAPI
+    url: openapi/lob-snap-pack-id-api-openapi.yml
+  - type: Documentation
+    url: https://docs.lob.com/
+- aid: lob:lob-snap-packs-api
+  name: Lob Snap  Packs API
+  description: The Snap  Packs API from Lob — 1 operation(s) for snap  packs.
+  humanURL: https://docs.lob.com/
+  tags:
+  - Snap  Packs
+  properties:
+  - type: OpenAPI
+    url: openapi/lob-snap-packs-api-openapi.yml
+  - type: Documentation
+    url: https://docs.lob.com/
+- aid: lob:lob-template-versions-api
+  name: Lob Template  Versions API
+  description: The Template  Versions API from Lob — 1 operation(s) for template  versions.
+  humanURL: https://docs.lob.com/
+  tags:
+  - Template  Versions
+  properties:
+  - type: OpenAPI
+    url: openapi/lob-template-versions-api-openapi.yml
+  - type: Documentation
+    url: https://docs.lob.com/
+- aid: lob:lob-templates-api
+  name: Lob Templates API
+  description: >-
+    These API endpoints allow you to create, retrieve, update and delete reusable HTML templates for use
+    with the Print & Mail API.
+
+    <div class="back-to-top" ><a href="#" onclick="toTopLink()">back to top</a></div>
+  humanURL: https://docs.lob.com/
+  tags:
+  - Templates
+  properties:
+  - type: OpenAPI
+    url: openapi/lob-templates-api-openapi.yml
+  - type: Documentation
+    url: https://docs.lob.com/
+- aid: lob:lob-u-r-l-shortener-api
+  name: Lob U R L  Shortener API
+  description: The U R L  Shortener API from Lob — 2 operation(s) for u r l  shortener.
+  humanURL: https://docs.lob.com/
+  tags:
+  - U R L  Shortener
+  properties:
+  - type: OpenAPI
+    url: openapi/lob-u-r-l-shortener-api-openapi.yml
+  - type: Documentation
+    url: https://docs.lob.com/
+- aid: lob:lob-u-s-autocompletions-api
+  name: Lob U S  Autocompletions API
+  description: The U S  Autocompletions API from Lob — 1 operation(s) for u s  autocompletions.
+  humanURL: https://docs.lob.com/
+  tags:
+  - U S  Autocompletions
+  properties:
+  - type: OpenAPI
+    url: openapi/lob-u-s-autocompletions-api-openapi.yml
+  - type: Documentation
+    url: https://docs.lob.com/
+- aid: lob:lob-u-s-verifications-api
+  name: Lob U S  Verifications API
+  description: The U S  Verifications API from Lob — 2 operation(s) for u s  verifications.
+  humanURL: https://docs.lob.com/
+  tags:
+  - U S  Verifications
+  properties:
+  - type: OpenAPI
+    url: openapi/lob-u-s-verifications-api-openapi.yml
+  - type: Documentation
+    url: https://docs.lob.com/
+- aid: lob:lob-uploads-api
+  name: Lob Uploads API
+  description: >-
+    The uploads endpoint allows you to upload audience files that are then associated with a given campaign.
+
+    At this time, only CSV files are allowed. The API provides endpoints for creating uploads, uploading
+    audience files,
+
+    and marking uploaded files as ready for processing. The API also provides endpoints for downloading
+    files that
+
+    describe the results, both successful and not, of the processing.
+  humanURL: https://docs.lob.com/
+  tags:
+  - Uploads
+  properties:
+  - type: OpenAPI
+    url: openapi/lob-uploads-api-openapi.yml
+  - type: Documentation
+    url: https://docs.lob.com/
+- aid: lob:lob-usps-campaign-id-api
+  name: Lob Usps_campaign_id API
+  description: The Usps_campaign_id API from Lob — 1 operation(s) for usps_campaign_id.
+  humanURL: https://docs.lob.com/
+  tags:
+  - Usps_campaign_id
+  properties:
+  - type: OpenAPI
+    url: openapi/lob-usps-campaign-id-api-openapi.yml
+  - type: Documentation
+    url: https://docs.lob.com/
+- aid: lob:lob-verify-api
+  name: Lob Verify API
+  description: The Verify API from Lob — 1 operation(s) for verify.
+  humanURL: https://docs.lob.com/
+  tags:
+  - Verify
+  properties:
+  - type: OpenAPI
+    url: openapi/lob-verify-api-openapi.yml
+  - type: Documentation
+    url: https://docs.lob.com/
+- aid: lob:lob-versions-api
+  name: Lob Versions API
+  description: The Versions API from Lob — 2 operation(s) for versions.
+  humanURL: https://docs.lob.com/
+  tags:
+  - Versions
+  properties:
+  - type: OpenAPI
+    url: openapi/lob-versions-api-openapi.yml
+  - type: Documentation
+    url: https://docs.lob.com/
+- aid: lob:lob-zip-lookups-api
+  name: Lob Zip  Lookups API
+  description: The Zip  Lookups API from Lob — 1 operation(s) for zip  lookups.
+  humanURL: https://docs.lob.com/
+  tags:
+  - Zip  Lookups
+  properties:
+  - type: OpenAPI
+    url: openapi/lob-zip-lookups-api-openapi.yml
+  - type: Documentation
+    url: https://docs.lob.com/
 common:
   - type: TrustCenter
     url: security/lob-trust-center.yml
