@@ -1,0 +1,197 @@
+{
+  "item": [
+    {
+      "id": "e78ba28f-e8ed-4872-8fb0-1ac5ca5b6903",
+      "name": "Q R  Codes",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "76b40901-3f71-421f-96a6-1d3d670800b1",
+          "name": "List",
+          "request": {
+            "name": "List",
+            "description": {
+              "content": "Returns a list of your QR codes. The QR codes are returned sorted by scan date, with the most recently scanned QR codes appearing first.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "qr_code_analytics"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "10",
+                  "description": "How many results to return."
+                },
+                {
+                  "disabled": false,
+                  "key": "offset",
+                  "value": "0",
+                  "description": "An integer that designates the offset at which to begin returning results. Defaults to 0."
+                },
+                {
+                  "disabled": false,
+                  "key": "include",
+                  "value": "<string>",
+                  "description": "Request that the response include the total count by specifying `include=[\"total_count\"]`.\n"
+                },
+                {
+                  "disabled": false,
+                  "key": "include",
+                  "value": "<string>",
+                  "description": "Request that the response include the total count by specifying `include=[\"total_count\"]`.\n"
+                },
+                {
+                  "disabled": false,
+                  "key": "date_created[key_0]",
+                  "value": "<string>",
+                  "description": "Filter by date created. Accepted formats are ISO-8601 date or datetime, e.g. `{ \"gt\": \"2012-01-01\", \"lt\": \"2012-01-31T12:34:56Z\" }` where `gt` is >, `lt` is <, `gte` is e, and `lte` is d."
+                },
+                {
+                  "disabled": false,
+                  "key": "date_created[key_1]",
+                  "value": "<string>",
+                  "description": "Filter by date created. Accepted formats are ISO-8601 date or datetime, e.g. `{ \"gt\": \"2012-01-01\", \"lt\": \"2012-01-31T12:34:56Z\" }` where `gt` is >, `lt` is <, `gte` is e, and `lte` is d."
+                },
+                {
+                  "disabled": false,
+                  "key": "date_created[key_2]",
+                  "value": "<string>",
+                  "description": "Filter by date created. Accepted formats are ISO-8601 date or datetime, e.g. `{ \"gt\": \"2012-01-01\", \"lt\": \"2012-01-31T12:34:56Z\" }` where `gt` is >, `lt` is <, `gte` is e, and `lte` is d."
+                },
+                {
+                  "disabled": false,
+                  "key": "scanned",
+                  "value": "<boolean>",
+                  "description": "Filter list of responses to only include QR codes with at least one scan event."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "d1e62579-b7fa-42dd-b230-6309f8a602b0",
+              "name": "Returns a list of QR Codes and their analytics.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "qr_code_analytics"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "limit",
+                      "value": "10"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "0"
+                    },
+                    {
+                      "key": "include",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "include",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "date_created[key_0]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "scanned",
+                      "value": "<boolean>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": [\n    {\n      \"resource_id\": \"ltr_d5a5a89da9106f8\",\n      \"date_created\": \"2019-07-27T23:49:01.511Z\",\n      \"number_of_scans\": 2,\n      \"scans\": [\n        {\n          \"ip_location\": \"127.0.0.1\",\n          \"scan_date\": \"2022-07-27T23:49:01.511Z\"\n        },\n        {\n          \"ip_location\": \"127.0.0.1\",\n          \"scan_date\": \"2022-07-29T23:45:00.436Z\"\n        }\n      ]\n    },\n    {\n      \"resource_id\": \"psc_d5a5a89da9106f8\",\n      \"date_created\": \"2022-09-27T23:49:01.511Z\",\n      \"number_of_scans\": 1,\n      \"scans\": [\n        {\n          \"ip_location\": \"127.0.0.1\",\n          \"scan_date\": \"2022-09-27T23:49:01.511Z\"\n        }\n      ]\n    }\n  ],\n  \"object\": \"list\",\n  \"count\": 2,\n  \"scanned_count\": 2,\n  \"total_count\": 2\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.lob.com/v1",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "basic",
+    "basic": [
+      {
+        "key": "username",
+        "value": "{{basicAuthUsername}}"
+      },
+      {
+        "key": "password",
+        "value": "{{basicAuthPassword}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "b1c5866b-de9e-4cd4-9c3c-349eabffedea",
+    "name": "Lob Q R  Codes API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Experience direct mail like never before, with unmatched personalization and scalability \u0014 all in one intuitive platform.\n\nContact Support:\n Name: Lob Developer Experience\n Email: lob-openapi@lob.com",
+      "type": "text/plain"
+    }
+  }
+}

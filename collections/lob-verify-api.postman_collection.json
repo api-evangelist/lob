@@ -1,0 +1,279 @@
+{
+  "item": [
+    {
+      "id": "9371bc28-6d39-46af-8519-7b51631565a9",
+      "name": "Verify",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "230fa184-80b8-4ad7-a48d-c74af4222c2a",
+          "name": "Verify",
+          "request": {
+            "name": "Verify",
+            "description": {
+              "content": "Verify a bank account in order to create a check.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "bank_accounts",
+                ":bank_id",
+                "verify"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "bank_id",
+                  "description": "(Required) id of the bank account to be verified"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/x-www-form-urlencoded"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": [
+                {
+                  "disabled": false,
+                  "key": "amounts",
+                  "value": "<integer>",
+                  "description": "(Required) In live mode, an array containing the two micro deposits (in cents) placed in the bank account. In test mode, no micro deposits will be placed, so any two integers between `1` and `100` will work."
+                },
+                {
+                  "disabled": false,
+                  "key": "amounts",
+                  "value": "<integer>",
+                  "description": "(Required) In live mode, an array containing the two micro deposits (in cents) placed in the bank account. In test mode, no micro deposits will be placed, so any two integers between `1` and `100` will work."
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "8855ddba-7ad6-4ac9-9db4-c367f554e80d",
+              "name": "Returns a bank_account object",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "bank_accounts",
+                    ":bank_id",
+                    "verify"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "bank_id",
+                      "description": "(Required) id of the bank account to be verified"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) In live mode, an array containing the two micro deposits (in cents) placed in the bank account. In test mode, no micro deposits will be placed, so any two integers between `1` and `100` will work.",
+                        "type": "text/plain"
+                      },
+                      "key": "amounts",
+                      "value": "1"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) In live mode, an array containing the two micro deposits (in cents) placed in the bank account. In test mode, no micro deposits will be placed, so any two integers between `1` and `100` will work.",
+                        "type": "text/plain"
+                      },
+                      "key": "amounts",
+                      "value": "100"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "disabled": false,
+                  "description": "The rate limit for a given endpoint.",
+                  "key": "ratelimit-limit",
+                  "value": "150"
+                },
+                {
+                  "disabled": false,
+                  "description": "The number of requests remaining in the current window.",
+                  "key": "ratelimit-remaining",
+                  "value": "100"
+                },
+                {
+                  "disabled": false,
+                  "description": "The time at which the rate limit window resets in  <a href=\"https://en.wikipedia.org/wiki/Unix_time\" target=\"_blank\">UTC epoch seconds</a>\n",
+                  "key": "ratelimit-reset",
+                  "value": "1528749846"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"bank_8cad8df5354d33f\",\n  \"signature_url\": \"https://lob-assets.com/letters/asd_asdfghjklqwertyu.pdf?version=45&expires=1234567890&signature=a\",\n  \"description\": \"Test Bank Account\",\n  \"metadata\": {},\n  \"routing_number\": \"322271627\",\n  \"fractional_routing_number\": \"25-3/440\",\n  \"check_template\": \"jpm\",\n  \"account_number\": \"123456789\",\n  \"account_type\": \"company\",\n  \"signatory\": \"John Doe\",\n  \"bank_name\": \"J.P. MORGAN CHASE BANK, N.A.,\",\n  \"bank_city\": \"Columbus\",\n  \"bank_state\": \"OH\",\n  \"bank_zip\": \"43240\",\n  \"verified\": false,\n  \"date_created\": \"2015-11-06T19:24:24.440Z\",\n  \"date_modified\": \"2015-11-06T19:24:24.440Z\",\n  \"object\": \"bank_account\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "374b2aef-b2f8-4fdd-a175-067c722f48a2",
+              "name": "Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "bank_accounts",
+                    ":bank_id",
+                    "verify"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "bank_id",
+                      "description": "(Required) id of the bank account to be verified"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) In live mode, an array containing the two micro deposits (in cents) placed in the bank account. In test mode, no micro deposits will be placed, so any two integers between `1` and `100` will work.",
+                        "type": "text/plain"
+                      },
+                      "key": "amounts",
+                      "value": "1"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) In live mode, an array containing the two micro deposits (in cents) placed in the bank account. In test mode, no micro deposits will be placed, so any two integers between `1` and `100` will work.",
+                        "type": "text/plain"
+                      },
+                      "key": "amounts",
+                      "value": "100"
+                    }
+                  ]
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": \"invalid\",\n    \"message\": \"routing_number is required\",\n    \"status_code\": 422\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.lob.com/v1",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "basic",
+    "basic": [
+      {
+        "key": "username",
+        "value": "{{basicAuthUsername}}"
+      },
+      {
+        "key": "password",
+        "value": "{{basicAuthPassword}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "da96cef8-85ab-4669-b2a6-7281df175ad1",
+    "name": "Lob Verify API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Experience direct mail like never before, with unmatched personalization and scalability \u0014 all in one intuitive platform.\n\nContact Support:\n Name: Lob Developer Experience\n Email: lob-openapi@lob.com",
+      "type": "text/plain"
+    }
+  }
+}

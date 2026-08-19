@@ -1,0 +1,63 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Lob Booklet_id API",
+    "version": "1.20.2"
+  },
+  "request": {
+    "auth": {
+      "type": "basic",
+      "username": "{{username}}",
+      "password": "{{password}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Booklet_id",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Retrieve",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.lob.com/v1/booklets/:booklet_id",
+            "params": [
+              {
+                "name": "booklet_id",
+                "value": "",
+                "type": "path",
+                "description": "id of the booklet"
+              }
+            ]
+          },
+          "docs": "Retrieves the details of an existing booklet. You need to only supply the unique booklet identifier that was returned upon booklet creation."
+        },
+        {
+          "info": {
+            "name": "Delete",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.lob.com/v1/booklets/:booklet_id",
+            "params": [
+              {
+                "name": "booklet_id",
+                "value": "",
+                "type": "path",
+                "description": "id of the booklet"
+              }
+            ]
+          },
+          "docs": "Completely removes a booklet from production. This can only be done if the booklet's `send_date` has not yet passed. If the booklet is successfully canceled, you will not be charged for it."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

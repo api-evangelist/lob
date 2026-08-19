@@ -1,0 +1,341 @@
+{
+  "item": [
+    {
+      "id": "d8236aee-88c5-414c-af9f-c1ea2eead104",
+      "name": "Psc_id",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "8680d625-e92f-4a09-84c5-09fdfa486188",
+          "name": "Retrieve",
+          "request": {
+            "name": "Retrieve",
+            "description": {
+              "content": "Retrieves the details of an existing postcard. You need only supply the unique customer identifier that was returned upon postcard creation.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "postcards",
+                ":psc_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "psc_id",
+                  "description": "(Required) id of the postcard"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "355ef55f-9ba5-4a9d-8688-f2d6eb181e5f",
+              "name": "Returns a postcard object",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "postcards",
+                    ":psc_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "psc_id",
+                      "description": "(Required) id of the postcard"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"psc_208e45e48d271294\",\n  \"description\": null,\n  \"metadata\": {},\n  \"to\": {\n    \"id\": \"adr_210a8d4b0b76d77b\",\n    \"description\": null,\n    \"name\": null,\n    \"company\": \"LOB\",\n    \"phone\": null,\n    \"email\": null,\n    \"address_line1\": \"210 KING ST STE 6100\",\n    \"address_line2\": null,\n    \"address_city\": \"SAN FRANCISCO\",\n    \"address_state\": \"CA\",\n    \"address_zip\": \"94107-1741\",\n    \"address_country\": \"UNITED STATES\",\n    \"metadata\": {},\n    \"date_created\": \"2018-12-08T03:01:07.651Z\",\n    \"date_modified\": \"2018-12-08T03:01:07.651Z\",\n    \"object\": \"address\"\n  },\n  \"url\": \"https://lob-assets.com/postcards/psc_208e45e48d271294.pdf?version=v1&expires=1619218302&signature=NfHHLBSr5tOHA_Z4kij4dKqZG8f3vMDtwvuFVeeF9pV_lylcjLsVVODhNCE5hR6-2slUr6t9WMNsi429Pj7_DA\",\n  \"carrier\": \"USPS\",\n  \"front_template_id\": null,\n  \"back_template_id\": null,\n  \"date_created\": \"2021-03-24T22:51:42.838Z\",\n  \"date_modified\": \"2021-03-24T22:51:42.838Z\",\n  \"send_date\": \"2021-03-24T22:51:42.838Z\",\n  \"use_type\": \"marketing\",\n  \"fsc\": false,\n  \"object\": \"postcard\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d93cac5e-add8-408b-a26c-8b7a73cbb7f0",
+              "name": "Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "postcards",
+                    ":psc_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "psc_id",
+                      "description": "(Required) id of the postcard"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": \"not_found\",\n    \"message\": \"to address not found\",\n    \"status_code\": 404\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "352d3944-f68b-4f72-85c8-3e1723eb7821",
+          "name": "Cancel",
+          "request": {
+            "name": "Cancel",
+            "description": {
+              "content": "Completely removes a postcard from production. This can only be done if the postcard has a `send_date` and the `send_date` has not yet passed. If the postcard is successfully canceled, you will not be charged for it. Read more on [cancellation windows](#section/Cancellation-Windows) and [scheduling](#section/Scheduled-Mailings). Scheduling and cancellation is a premium feature. Upgrade to the appropriate <a href=\"https://dashboard.lob.com/#/settings/editions\" target=\"_blank\">Print & Mail Edition</a> to gain access.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "postcards",
+                ":psc_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "psc_id",
+                  "description": "(Required) id of the postcard"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "2d893a72-95f8-4de8-b7e5-11ecec9b27e3",
+              "name": "Deleted",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "postcards",
+                    ":psc_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "psc_id",
+                      "description": "(Required) id of the postcard"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"psc_123456789\",\n  \"deleted\": true\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e994c7a2-b477-45ed-b3c0-00da2f2c2f78",
+              "name": "Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "postcards",
+                    ":psc_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "psc_id",
+                      "description": "(Required) id of the postcard"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": \"not_found\",\n    \"message\": \"to address not found\",\n    \"status_code\": 404\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.lob.com/v1",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "basic",
+    "basic": [
+      {
+        "key": "username",
+        "value": "{{basicAuthUsername}}"
+      },
+      {
+        "key": "password",
+        "value": "{{basicAuthPassword}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "04171c70-f666-4d9e-bc24-84dd0607472a",
+    "name": "Lob Psc_id API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Experience direct mail like never before, with unmatched personalization and scalability \u0014 all in one intuitive platform.\n\nContact Support:\n Name: Lob Developer Experience\n Email: lob-openapi@lob.com",
+      "type": "text/plain"
+    }
+  }
+}

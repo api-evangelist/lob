@@ -1,0 +1,446 @@
+{
+  "item": [
+    {
+      "id": "418ff877-5860-4bc8-8ac3-f6cb7e5315d6",
+      "name": "Bulk",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "1ece0bbf-044c-4b7d-aee1-131afa33edce",
+          "name": "Bulk Verify",
+          "request": {
+            "name": "Bulk Verify",
+            "description": {
+              "content": "Verify a list of US or US territory addresses _with a live API key_. Requests to this endpoint with a test API key will return a dummy response based on the primary line you input.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "bulk",
+                "us_verifications"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "case",
+                  "value": "upper",
+                  "description": "Casing of the verified address. Possible values are `upper` and `proper` for uppercased (e.g. \"PO BOX\") and proper-cased (e.g. \"PO Box\"), respectively. Only affects `recipient`, `primary_line`, `secondary_line`, `urbanization`, and `last_line`. Default casing is `upper`."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/x-www-form-urlencoded"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": [
+                {
+                  "disabled": false,
+                  "key": "addresses",
+                  "value": "{\"primary_line\":\"<string>\",\"recipient\":\"<string>\",\"secondary_line\":\"<string>\",\"urbanization\":\"<string>\",\"city\":\"<string>\",\"state\":\"<string>\",\"zip_code\":\"<string>\"}",
+                  "description": "(Required) "
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "3fd8ac2b-645c-4995-9dd6-c9ca83362d39",
+              "name": "Returns a list of US verification objects.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "bulk",
+                    "us_verifications"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "case",
+                      "value": "upper"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) ",
+                        "type": "text/plain"
+                      },
+                      "key": "addresses",
+                      "value": "{\"primary_line\":\"210 King Street\",\"city\":\"San Francisco\",\"state\":\"CA\",\"zip_code\":\"94107\"}"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) ",
+                        "type": "text/plain"
+                      },
+                      "key": "addresses",
+                      "value": "{\"recipient\":\"Walgreens\",\"primary_line\":\"Ave Wilson Churchill 123\",\"secondary_line\":\"\",\"urbanization\":\"URB FAIR OAKS\",\"city\":\"RIO PIEDRAS\",\"state\":\"PR\",\"zip_code\":926}"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "disabled": false,
+                  "description": "The rate limit for a given endpoint.",
+                  "key": "ratelimit-limit",
+                  "value": "150"
+                },
+                {
+                  "disabled": false,
+                  "description": "The number of requests remaining in the current window.",
+                  "key": "ratelimit-remaining",
+                  "value": "100"
+                },
+                {
+                  "disabled": false,
+                  "description": "The time at which the rate limit window resets in  <a href=\"https://en.wikipedia.org/wiki/Unix_time\" target=\"_blank\">UTC epoch seconds</a>\n",
+                  "key": "ratelimit-reset",
+                  "value": "1528749846"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"addresses\": [\n    {\n      \"id\": \"us_ver_c7cb63d68f8d6\",\n      \"recipient\": \"LOB.COM\",\n      \"primary_line\": \"210 KING ST\",\n      \"secondary_line\": \"\",\n      \"urbanization\": \"\",\n      \"last_line\": \"SAN FRANCISCO CA 94107-1702\",\n      \"deliverability\": \"deliverable\",\n      \"valid_address\": true,\n      \"components\": {\n        \"primary_number\": \"210\",\n        \"street_predirection\": \"\",\n        \"street_name\": \"KING\",\n        \"street_suffix\": \"ST\",\n        \"street_postdirection\": \"\",\n        \"secondary_designator\": \"\",\n        \"secondary_number\": \"\",\n        \"pmb_designator\": \"\",\n        \"pmb_number\": \"\",\n        \"extra_secondary_designator\": \"\",\n        \"extra_secondary_number\": \"\",\n        \"city\": \"SAN FRANCISCO\",\n        \"state\": \"CA\",\n        \"zip_code\": \"94107\",\n        \"zip_code_plus_4\": \"1702\",\n        \"zip_code_type\": \"standard\",\n        \"delivery_point_barcode\": \"941071728506\",\n        \"address_type\": \"commercial\",\n        \"record_type\": \"street\",\n        \"default_building_address\": false,\n        \"county\": \"SAN FRANCISCO\",\n        \"county_fips\": \"06075\",\n        \"carrier_route\": \"C032\",\n        \"carrier_route_type\": \"city_delivery\",\n        \"po_box_only_flag\": \"N\",\n        \"latitude\": 37.77597542841264,\n        \"longitude\": -122.3929557343685\n      },\n      \"deliverability_analysis\": {\n        \"dpv_confirmation\": \"Y\",\n        \"dpv_cmra\": \"N\",\n        \"dpv_vacant\": \"N\",\n        \"dpv_active\": \"Y\",\n        \"dpv_inactive_reason\": \"\",\n        \"dpv_throwback\": \"N\",\n        \"dpv_non_delivery_day_flag\": \"N\",\n        \"dpv_non_delivery_day_values\": \"\",\n        \"dpv_no_secure_location\": \"N\",\n        \"dpv_door_not_accessible\": \"N\",\n        \"dpv_footnotes\": [\n          \"AA\",\n          \"BB\"\n        ],\n        \"ews_match\": false,\n        \"lacs_indicator\": \"\",\n        \"lacs_return_code\": \"\",\n        \"suite_return_code\": \"\"\n      },\n      \"lob_confidence_score\": {\n        \"score\": 100,\n        \"level\": \"high\"\n      },\n      \"object\": \"us_verification\"\n    }\n  ],\n  \"errors\": false\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a01f32c3-4d6e-41ff-b19a-d5fc8070b9f6",
+              "name": "Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "bulk",
+                    "us_verifications"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "case",
+                      "value": "upper"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) ",
+                        "type": "text/plain"
+                      },
+                      "key": "addresses",
+                      "value": "{\"primary_line\":\"210 King Street\",\"city\":\"San Francisco\",\"state\":\"CA\",\"zip_code\":\"94107\"}"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) ",
+                        "type": "text/plain"
+                      },
+                      "key": "addresses",
+                      "value": "{\"recipient\":\"Walgreens\",\"primary_line\":\"Ave Wilson Churchill 123\",\"secondary_line\":\"\",\"urbanization\":\"URB FAIR OAKS\",\"city\":\"RIO PIEDRAS\",\"state\":\"PR\",\"zip_code\":926}"
+                    }
+                  ]
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": \"invalid\",\n    \"message\": \"primary_line is required or address is required\",\n    \"status_code\": 422\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "b33bd2b3-3378-4267-8d4c-eadc34051f7e",
+          "name": "Bulk Verify",
+          "request": {
+            "name": "Bulk Verify",
+            "description": {
+              "content": "Verify a list of international (except US or US territories) address _with a live API key_. Requests to this endpoint with a test API key will return a dummy response based on the primary line you input.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "bulk",
+                "intl_verifications"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "multipart/form-data"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "addresses",
+                  "value": "[{\"primary_line\":\"<string>\",\"country\":\"<string>\",\"recipient\":\"<string>\",\"secondary_line\":\"<string>\",\"city\":\"<string>\",\"state\":\"<string>\",\"postal_code\":\"<string>\"}]",
+                  "type": "text",
+                  "description": "(Required) "
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "74d6d51e-d294-4ff6-943b-200da82d58c2",
+              "name": "Returns an array of international verification objects.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "bulk",
+                    "intl_verifications"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "description": {
+                        "content": "(Required) ",
+                        "type": "text/plain"
+                      },
+                      "key": "addresses",
+                      "value": "[{\"recipient\":\"John Doe\",\"primary_line\":\"370 Water St\",\"secondary_line\":\"\",\"city\":\"Summerside\",\"state\":\"Prince Edwards Island\",\"postal_code\":\"C1N 1C4\",\"country\":\"CA\"},{\"recipient\":\"Jane Doe\",\"primary_line\":\"UL. DOLSKAYA 1\",\"secondary_line\":\"\",\"city\":\"MOSCOW\",\"state\":\"MOSCOW G\",\"postal_code\":\"115569\",\"country\":\"RU\"}]",
+                      "type": "text"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "disabled": false,
+                  "description": "The rate limit for a given endpoint.",
+                  "key": "ratelimit-limit",
+                  "value": "150"
+                },
+                {
+                  "disabled": false,
+                  "description": "The number of requests remaining in the current window.",
+                  "key": "ratelimit-remaining",
+                  "value": "100"
+                },
+                {
+                  "disabled": false,
+                  "description": "The time at which the rate limit window resets in  <a href=\"https://en.wikipedia.org/wiki/Unix_time\" target=\"_blank\">UTC epoch seconds</a>\n",
+                  "key": "ratelimit-reset",
+                  "value": "1528749846"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"addresses\": [\n    {\n      \"id\": \"intl_ver_c7cb63d68f8d6\",\n      \"recipient\": null,\n      \"primary_line\": \"370 WATER ST\",\n      \"secondary_line\": \"\",\n      \"last_line\": \"SUMMERSIDE PE C1N 1C4\",\n      \"country\": \"CA\",\n      \"coverage\": \"SUBBUILDING\",\n      \"deliverability\": \"deliverable\",\n      \"status\": \"LV4\",\n      \"components\": {\n        \"primary_number\": \"370\",\n        \"street_name\": \"WATER ST\",\n        \"city\": \"SUMMERSIDE\",\n        \"state\": \"PE\",\n        \"postal_code\": \"C1N 1C4\"\n      },\n      \"object\": \"intl_verification\"\n    }\n  ],\n  \"errors\": false\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "31ac0c99-950b-4cc4-a08e-ad1319f12f28",
+              "name": "Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "bulk",
+                    "intl_verifications"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "description": {
+                        "content": "(Required) ",
+                        "type": "text/plain"
+                      },
+                      "key": "addresses",
+                      "value": "[{\"recipient\":\"John Doe\",\"primary_line\":\"370 Water St\",\"secondary_line\":\"\",\"city\":\"Summerside\",\"state\":\"Prince Edwards Island\",\"postal_code\":\"C1N 1C4\",\"country\":\"CA\"},{\"recipient\":\"Jane Doe\",\"primary_line\":\"UL. DOLSKAYA 1\",\"secondary_line\":\"\",\"city\":\"MOSCOW\",\"state\":\"MOSCOW G\",\"postal_code\":\"115569\",\"country\":\"RU\"}]",
+                      "type": "text"
+                    }
+                  ]
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": \"invalid\",\n    \"message\": \"country is required\",\n    \"status_code\": 422\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.lob.com/v1",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "basic",
+    "basic": [
+      {
+        "key": "username",
+        "value": "{{basicAuthUsername}}"
+      },
+      {
+        "key": "password",
+        "value": "{{basicAuthPassword}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "d0ac183e-a3dc-4628-94fc-62ab8fa9865b",
+    "name": "Lob Bulk API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Experience direct mail like never before, with unmatched personalization and scalability \u0014 all in one intuitive platform.\n\nContact Support:\n Name: Lob Developer Experience\n Email: lob-openapi@lob.com",
+      "type": "text/plain"
+    }
+  }
+}

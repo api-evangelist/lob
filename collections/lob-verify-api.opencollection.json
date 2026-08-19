@@ -1,0 +1,48 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Lob Verify API",
+    "version": "1.20.2"
+  },
+  "request": {
+    "auth": {
+      "type": "basic",
+      "username": "{{username}}",
+      "password": "{{password}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Verify",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Verify",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.lob.com/v1/bank_accounts/:bank_id/verify",
+            "params": [
+              {
+                "name": "bank_id",
+                "value": "",
+                "type": "path",
+                "description": "id of the bank account to be verified"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Verify a bank account in order to create a check."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

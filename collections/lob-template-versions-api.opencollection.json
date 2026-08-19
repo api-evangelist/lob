@@ -1,0 +1,104 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Lob Template  Versions API",
+    "version": "1.20.2"
+  },
+  "request": {
+    "auth": {
+      "type": "basic",
+      "username": "{{username}}",
+      "password": "{{password}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Template  Versions",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Retrieve",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.lob.com/v1/templates/:tmpl_id/versions/:vrsn_id",
+            "params": [
+              {
+                "name": "tmpl_id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the template to which the version belongs."
+              },
+              {
+                "name": "vrsn_id",
+                "value": "",
+                "type": "path",
+                "description": "id of the template_version"
+              }
+            ]
+          },
+          "docs": "Retrieves the template version with the given template and version ids."
+        },
+        {
+          "info": {
+            "name": "Update",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.lob.com/v1/templates/:tmpl_id/versions/:vrsn_id",
+            "params": [
+              {
+                "name": "tmpl_id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the template to which the version belongs."
+              },
+              {
+                "name": "vrsn_id",
+                "value": "",
+                "type": "path",
+                "description": "id of the template_version"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates the template version with the given template and version ids."
+        },
+        {
+          "info": {
+            "name": "Delete",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.lob.com/v1/templates/:tmpl_id/versions/:vrsn_id",
+            "params": [
+              {
+                "name": "tmpl_id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the template to which the version belongs."
+              },
+              {
+                "name": "vrsn_id",
+                "value": "",
+                "type": "path",
+                "description": "id of the template_version"
+              }
+            ]
+          },
+          "docs": "Permanently deletes a template version. A template's `published_version` can not be deleted."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,281 @@
+{
+  "item": [
+    {
+      "id": "dcdfabed-95ff-4751-8ebe-055fd3e1dbed",
+      "name": "Creatives",
+      "description": {
+        "content": "The creatives endpoint allows you to create and view creatives. Creatives are used to create\nreusable letter and postcard templates. The API provides endpoints for creating creatives, updating creatives,\nretrieving individual creatives, and deleting creatives.\n",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "44ffad57-4108-40f9-b53e-ebd38b0be267",
+          "name": "Create",
+          "request": {
+            "name": "Create",
+            "description": {
+              "content": "Creates a new creative with the provided properties",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "creatives"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "* `native` - Translate response to the native language of the country in the request\n* `match` - match the response to the language in the request\n\nDefault response is in English.\n",
+                "key": "x-lang-output",
+                "value": "<string>"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/x-www-form-urlencoded"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": [
+                {
+                  "disabled": false,
+                  "key": "front",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "back",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "campaign_id",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "resource_type",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "mail_type",
+                  "value": "usps_first_class"
+                },
+                {
+                  "disabled": false,
+                  "key": "size",
+                  "value": "4x6"
+                },
+                {
+                  "disabled": false,
+                  "key": "qr_code",
+                  "value": "{\"position\":\"<string>\",\"width\":\"<string>\",\"top\":\"<string>\",\"right\":\"<string>\",\"left\":\"<string>\",\"bottom\":\"<string>\",\"redirect_url\":{},\"pages\":\"<string>\"}"
+                },
+                {
+                  "disabled": false,
+                  "key": "from",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "description",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "metadata",
+                  "value": "'vDS&EDse8|d>d(((D},2GOB0[*0>xc`p[`'z[b$=#[CgfVz{L?B## =Q*[|.%x<mQrnHb?O)|=@64yYOTmW ?8?O~OODKKsV^t,`/Hyna7W)o5_C 78ZR+VND=Kcm>cnl'N]hbq{~2+ps[{ob*4htpv7#w<&>:Q3AcbZ1_x_`lPK:=wRbfDMT^_ioExQdJ$5[dF$I0 Y~%xiE#%z3G/?UG0E-.[lSNB/MO6S().tZPo:xFqrocOdH9D'nZyi@}$'KCxrlFm[K C"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "f3d9f33c-3930-4506-b033-ab33c78117cd",
+              "name": "Creative created successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "creatives"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "* `native` - Translate response to the native language of the country in the request\n* `match` - match the response to the language in the request\n\nDefault response is in English.\n",
+                    "key": "x-lang-output",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "disabled": false,
+                      "key": "campaign_id",
+                      "value": "cmp_e05ee61ff80764b"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "resource_type",
+                      "value": "postcard"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "description",
+                      "value": "Our 4x6 postcard creative"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"crv_2a3b096c409b32c\",\n  \"description\": \"Our 4x6 postcard creative\",\n  \"from\": \"adr_210a8d4b0b76d77b\",\n  \"resource_type\": \"postcard\",\n  \"details\": {},\n  \"metadata\": {},\n  \"template_preview_urls\": {},\n  \"template_previews\": [],\n  \"campaigns\": [],\n  \"date_created\": \"2017-09-05T17:47:53.767Z\",\n  \"date_modified\": \"2017-09-05T17:47:53.767Z\",\n  \"object\": \"creative\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "2bd1f43a-fb85-48ee-93ce-212cdb6c1637",
+              "name": "Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "creatives"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "* `native` - Translate response to the native language of the country in the request\n* `match` - match the response to the language in the request\n\nDefault response is in English.\n",
+                    "key": "x-lang-output",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "disabled": false,
+                      "key": "campaign_id",
+                      "value": "cmp_e05ee61ff80764b"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "resource_type",
+                      "value": "postcard"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "description",
+                      "value": "Our 4x6 postcard creative"
+                    }
+                  ]
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": \"not_found\",\n    \"message\": \"creative not found\",\n    \"status_code\": 404\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.lob.com/v1",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "basic",
+    "basic": [
+      {
+        "key": "username",
+        "value": "{{basicAuthUsername}}"
+      },
+      {
+        "key": "password",
+        "value": "{{basicAuthPassword}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "8b4ec6f8-ed9d-4286-985d-262b405e0b91",
+    "name": "Lob Creatives API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Experience direct mail like never before, with unmatched personalization and scalability \u0014 all in one intuitive platform.\n\nContact Support:\n Name: Lob Developer Experience\n Email: lob-openapi@lob.com",
+      "type": "text/plain"
+    }
+  }
+}

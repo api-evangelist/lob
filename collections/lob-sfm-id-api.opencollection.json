@@ -1,0 +1,63 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Lob Sfm_id API",
+    "version": "1.20.2"
+  },
+  "request": {
+    "auth": {
+      "type": "basic",
+      "username": "{{username}}",
+      "password": "{{password}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Sfm_id",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Retrieve",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.lob.com/v1/self_mailers/:sfm_id",
+            "params": [
+              {
+                "name": "sfm_id",
+                "value": "",
+                "type": "path",
+                "description": "id of the self_mailer"
+              }
+            ]
+          },
+          "docs": "Retrieves the details of an existing self_mailer. You need only supply the unique self_mailer identifier that was returned upon self_mailer creation."
+        },
+        {
+          "info": {
+            "name": "Delete",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.lob.com/v1/self_mailers/:sfm_id",
+            "params": [
+              {
+                "name": "sfm_id",
+                "value": "",
+                "type": "path",
+                "description": "id of the self_mailer"
+              }
+            ]
+          },
+          "docs": "Completely removes a self mailer from production. This can only be done if the self mailer's `send_date` has not yet passed. If the self mailer is successfully canceled, you will not be charged for it. This feature is exclusive to certain customers. Upgrade to the appropriate <a href=\"https://dashboard.lob.com/#/settings/editions\" target=\"_blank\">Print & Mail Edition</a> to gain access."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

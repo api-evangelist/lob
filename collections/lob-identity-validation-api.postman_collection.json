@@ -1,0 +1,296 @@
+{
+  "item": [
+    {
+      "id": "f53d8c85-4a5f-4f0f-a625-e04e168421f0",
+      "name": "Identity  Validation",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "49b98d9e-bbe7-4752-95b8-4cf6194cc2aa",
+          "name": "Identity Validation",
+          "request": {
+            "name": "Identity Validation",
+            "description": {
+              "content": "Validates whether a given name is associated with an address.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "identity_validation"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/x-www-form-urlencoded"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": [
+                {
+                  "disabled": false,
+                  "key": "recipient",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "primary_line",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "secondary_line",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "urbanization",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "city",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "state",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "zip_code",
+                  "value": "<string>"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "bc31a731-be8a-4c9b-978f-db879c492005",
+              "name": "Returns the likelihood a given name is associated with an address.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "identity_validation"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "disabled": false,
+                      "key": "recipient",
+                      "value": "Larry Lobster"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "primary_line",
+                      "value": "210 King St."
+                    },
+                    {
+                      "disabled": false,
+                      "key": "secondary_line",
+                      "value": ""
+                    },
+                    {
+                      "disabled": false,
+                      "key": "city",
+                      "value": "San Francisco"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "state",
+                      "value": "CA"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "zip_code",
+                      "value": "94107"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "disabled": false,
+                  "description": "The rate limit for a given endpoint.",
+                  "key": "ratelimit-limit",
+                  "value": "150"
+                },
+                {
+                  "disabled": false,
+                  "description": "The number of requests remaining in the current window.",
+                  "key": "ratelimit-remaining",
+                  "value": "100"
+                },
+                {
+                  "disabled": false,
+                  "description": "The time at which the rate limit window resets in  <a href=\"https://en.wikipedia.org/wiki/Unix_time\" target=\"_blank\">UTC epoch seconds</a>\n",
+                  "key": "ratelimit-reset",
+                  "value": "1528749846"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"id_validation_8a013f3e\",\n  \"recipient\": \"LARRY LOBSTER\",\n  \"primary_line\": \"210 KING ST.\",\n  \"secondary_line\": \"\",\n  \"urbanization\": \"\",\n  \"last_line\": \"SAN FRANCISCO CA 94107-1728\",\n  \"score\": 100,\n  \"confidence\": \"high\",\n  \"object\": \"id_validation\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "7bf0ba5c-04e5-43bf-957c-2ff57398a9b9",
+              "name": "Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "identity_validation"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "disabled": false,
+                      "key": "recipient",
+                      "value": "Larry Lobster"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "primary_line",
+                      "value": "210 King St."
+                    },
+                    {
+                      "disabled": false,
+                      "key": "secondary_line",
+                      "value": ""
+                    },
+                    {
+                      "disabled": false,
+                      "key": "city",
+                      "value": "San Francisco"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "state",
+                      "value": "CA"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "zip_code",
+                      "value": "94107"
+                    }
+                  ]
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": \"invalid\",\n    \"message\": \"recipient is required\",\n    \"status_code\": 422\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.lob.com/v1",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "basic",
+    "basic": [
+      {
+        "key": "username",
+        "value": "{{basicAuthUsername}}"
+      },
+      {
+        "key": "password",
+        "value": "{{basicAuthPassword}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "fd19b019-fee8-4226-ba3d-89271617d5e0",
+    "name": "Lob Identity  Validation API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Experience direct mail like never before, with unmatched personalization and scalability \u0014 all in one intuitive platform.\n\nContact Support:\n Name: Lob Developer Experience\n Email: lob-openapi@lob.com",
+      "type": "text/plain"
+    }
+  }
+}

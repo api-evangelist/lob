@@ -1,0 +1,711 @@
+{
+  "item": [
+    {
+      "id": "9739c313-8ece-43b7-afdb-cf3919618768",
+      "name": "Usps_campaign_id",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "657a3840-e61c-4739-ae6c-baba739e9978",
+          "name": "Retrieve",
+          "request": {
+            "name": "Retrieve",
+            "description": {
+              "content": "Retrieves the details of an existing Informed Delivery campaign. You need only supply the `usps_campaign_id` returned in the campaign creation request.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "informed_delivery_campaigns",
+                ":usps_campaign_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "usps_campaign_id",
+                  "description": "(Required) usps_campaign_id of the Informed Delivery campaign"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "60b09970-940d-4748-9268-776cbd66e327",
+              "name": "Returns a informed delivery campaign object",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "informed_delivery_campaigns",
+                    ":usps_campaign_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "usps_campaign_id",
+                      "description": "(Required) usps_campaign_id of the Informed Delivery campaign"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"infd_234g5324g324g23\",\n  \"object\": \"informed_delivery_campaign\",\n  \"account_id\": \"xxxxxxxxxxxxxxxxxxxx\",\n  \"quantity\": 20,\n  \"usps_campaign_id\": \"1234567890\",\n  \"usps_title\": \"Campaign: 1a1a1a1a-9657-423b-b3c7-2\",\n  \"start_date\": \"2024-08-31T00:00:00.000Z\",\n  \"end_date\": \"2024-10-15T00:00:00.000Z\",\n  \"start_serial\": 3183487,\n  \"end_serial\": 3183506,\n  \"ride_along_url\": \"https://www.lob.com\",\n  \"ride_along_image_s3_link\": \"https://lob-assets.com/informed-delivery/infd_234g5324g324g23_ride_along.jpg\",\n  \"representative_image_s3_link\": null,\n  \"status\": \"approved\",\n  \"date_created\": \"2024-08-30T23:30:02.980Z\",\n  \"date_modified\": \"2024-08-30T23:30:05.027Z\",\n  \"mode\": \"live\",\n  \"lob_campaign_id\": null,\n  \"deleted\": false,\n  \"campaign_code\": \"1a1a1a1a-9657-423b-b3c7-2+Code\",\n  \"brand_name\": \"Lob\",\n  \"service_request_number\": null\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "9d32ae9f-9f37-4b9e-99b9-71cfdd2fb91a",
+              "name": "Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "informed_delivery_campaigns",
+                    ":usps_campaign_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "usps_campaign_id",
+                      "description": "(Required) usps_campaign_id of the Informed Delivery campaign"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": \"not_found\",\n    \"message\": \"informed delivery campaign not found\",\n    \"status_code\": 404\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "02fd7330-cf01-4b1f-85d4-f8ac6472d3e0",
+          "name": "Update",
+          "request": {
+            "name": "Update",
+            "description": {
+              "content": "Update the details of an existing Informed Delivery campaign.<br> **NOTE:** you can only update a campaign in the `pending_approval` status.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "informed_delivery_campaigns",
+                ":usps_campaign_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "usps_campaign_id",
+                  "description": "(Required) usps_campaign_id of the Informed Delivery campaign"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "multipart/form-data"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PATCH",
+            "auth": null,
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "quantity",
+                  "value": "<integer>",
+                  "type": "text",
+                  "description": "undefined"
+                },
+                {
+                  "key": "status",
+                  "value": "<string>",
+                  "type": "text",
+                  "description": "undefined"
+                },
+                {
+                  "key": "ride_along_url",
+                  "value": "<string>",
+                  "type": "text",
+                  "description": "undefined"
+                },
+                {
+                  "key": "start_date",
+                  "value": "<date>",
+                  "type": "text",
+                  "description": "undefined"
+                },
+                {
+                  "key": "brand_name",
+                  "value": "<string>",
+                  "type": "text",
+                  "description": "undefined"
+                },
+                {
+                  "key": "usps_title",
+                  "value": "<string>",
+                  "type": "text",
+                  "description": "undefined"
+                },
+                {
+                  "key": "lob_campaign_id",
+                  "value": "<string>",
+                  "type": "text",
+                  "description": "undefined"
+                },
+                {
+                  "key": "ride_along_image",
+                  "value": "<object>",
+                  "type": "text",
+                  "description": "undefined"
+                },
+                {
+                  "key": "representative_image",
+                  "value": "<object>",
+                  "type": "text",
+                  "description": "undefined"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "adc5c146-cd62-44d4-a435-f2dfb198e47d",
+              "name": "Returns an Informed Delivery campaign object",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "informed_delivery_campaigns",
+                    ":usps_campaign_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "usps_campaign_id",
+                      "description": "(Required) usps_campaign_id of the Informed Delivery campaign"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "description": {
+                        "content": "undefined",
+                        "type": "text/plain"
+                      },
+                      "key": "quantity",
+                      "value": "<integer>",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "undefined",
+                        "type": "text/plain"
+                      },
+                      "key": "status",
+                      "value": "<string>",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "undefined",
+                        "type": "text/plain"
+                      },
+                      "key": "ride_along_url",
+                      "value": "<string>",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "undefined",
+                        "type": "text/plain"
+                      },
+                      "key": "start_date",
+                      "value": "<date>",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "undefined",
+                        "type": "text/plain"
+                      },
+                      "key": "brand_name",
+                      "value": "<string>",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "undefined",
+                        "type": "text/plain"
+                      },
+                      "key": "usps_title",
+                      "value": "<string>",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "undefined",
+                        "type": "text/plain"
+                      },
+                      "key": "lob_campaign_id",
+                      "value": "<string>",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "undefined",
+                        "type": "text/plain"
+                      },
+                      "key": "ride_along_image",
+                      "value": "<object>",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "undefined",
+                        "type": "text/plain"
+                      },
+                      "key": "representative_image",
+                      "value": "<object>",
+                      "type": "text"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"infd_234g5324g324g23\",\n  \"object\": \"informed_delivery_campaign\",\n  \"account_id\": \"xxxxxxxxxxxxxxxxxxxx\",\n  \"quantity\": 20,\n  \"usps_campaign_id\": \"1234567890\",\n  \"usps_title\": \"Campaign: 1a1a1a1a-9657-423b-b3c7-2\",\n  \"start_date\": \"2024-08-31T00:00:00.000Z\",\n  \"end_date\": \"2024-10-15T00:00:00.000Z\",\n  \"start_serial\": 3183487,\n  \"end_serial\": 3183506,\n  \"ride_along_url\": \"https://www.lob.com\",\n  \"ride_along_image_s3_link\": \"https://lob-assets.com/informed-delivery/infd_234g5324g324g23_ride_along.jpg\",\n  \"representative_image_s3_link\": null,\n  \"status\": \"approved\",\n  \"date_created\": \"2024-08-30T23:30:02.980Z\",\n  \"date_modified\": \"2024-08-30T23:30:05.027Z\",\n  \"mode\": \"live\",\n  \"lob_campaign_id\": null,\n  \"deleted\": false,\n  \"campaign_code\": \"1a1a1a1a-9657-423b-b3c7-2+Code\",\n  \"brand_name\": \"Lob\",\n  \"service_request_number\": null\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d9d4b61c-76c7-4a60-92df-13ffa9dbe95e",
+              "name": "Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "informed_delivery_campaigns",
+                    ":usps_campaign_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "usps_campaign_id",
+                      "description": "(Required) usps_campaign_id of the Informed Delivery campaign"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "description": {
+                        "content": "undefined",
+                        "type": "text/plain"
+                      },
+                      "key": "quantity",
+                      "value": "<integer>",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "undefined",
+                        "type": "text/plain"
+                      },
+                      "key": "status",
+                      "value": "<string>",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "undefined",
+                        "type": "text/plain"
+                      },
+                      "key": "ride_along_url",
+                      "value": "<string>",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "undefined",
+                        "type": "text/plain"
+                      },
+                      "key": "start_date",
+                      "value": "<date>",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "undefined",
+                        "type": "text/plain"
+                      },
+                      "key": "brand_name",
+                      "value": "<string>",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "undefined",
+                        "type": "text/plain"
+                      },
+                      "key": "usps_title",
+                      "value": "<string>",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "undefined",
+                        "type": "text/plain"
+                      },
+                      "key": "lob_campaign_id",
+                      "value": "<string>",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "undefined",
+                        "type": "text/plain"
+                      },
+                      "key": "ride_along_image",
+                      "value": "<object>",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "undefined",
+                        "type": "text/plain"
+                      },
+                      "key": "representative_image",
+                      "value": "<object>",
+                      "type": "text"
+                    }
+                  ]
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": \"not_found\",\n    \"message\": \"informed delivery campaign not found\",\n    \"status_code\": 404\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "8698e47f-43ae-47ff-9877-50798478daed",
+              "name": "Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "informed_delivery_campaigns",
+                    ":usps_campaign_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "usps_campaign_id",
+                      "description": "(Required) usps_campaign_id of the Informed Delivery campaign"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "description": {
+                        "content": "undefined",
+                        "type": "text/plain"
+                      },
+                      "key": "quantity",
+                      "value": "<integer>",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "undefined",
+                        "type": "text/plain"
+                      },
+                      "key": "status",
+                      "value": "<string>",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "undefined",
+                        "type": "text/plain"
+                      },
+                      "key": "ride_along_url",
+                      "value": "<string>",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "undefined",
+                        "type": "text/plain"
+                      },
+                      "key": "start_date",
+                      "value": "<date>",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "undefined",
+                        "type": "text/plain"
+                      },
+                      "key": "brand_name",
+                      "value": "<string>",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "undefined",
+                        "type": "text/plain"
+                      },
+                      "key": "usps_title",
+                      "value": "<string>",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "undefined",
+                        "type": "text/plain"
+                      },
+                      "key": "lob_campaign_id",
+                      "value": "<string>",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "undefined",
+                        "type": "text/plain"
+                      },
+                      "key": "ride_along_image",
+                      "value": "<object>",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "undefined",
+                        "type": "text/plain"
+                      },
+                      "key": "representative_image",
+                      "value": "<object>",
+                      "type": "text"
+                    }
+                  ]
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": \"invalid\",\n    \"message\": \"quantity must be greater than or equal to 2\",\n    \"status_code\": 422\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.lob.com/v1",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "basic",
+    "basic": [
+      {
+        "key": "username",
+        "value": "{{basicAuthUsername}}"
+      },
+      {
+        "key": "password",
+        "value": "{{basicAuthPassword}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "e4724771-7cc8-42f0-a6ad-88c5cf132e1c",
+    "name": "Lob Usps_campaign_id API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Experience direct mail like never before, with unmatched personalization and scalability \u0014 all in one intuitive platform.\n\nContact Support:\n Name: Lob Developer Experience\n Email: lob-openapi@lob.com",
+      "type": "text/plain"
+    }
+  }
+}

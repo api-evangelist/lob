@@ -1,0 +1,341 @@
+{
+  "item": [
+    {
+      "id": "ce4515bb-4547-448a-8fc0-b3f5d1a1a090",
+      "name": "Ltr_id",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "25bfb370-1e61-4955-ba4e-9d8dfb98a383",
+          "name": "Retrieve",
+          "request": {
+            "name": "Retrieve",
+            "description": {
+              "content": "Retrieves the details of an existing letter. You need only supply the unique letter identifier that was returned upon letter creation.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "letters",
+                ":ltr_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "ltr_id",
+                  "description": "(Required) id of the letter"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "1aea12a8-9922-4c08-a29a-c89e8b8e646b",
+              "name": "Returns a letter object",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "letters",
+                    ":ltr_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "ltr_id",
+                      "description": "(Required) id of the letter"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"ltr_4868c3b754655f90\",\n  \"description\": \"Demo Letter\",\n  \"metadata\": {},\n  \"to\": {\n    \"id\": \"adr_d3489cd64c791ab5\",\n    \"description\": null,\n    \"name\": \"HARRY ZHANG\",\n    \"company\": null,\n    \"phone\": null,\n    \"email\": null,\n    \"address_line1\": \"210 KING ST STE 6100\",\n    \"address_line2\": null,\n    \"address_city\": \"SAN FRANCISCO\",\n    \"address_state\": \"CA\",\n    \"address_zip\": \"94107-1741\",\n    \"address_country\": \"UNITED STATES\",\n    \"metadata\": {},\n    \"date_created\": \"2017-09-05T15:54:53.264Z\",\n    \"date_modified\": \"2017-09-05T15:54:53.264Z\",\n    \"deleted\": true,\n    \"object\": \"address\"\n  },\n  \"from\": {\n    \"id\": \"adr_b8fb5acf3a2b55db\",\n    \"description\": null,\n    \"name\": \"LEORE AVIDAR\",\n    \"company\": null,\n    \"phone\": null,\n    \"email\": null,\n    \"address_line1\": \"210 KING ST STE 6100\",\n    \"address_line2\": null,\n    \"address_city\": \"SAN FRANCISCO\",\n    \"address_state\": \"CA\",\n    \"address_zip\": \"94107-1741\",\n    \"address_country\": \"UNITED STATES\",\n    \"metadata\": {},\n    \"date_created\": \"2017-09-05T15:54:53.264Z\",\n    \"date_modified\": \"2017-09-05T15:54:53.264Z\",\n    \"deleted\": true,\n    \"object\": \"address\"\n  },\n  \"color\": true,\n  \"double_sided\": true,\n  \"address_placement\": \"top_first_page\",\n  \"return_envelope\": false,\n  \"perforated_page\": null,\n  \"custom_envelope\": null,\n  \"extra_service\": null,\n  \"mail_type\": \"usps_first_class\",\n  \"url\": \"https://lob-assets.com/letters/ltr_4868c3b754655f90.pdf?expires=1540372221&signature=8r94fse8uam7wGWmW5baxXulU88X2CA\",\n  \"carrier\": \"USPS\",\n  \"tracking_number\": null,\n  \"tracking_events\": [],\n  \"thumbnails\": [\n    {\n      \"small\": \"https://lob-assets.com/letters/ltr_4868c3b754655f90_thumb_small_1.png?expires=1540372221&signature=a5fRBJ22ZA78Vgpg34M9UfmHWTS3eha\",\n      \"medium\": \"https://lob-assets.com/letters/ltr_4868c3b754655f90_thumb_medium_1.png?expires=1540372221&signature=bAzL8sv935PY09FWSkpDpWKkyvGSWYF\",\n      \"large\": \"https://lob-assets.com/letters/ltr_4868c3b754655f90_thumb_large_1.png?expires=1540372221&signature=gsKvxXgrm4v4iZD3bOibK7jApNkEMdW\"\n    }\n  ],\n  \"merge_variables\": {\n    \"name\": \"Harry\"\n  },\n  \"expected_delivery_date\": \"2017-09-12\",\n  \"date_created\": \"2017-09-05T15:54:53.346Z\",\n  \"date_modified\": \"2017-09-05T15:54:53.346Z\",\n  \"send_date\": \"2017-09-05T15:54:53.346Z\",\n  \"cards\": [\n    {\n      \"id\": \"card_c51ae96f5cebf3e\",\n      \"account_id\": \"fa9ea650fc7b31a89f92\",\n      \"description\": null,\n      \"url\": \"https://lob-assets.com/cards/card_c51ae96f5cebf3e.pdf?version=v1&expires=1636910992&signature=mnsDH2DAxdkN9VibdlLMxJC86sME5WYDqkNtmvGwdNsAaUWfbnv0rJhJ1mR8Ol4uxQq61j5wYZ0r3s-lBkQfDA\",\n      \"size\": \"2.125x3.375\",\n      \"auto_reorder\": false,\n      \"reorder_quantity\": null,\n      \"raw_url\": \"https://lob-assets.com/cards/card_c51ae96f5cebf3e_raw.pdf?version=v1&expires=1636910992&signature=-bZo31FMAp2vmNaZKyXn_Qa4APqwtNinw76FrQ7uyQejFZw6VBQQYfoiQ642iXh0H2K5i2aOo8_BAkt3UJdVDw\",\n      \"front_original_url\": \"https://lob-assets.com/cards/card_c51ae96f5cebf3e_raw.pdf?version=v1&expires=1636910992&signature=-bZo31FMAp2vmNaZKyXn_Qa4APqwtNinw76FrQ7uyQejFZw6VBQQYfoiQ642iXh0H2K5i2aOo8_BAkt3UJdVDw\",\n      \"back_original_url\": \"https://lob-assets.com/cards/card_c51ae96f5cebf3e_raw.pdf?version=v1&expires=1636910992&signature=-bZo31FMAp2vmNaZKyXn_Qa4APqwtNinw76FrQ7uyQejFZw6VBQQYfoiQ642iXh0H2K5i2aOo8_BAkt3UJdVDw\",\n      \"thumbnails\": [\n        {\n          \"small\": \"https://lob-assets.com/cards/card_c51ae96f5cebf3e_thumb_small_1.png?version=v1&expires=1636910992&signature=mrv8JDvpZK4I8WUGH0tPdtK-My5oes0Ltj_gL7BDw96SpCTTeZFHkz81SzclyFP9dQRtlsvAsjcuGcTBvCvOCg\",\n          \"medium\": \"https://lob-assets.com/cards/card_c51ae96f5cebf3e_thumb_medium_1.png?version=v1&expires=1636910992&signature=VgL_2Ckm_kxKiWGgWtdNoy9HHOn8dGYSVOn7UqyCbwdbVlUtx28TRN4Bo8Iru3n0keKp9He0YhKT1ILotznMDA\",\n          \"large\": \"https://lob-assets.com/cards/card_c51ae96f5cebf3e_thumb_large_1.png?version=v1&expires=1636910992&signature=FKSzymA13j-CQ0uk20cGHZTzT3vimzNBYrgp-xifLFg4mMdo1BZALR5O0aF_jVhsX614hKP35ONdYl47TQxXAw\"\n        },\n        {\n          \"small\": \"https://lob-assets.com/cards/card_c51ae96f5cebf3e_thumb_small_2.png?version=v1&expires=1636910992&signature=IWsmPa_ULlv2yyqjX564d_YfHHY_M7i9YxDnw-WXDr2jtOFcArmRZQbnHeE9g_rYxnddJbgosuv8-c2utiu7Cg\",\n          \"medium\": \"https://lob-assets.com/cards/card_c51ae96f5cebf3e_thumb_medium_2.png?version=v1&expires=1636910992&signature=zxK7VKGiTvz5Ywrkaydd0v3GcYf58R7A08J4tNfI7-aiNODDcTF3l0MqY13n9Pyc8RXSdD0XVBY-OpbA1VM-Ag\",\n          \"large\": \"https://lob-assets.com/cards/card_c51ae96f5cebf3e_thumb_large_2.png?version=v1&expires=1636910992&signature=r0OFUhh315ZwN0raMZdIwJd2oCIEYsz0BABaMxIuO1PKTD0ckGWrhcGdzk2dlWQ6vSvp0CUQ5k1RXGqkIIqkDw\"\n        }\n      ],\n      \"available_quantity\": 10000,\n      \"pending_quantity\": 0,\n      \"countries\": null,\n      \"status\": \"rendered\",\n      \"mode\": \"test\",\n      \"orientation\": \"horizontal\",\n      \"threshold_amount\": 0,\n      \"date_created\": \"2017-08-05T15:54:53.346Z\",\n      \"date_modified\": \"2017-08-05T15:54:53.346Z\",\n      \"object\": \"card\"\n    }\n  ],\n  \"use_type\": \"marketing\",\n  \"fsc\": false,\n  \"object\": \"letter\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ee50b053-c126-4c74-b3f9-62b6edb60168",
+              "name": "Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "letters",
+                    ":ltr_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "ltr_id",
+                      "description": "(Required) id of the letter"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": \"not_found\",\n    \"message\": \"to address not found\",\n    \"status_code\": 404\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "a5a3c05d-fa99-4385-9647-a350f15c1afe",
+          "name": "Cancel",
+          "request": {
+            "name": "Cancel",
+            "description": {
+              "content": "Completely removes a letter from production. This can only be done if the letter has a `send_date` and the `send_date` has not yet passed. If the letter is successfully canceled, you will not be charged for it. Read more on [cancellation windows](#section/Cancellation-Windows) and [scheduling](#section/Scheduled-Mailings). Scheduling and cancellation is a premium feature. Upgrade to the appropriate <a href=\"https://dashboard.lob.com/#/settings/editions\" target=\"_blank\">Print & Mail Edition</a> to gain access.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "letters",
+                ":ltr_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "ltr_id",
+                  "description": "(Required) id of the letter"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "448b8cc0-ee99-44d0-89ab-989bc8bde688",
+              "name": "Deleted",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "letters",
+                    ":ltr_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "ltr_id",
+                      "description": "(Required) id of the letter"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"ltr_123456789\",\n  \"deleted\": true\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "23b1d205-d2f3-450e-ad5e-a3135f9ebb4e",
+              "name": "Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "letters",
+                    ":ltr_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "ltr_id",
+                      "description": "(Required) id of the letter"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": \"not_found\",\n    \"message\": \"to address not found\",\n    \"status_code\": 404\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.lob.com/v1",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "basic",
+    "basic": [
+      {
+        "key": "username",
+        "value": "{{basicAuthUsername}}"
+      },
+      {
+        "key": "password",
+        "value": "{{basicAuthPassword}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "8fb15445-06c2-4ceb-83bf-6b8926b010bd",
+    "name": "Lob Ltr_id API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Experience direct mail like never before, with unmatched personalization and scalability \u0014 all in one intuitive platform.\n\nContact Support:\n Name: Lob Developer Experience\n Email: lob-openapi@lob.com",
+      "type": "text/plain"
+    }
+  }
+}

@@ -1,0 +1,63 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Lob Psc_id API",
+    "version": "1.20.2"
+  },
+  "request": {
+    "auth": {
+      "type": "basic",
+      "username": "{{username}}",
+      "password": "{{password}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Psc_id",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Retrieve",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.lob.com/v1/postcards/:psc_id",
+            "params": [
+              {
+                "name": "psc_id",
+                "value": "",
+                "type": "path",
+                "description": "id of the postcard"
+              }
+            ]
+          },
+          "docs": "Retrieves the details of an existing postcard. You need only supply the unique customer identifier that was returned upon postcard creation."
+        },
+        {
+          "info": {
+            "name": "Cancel",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.lob.com/v1/postcards/:psc_id",
+            "params": [
+              {
+                "name": "psc_id",
+                "value": "",
+                "type": "path",
+                "description": "id of the postcard"
+              }
+            ]
+          },
+          "docs": "Completely removes a postcard from production. This can only be done if the postcard has a `send_date` and the `send_date` has not yet passed. If the postcard is successfully canceled, you will not be charged for it. Read more on [cancellation windows](#section/Cancellation-Windows) and [scheduling](#section/Scheduled-Mailings). Scheduling and cancellation is a premium feature. Upgrade to the appropriate <a href=\"https://dashboard.lob.com/#/settings/editions\" target=\"_blank\">Print & Mail Edition"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

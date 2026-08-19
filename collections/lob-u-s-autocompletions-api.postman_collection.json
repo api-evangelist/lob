@@ -1,0 +1,352 @@
+{
+  "item": [
+    {
+      "id": "b6d9c630-3c00-4302-85b3-423459465fd5",
+      "name": "U S  Autocompletions",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "5c978eb4-d539-4539-b187-c85816dc0915",
+          "name": "Autocomplete",
+          "request": {
+            "name": "Autocomplete",
+            "description": {
+              "content": "Given an address prefix consisting of a partial primary line, as well as optional input of city, state, and zip code, this functionality returns up to 10 full US address suggestions. Not all of them will turn out to be valid addresses; they'll need to be [verified](#operation/verification_us).",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "us_autocompletions"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "case",
+                  "value": "upper",
+                  "description": "Casing of the verified address. Possible values are `upper` and `proper` for uppercased (e.g. \"PO BOX\") and proper-cased (e.g. \"PO Box\"), respectively. Only affects `primary_line`, `city`, and `state`. Default casing is `upper`."
+                },
+                {
+                  "disabled": false,
+                  "key": "valid_addresses",
+                  "value": "false",
+                  "description": "Possible values are `true` and `false`. If false, not all of the suggestions in the response will be valid addresses; they'll need to be verified in order to determine the deliverability. The valid_addresses flag will greatly reduce the number of keystrokes needed before reaching an intended address."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/x-www-form-urlencoded"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": [
+                {
+                  "disabled": false,
+                  "key": "address_prefix",
+                  "value": "<string>",
+                  "description": "(Required) Only accepts numbers and street names in an alphanumeric format.\n"
+                },
+                {
+                  "disabled": false,
+                  "key": "city",
+                  "value": "<string>",
+                  "description": "An optional city input used to filter suggestions. Case insensitive and does not match partial abbreviations.\n"
+                },
+                {
+                  "disabled": false,
+                  "key": "state",
+                  "value": "<string>",
+                  "description": "An optional state input used to filter suggestions. Case insensitive and does not match partial abbreviations.\n"
+                },
+                {
+                  "disabled": false,
+                  "key": "zip_code",
+                  "value": "<string>",
+                  "description": "An optional ZIP Code input used to filter suggestions. Matches partial entries.\n"
+                },
+                {
+                  "disabled": false,
+                  "key": "geo_ip_sort",
+                  "value": "<boolean>",
+                  "description": "If `true`, sort suggestions by proximity to the IP set in the `X-Forwarded-For` header.\n"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "6d9ed67e-7d57-4413-a298-f721f30a8eb3",
+              "name": "Returns a US autocompletion object.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "us_autocompletions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "case",
+                      "value": "upper"
+                    },
+                    {
+                      "key": "valid_addresses",
+                      "value": "false"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) Only accepts numbers and street names in an alphanumeric format.\n",
+                        "type": "text/plain"
+                      },
+                      "key": "address_prefix",
+                      "value": "185 B"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "An optional city input used to filter suggestions. Case insensitive and does not match partial abbreviations.\n",
+                        "type": "text/plain"
+                      },
+                      "key": "city",
+                      "value": "San Francisco"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "An optional state input used to filter suggestions. Case insensitive and does not match partial abbreviations.\n",
+                        "type": "text/plain"
+                      },
+                      "key": "state",
+                      "value": "CA"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "An optional ZIP Code input used to filter suggestions. Matches partial entries.\n",
+                        "type": "text/plain"
+                      },
+                      "key": "zip_code",
+                      "value": "94107"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "If `true`, sort suggestions by proximity to the IP set in the `X-Forwarded-For` header.\n",
+                        "type": "text/plain"
+                      },
+                      "key": "geo_ip_sort",
+                      "value": "false"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "disabled": false,
+                  "description": "The rate limit for a given endpoint.",
+                  "key": "ratelimit-limit",
+                  "value": "150"
+                },
+                {
+                  "disabled": false,
+                  "description": "The number of requests remaining in the current window.",
+                  "key": "ratelimit-remaining",
+                  "value": "100"
+                },
+                {
+                  "disabled": false,
+                  "description": "The time at which the rate limit window resets in  <a href=\"https://en.wikipedia.org/wiki/Unix_time\" target=\"_blank\">UTC epoch seconds</a>\n",
+                  "key": "ratelimit-reset",
+                  "value": "1528749846"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"us_auto_a3ac97bcfbb2460ab20c\",\n  \"suggestions\": [\n    {\n      \"primary_line\": \"185 BAYSIDE VILLAGE PL\",\n      \"city\": \"SAN FRANCISCO\",\n      \"state\": \"CA\",\n      \"zip_code\": \"94107\"\n    },\n    {\n      \"primary_line\": \"185 BRANNAN ST\",\n      \"city\": \"SAN FRANCISCO\",\n      \"state\": \"CA\",\n      \"zip_code\": \"94107\"\n    },\n    {\n      \"primary_line\": \"185 BONIFACIO ST\",\n      \"city\": \"SAN FRANCISCO\",\n      \"state\": \"CA\",\n      \"zip_code\": \"94107\"\n    },\n    {\n      \"primary_line\": \"185 BLAIR TER\",\n      \"city\": \"SAN FRANCISCO\",\n      \"state\": \"CA\",\n      \"zip_code\": \"94107\"\n    },\n    {\n      \"primary_line\": \"185 BLUXOME ST\",\n      \"city\": \"SAN FRANCISCO\",\n      \"state\": \"CA\",\n      \"zip_code\": \"94107\"\n    },\n    {\n      \"primary_line\": \"210 KING ST\",\n      \"city\": \"SAN FRANCISCO\",\n      \"state\": \"CA\",\n      \"zip_code\": \"94107\"\n    },\n    {\n      \"primary_line\": \"185 BRYANT ST\",\n      \"city\": \"SAN FRANCISCO\",\n      \"state\": \"CA\",\n      \"zip_code\": \"94107\"\n    }\n  ],\n  \"object\": \"us_autocompletion\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a70599a7-e905-4ee1-aafd-61e2d51df9c3",
+              "name": "Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "us_autocompletions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "case",
+                      "value": "upper"
+                    },
+                    {
+                      "key": "valid_addresses",
+                      "value": "false"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) Only accepts numbers and street names in an alphanumeric format.\n",
+                        "type": "text/plain"
+                      },
+                      "key": "address_prefix",
+                      "value": "185 B"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "An optional city input used to filter suggestions. Case insensitive and does not match partial abbreviations.\n",
+                        "type": "text/plain"
+                      },
+                      "key": "city",
+                      "value": "San Francisco"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "An optional state input used to filter suggestions. Case insensitive and does not match partial abbreviations.\n",
+                        "type": "text/plain"
+                      },
+                      "key": "state",
+                      "value": "CA"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "An optional ZIP Code input used to filter suggestions. Matches partial entries.\n",
+                        "type": "text/plain"
+                      },
+                      "key": "zip_code",
+                      "value": "94107"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "If `true`, sort suggestions by proximity to the IP set in the `X-Forwarded-For` header.\n",
+                        "type": "text/plain"
+                      },
+                      "key": "geo_ip_sort",
+                      "value": "false"
+                    }
+                  ]
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": \"invalid\",\n    \"message\": \"address_prefix is required\",\n    \"status_code\": 422\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.lob.com/v1",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "basic",
+    "basic": [
+      {
+        "key": "username",
+        "value": "{{basicAuthUsername}}"
+      },
+      {
+        "key": "password",
+        "value": "{{basicAuthPassword}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "5a10f50a-2204-402d-af37-b3f71ee569a5",
+    "name": "Lob U S  Autocompletions API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Experience direct mail like never before, with unmatched personalization and scalability \u0014 all in one intuitive platform.\n\nContact Support:\n Name: Lob Developer Experience\n Email: lob-openapi@lob.com",
+      "type": "text/plain"
+    }
+  }
+}

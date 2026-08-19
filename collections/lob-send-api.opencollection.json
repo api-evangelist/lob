@@ -1,0 +1,44 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Lob Send API",
+    "version": "1.20.2"
+  },
+  "request": {
+    "auth": {
+      "type": "basic",
+      "username": "{{username}}",
+      "password": "{{password}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Send",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Send Campaign",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.lob.com/v1/campaigns/:cmp_id/send",
+            "params": [
+              {
+                "name": "cmp_id",
+                "value": "",
+                "type": "path",
+                "description": "id of the campaign"
+              }
+            ]
+          },
+          "docs": "Sends a campaign. You need only supply the unique campaign identifier that was returned upon campaign creation."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

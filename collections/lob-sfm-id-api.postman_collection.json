@@ -1,0 +1,341 @@
+{
+  "item": [
+    {
+      "id": "571d3f4b-cd90-47db-82fc-4aef08cc8ad7",
+      "name": "Sfm_id",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "1d64570b-e574-403b-91d2-ce9862efa4d0",
+          "name": "Retrieve",
+          "request": {
+            "name": "Retrieve",
+            "description": {
+              "content": "Retrieves the details of an existing self_mailer. You need only supply the unique self_mailer identifier that was returned upon self_mailer creation.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "self_mailers",
+                ":sfm_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "sfm_id",
+                  "description": "(Required) id of the self_mailer"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "f4356070-f592-4cc8-9b0f-60f9c230193e",
+              "name": "Returns a self_mailer object",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "self_mailers",
+                    ":sfm_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "sfm_id",
+                      "description": "(Required) id of the self_mailer"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"sfm_8ffbe811dea49dcf\",\n  \"description\": \"April Campaign\",\n  \"metadata\": {},\n  \"to\": {\n    \"id\": \"adr_bae820679f3f536b\",\n    \"description\": null,\n    \"name\": \"HARRY ZHANG\",\n    \"company\": null,\n    \"phone\": null,\n    \"email\": null,\n    \"address_line1\": \"210 KING ST STE 6100\",\n    \"address_line2\": null,\n    \"address_city\": \"SAN FRANCISCO\",\n    \"address_state\": \"CA\",\n    \"address_zip\": \"94107-1741\",\n    \"address_country\": \"UNITED STATES\",\n    \"metadata\": {},\n    \"date_created\": \"2017-09-05T17:47:53.767Z\",\n    \"date_modified\": \"2017-09-05T17:47:53.767Z\",\n    \"deleted\": true,\n    \"object\": \"address\"\n  },\n  \"from\": {\n    \"id\": \"adr_210a8d4b0b76d77b\",\n    \"description\": null,\n    \"name\": \"LEORE AVIDAR\",\n    \"company\": null,\n    \"phone\": null,\n    \"email\": null,\n    \"address_line1\": \"210 KING ST STE 6100\",\n    \"address_line2\": null,\n    \"address_city\": \"SAN FRANCISCO\",\n    \"address_state\": \"CA\",\n    \"address_zip\": \"94107-1741\",\n    \"address_country\": \"UNITED STATES\",\n    \"metadata\": {},\n    \"date_created\": \"2017-09-05T17:47:53.767Z\",\n    \"date_modified\": \"2017-09-05T17:47:53.767Z\",\n    \"deleted\": true,\n    \"object\": \"address\"\n  },\n  \"url\": \"https://lob-assets.com/self-mailers/sfm_8ffbe811dea49dcf.pdf?version=v1&expires=1618512040&signature=qvyCqXI1ndBvc4AjvG8FlirqLXEcfmYo4sDrRtabaXMOsX88to9G3K49uIk_aqevvZXe8HoRYD_nWydbQHqaCA\",\n  \"outside_template_id\": \"tmpl_a3cb937f26d7eec\",\n  \"inside_template_id\": \"tmpl_a3cb937f26d7eec\",\n  \"inside_template_version_id\": \"vrsn_bfdf70893b00a85\",\n  \"outside_template_version_id\": \"vrsn_bfdf70893b00a85\",\n  \"carrier\": \"USPS\",\n  \"tracking_events\": [],\n  \"thumbnails\": [\n    {\n      \"small\": \"https://lob-assets.com/self-mailers/sfm_8ffbe811dea49dcf_thumb_small_1.png?version=v1&expires=1618512040&signature=-bipeUHP-hAMcCBSrWM0ZH1VwRdSPNVGGZN9hAZKr6Lh4ly6uxvratVd5LXJCK_zOEMYk_mTWASt0ge7OY6SDA\",\n      \"medium\": \"https://lob-assets.com/self-mailers/sfm_8ffbe811dea49dcf_thumb_medium_1.png?version=v1&expires=1618512040&signature=ryxN7bsXGtw_GRFSP3Cs3A3IYjxZi3cW9BHDCNgMt6p3nobVmsc_iFHt2e-S7ndAXhhN7nP-MQVov3bt3r37BQ\",\n      \"large\": \"https://lob-assets.com/self-mailers/sfm_8ffbe811dea49dcf_thumb_large_1.png?version=v1&expires=1618512040&signature=kBrm00xkyCkJNJRHxH8HshFaebtOxnzjVWOs1VVmGMuw8H6OBNcMAMxt9s49K0jlpHoh3Nr9uSncEZMQaaNjAg\"\n    },\n    {\n      \"small\": \"https://lob-assets.com/self-mailers/sfm_8ffbe811dea49dcf_thumb_small_2.png?version=v1&expires=1618512040&signature=3gTgU7Fd3KoT_vNlQnTGptRps5ZgnkhSnPrAwk7L98higIzSwfKoLvuu_DIpMM48dHbxckKT9waR8euJ4KSDBQ\",\n      \"medium\": \"https://lob-assets.com/self-mailers/sfm_8ffbe811dea49dcf_thumb_medium_2.png?version=v1&expires=1618512040&signature=Ue1lw5CMj7KRx6cMQL8xPeazaHCdJzWcACd1w3acuYPnWkVIpSt62OIO7hAtpAQK9xm1dhhlFj0rqRZMdRMMBA\",\n      \"large\": \"https://lob-assets.com/self-mailers/sfm_8ffbe811dea49dcf_thumb_large_2.png?version=v1&expires=1618512040&signature=cICc7HEm1xG_eyM4a_wtvPk2FqoLRmtgGa29kJisWnMIYBL0OkyzG4ZCYGMhp-5cZpJlSpXfTgGKh_Qmeo1TDw\"\n    }\n  ],\n  \"merge_variables\": {\n    \"name\": null\n  },\n  \"size\": \"6x18_bifold\",\n  \"mail_type\": \"usps_first_class\",\n  \"expected_delivery_date\": \"2021-03-24\",\n  \"date_created\": \"2021-03-16T18:40:40.504Z\",\n  \"date_modified\": \"2021-03-16T18:40:40.504Z\",\n  \"send_date\": \"2021-03-16T18:45:40.493Z\",\n  \"use_type\": \"marketing\",\n  \"fsc\": false,\n  \"object\": \"self_mailer\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "80e60236-0d30-43bc-b20d-59cdd66969ae",
+              "name": "Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "self_mailers",
+                    ":sfm_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "sfm_id",
+                      "description": "(Required) id of the self_mailer"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": \"not_found\",\n    \"message\": \"to address not found\",\n    \"status_code\": 404\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "1db7558f-1b47-43f2-a56a-1a35e5b90366",
+          "name": "Delete",
+          "request": {
+            "name": "Delete",
+            "description": {
+              "content": "Completely removes a self mailer from production. This can only be done if the self mailer's `send_date` has not yet passed. If the self mailer is successfully canceled, you will not be charged for it. This feature is exclusive to certain customers. Upgrade to the appropriate <a href=\"https://dashboard.lob.com/#/settings/editions\" target=\"_blank\">Print & Mail Edition</a> to gain access.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "self_mailers",
+                ":sfm_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "sfm_id",
+                  "description": "(Required) id of the self_mailer"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "e356cc3f-e594-4979-8d16-b779c295b01c",
+              "name": "Deleted",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "self_mailers",
+                    ":sfm_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "sfm_id",
+                      "description": "(Required) id of the self_mailer"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"sfm_123456789\",\n  \"deleted\": true\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "437b974b-fefd-4e25-9929-ab4e49b80512",
+              "name": "Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "self_mailers",
+                    ":sfm_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "sfm_id",
+                      "description": "(Required) id of the self_mailer"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": \"not_found\",\n    \"message\": \"to address not found\",\n    \"status_code\": 404\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.lob.com/v1",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "basic",
+    "basic": [
+      {
+        "key": "username",
+        "value": "{{basicAuthUsername}}"
+      },
+      {
+        "key": "password",
+        "value": "{{basicAuthPassword}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "89b237ee-1ad5-4ed1-91c5-934056a3ceb2",
+    "name": "Lob Sfm_id API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Experience direct mail like never before, with unmatched personalization and scalability \u0014 all in one intuitive platform.\n\nContact Support:\n Name: Lob Developer Experience\n Email: lob-openapi@lob.com",
+      "type": "text/plain"
+    }
+  }
+}

@@ -1,0 +1,829 @@
+{
+  "item": [
+    {
+      "id": "8f4fd6d9-1359-426a-8f6e-54dabae4048d",
+      "name": "U R L  Shortener",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "4aa15439-ea67-4457-a30a-5871f9e269af",
+          "name": "Retrieve a domain",
+          "request": {
+            "name": "Retrieve a domain",
+            "description": {
+              "content": "Retrieve details for a single domain.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "domains",
+                ":domain_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "domain_id",
+                  "description": "(Required) Unique identifier for a domain."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "9793b135-e535-4010-8be4-ed42e90454c3",
+              "name": "Returns domain related details.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "domains",
+                    ":domain_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "domain_id",
+                      "description": "(Required) Unique identifier for a domain."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"string\",\n  \"domain\": \"string\",\n  \"error_redirect_link\": \"string\",\n  \"status\": \"configured\",\n  \"created_at\": \"string\",\n  \"updated_at\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "1313e9ed-ff7b-4806-8348-8584ba9490a9",
+              "name": "Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "domains",
+                    ":domain_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "domain_id",
+                      "description": "(Required) Unique identifier for a domain."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"Rate limit exceeded. Please wait 5 seconds and try your request again.\",\n    \"status_code\": 401,\n    \"code\": \"unsupported_lob_version\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "1e224c46-7b01-4b40-98be-820198952737",
+          "name": "Delete a Domain",
+          "request": {
+            "name": "Delete a Domain",
+            "description": {
+              "content": "Delete a registered domain. This operation can only be performed if all associated links with the domain are deleted.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "domains",
+                ":domain_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "domain_id",
+                  "description": "(Required) Unique identifier for a domain."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "f3220496-5571-4cbd-8512-7bdac9bc0c2c",
+              "name": "Returns the deleted link object.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "domains",
+                    ":domain_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "domain_id",
+                      "description": "(Required) Unique identifier for a domain."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"string\",\n  \"deleted\": true\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f1b7e697-638c-4b31-adf1-db2f17c02b93",
+              "name": "Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "domains",
+                    ":domain_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "domain_id",
+                      "description": "(Required) Unique identifier for a domain."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"Rate limit exceeded. Please wait 5 seconds and try your request again.\",\n    \"status_code\": 401,\n    \"code\": \"unsupported_lob_version\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "521603a2-8383-4835-be82-60915db30e30",
+          "name": "Retrieve a link",
+          "request": {
+            "name": "Retrieve a link",
+            "description": {
+              "content": "Retrieves a single shortened link.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "links",
+                ":link_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "link_id",
+                  "description": "(Required) Unique identifier for a link."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "d6699a76-2ead-4974-a9e0-449180642672",
+              "name": "Returns a single link.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "links",
+                    ":link_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "link_id",
+                      "description": "(Required) Unique identifier for a link."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"string\",\n  \"title\": \"string\",\n  \"domain_id\": \"string\",\n  \"redirect_link\": \"string\",\n  \"short_link\": \"string\",\n  \"metadata\": \"phsb,lj[juD2Fu+4x0%wBz~GQbubf/zKm>zmt./8Aq_KioqgdaqT>t`JOOgFxK<jvNGNWgvV V`'M]lewgt7[[Q$Rcak[lzbm9`[1|)(w_hv<d+R#Mmq3|egBwIhh1F9=+XfOZhK{sji8^1rsPS)aR|UoBD/;<v*<4OaB:qLT5WBe=znQlrpy2$m<LvQ6,xx{k7~Sq~bg]|j`c\",\n  \"created_at\": \"string\",\n  \"updated_at\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "eaec36e5-d9a5-468a-a238-f0790d107a43",
+              "name": "Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "links",
+                    ":link_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "link_id",
+                      "description": "(Required) Unique identifier for a link."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"Rate limit exceeded. Please wait 5 seconds and try your request again.\",\n    \"status_code\": 401,\n    \"code\": \"unsupported_lob_version\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "695ae621-2c5e-499e-a4d1-1b5a88e89f96",
+          "name": "Update a Link",
+          "request": {
+            "name": "Update a Link",
+            "description": {
+              "content": "Update any of the properties of a shortened link.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "links",
+                ":link_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "link_id",
+                  "description": "(Required) Unique identifier for a link."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/x-www-form-urlencoded"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PATCH",
+            "auth": null,
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": [
+                {
+                  "disabled": false,
+                  "key": "redirect_link",
+                  "value": "<string>",
+                  "description": "(Required) "
+                },
+                {
+                  "disabled": false,
+                  "key": "title",
+                  "value": "<string>",
+                  "description": "The title of the URL."
+                },
+                {
+                  "disabled": false,
+                  "key": "metadata",
+                  "value": "d.7#=gM+i0Vv}&TXSd7)%m<+,1sqe@5=wrPprpEoP`nXqx/KSYVH0$+}^+(sJe+uhEU/1RQo$V6$H!a|{7cYj>4gVmc}E>PjdNt3&4BK/79CM{8s.'`gW9Bs[k#jiHSxU.CyELy9y``3cCi5RVeKWp?:L`~(Lek?)=v[(++'r$|F8UTKB&??}`;$A!/`s4MpR;Wu:v,%[)sY7.yFGky(;Pwee$t`az:zCS-OC|sRYiA}p2_0S<{VCLPP~cfS:NyJv?z&x[A53Zh`pM"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "cf6c0694-013a-407e-82c8-36ac2388557b",
+              "name": "Returns the updated link.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "links",
+                    ":link_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "link_id",
+                      "description": "(Required) Unique identifier for a link."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "disabled": false,
+                      "key": "resource_id",
+                      "value": "ltr_133"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"string\",\n  \"title\": \"string\",\n  \"domain_id\": \"string\",\n  \"redirect_link\": \"<string>\",\n  \"short_link\": \"string\",\n  \"metadata\": \"w(yE)e)YM;-`Mn5U{-) O/]Gf+?7N][unHozX5A07L1IB<C$*R.s7gV'B%7B[p61~VhI^3Gi*<Yy^w-;Jdsd?1vU~(r0{g*ax-ao~N>;tzQ T|zdUCd-|4JsQ0Nx=F%S).N99o`p#`Y[[Czm)1N=T2'BgrK-oa^<i7$R@n097*j)p+( E_runHV8%pt29 U`,7wA0^JF0w*G(v]tfqP=U0cAqdn]T'4KSy,]ph@=LWTom}d/`h%Eyz1,P*pFnN#1xAbx]zc;:A$ZY5.kNu;h1}Cw|A;gek_jZ%A(K&7-{c@>08-Nh!58ml2&R2Vx<kQ*!`jpb!]T=mi6Y.f[2phlW xQx9gZ!Vqqbn\",\n  \"created_at\": \"string\",\n  \"updated_at\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c829ff5e-70a5-4d92-9179-5e7ea33a2c78",
+              "name": "Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "links",
+                    ":link_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "link_id",
+                      "description": "(Required) Unique identifier for a link."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "disabled": false,
+                      "key": "resource_id",
+                      "value": "ltr_133"
+                    }
+                  ]
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": \"invalid\",\n    \"message\": \"redirect_link is required\",\n    \"status_code\": 422\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "e2a8cad2-54f5-49ed-a918-ea6ed5a681c1",
+          "name": "Delete Link",
+          "request": {
+            "name": "Delete Link",
+            "description": {
+              "content": "Delete the shortened link.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "links",
+                ":link_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "link_id",
+                  "description": "(Required) Unique identifier for a link."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "7c5655bd-eb29-440b-ab04-5b1ee7a829e6",
+              "name": "Returns the deleted short link object",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "links",
+                    ":link_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "link_id",
+                      "description": "(Required) Unique identifier for a link."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"string\",\n  \"deleted\": false\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "20da9566-c39f-4d3a-84a3-d1f8ba34dfbc",
+              "name": "Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "links",
+                    ":link_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "link_id",
+                      "description": "(Required) Unique identifier for a link."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"message\": \"Rate limit exceeded. Please wait 5 seconds and try your request again.\",\n    \"status_code\": 401,\n    \"code\": \"unsupported_lob_version\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.lob.com/v1",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "basic",
+    "basic": [
+      {
+        "key": "username",
+        "value": "{{basicAuthUsername}}"
+      },
+      {
+        "key": "password",
+        "value": "{{basicAuthPassword}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "e506912c-3f6c-4546-ac5c-b146f7e5c9bd",
+    "name": "Lob U R L  Shortener API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Experience direct mail like never before, with unmatched personalization and scalability \u0014 all in one intuitive platform.\n\nContact Support:\n Name: Lob Developer Experience\n Email: lob-openapi@lob.com",
+      "type": "text/plain"
+    }
+  }
+}

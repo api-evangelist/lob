@@ -1,0 +1,138 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Lob Links API",
+    "version": "1.20.2"
+  },
+  "request": {
+    "auth": {
+      "type": "basic",
+      "username": "{{username}}",
+      "password": "{{password}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Links",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Retrieve a link",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.lob.com/v1/links/:link_id",
+            "params": [
+              {
+                "name": "link_id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier for a link."
+              }
+            ]
+          },
+          "docs": "Retrieves a single shortened link."
+        },
+        {
+          "info": {
+            "name": "Update a Link",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.lob.com/v1/links/:link_id",
+            "params": [
+              {
+                "name": "link_id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier for a link."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update any of the properties of a shortened link."
+        },
+        {
+          "info": {
+            "name": "Delete Link",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.lob.com/v1/links/:link_id",
+            "params": [
+              {
+                "name": "link_id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier for a link."
+              }
+            ]
+          },
+          "docs": "Delete the shortened link."
+        },
+        {
+          "info": {
+            "name": "List all links",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.lob.com/v1/links",
+            "params": [
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "How many results to return."
+              },
+              {
+                "name": "before/after",
+                "value": "",
+                "type": "query",
+                "description": "`before` and `after` are both optional but only one of them can be in the query at a time.\n"
+              },
+              {
+                "name": "campaign_id",
+                "value": "",
+                "type": "query",
+                "description": "Filters resources created by the provided campaign id, prefixed with `cmp_`. In the case of snap packs, booklets, and letters with size `us_legal`, however, the campaign id is prefixed with `camp_` instead of `cmp_`."
+              },
+              {
+                "name": "domain_id",
+                "value": "",
+                "type": "query",
+                "description": "Filters links by the provided domain id."
+              }
+            ]
+          },
+          "docs": "Retrieves a list of shortened links. The list is sorted by  creation date, with the most recently created appearing first."
+        },
+        {
+          "info": {
+            "name": "Create Link",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.lob.com/v1/links",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Given a long URL, shorten your URL either by using a custom domain or Lob's own short domain."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

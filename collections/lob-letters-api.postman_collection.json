@@ -1,0 +1,1085 @@
+{
+  "item": [
+    {
+      "id": "d86b41f8-8b7d-4547-9fcc-406c56f3fbcc",
+      "name": "Letters",
+      "description": {
+        "content": "The letters endpoint allows you to easily print and mail letters. The API provides endpoints for\ncreating letters, retrieving individual letters, canceling letters, and retrieving a list of letters.\n<div class=\"back-to-top\" ><a href=\"#\" onclick=\"toTopLink()\">back to top</a></div>\n",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "4909935e-c286-47b6-8d0a-f84d0e49006b",
+          "name": "List",
+          "request": {
+            "name": "List",
+            "description": {
+              "content": "Returns a list of your letters. The letters are returned sorted by creation date, with the most recently created letters appearing first.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "letters"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "10",
+                  "description": "How many results to return."
+                },
+                {
+                  "disabled": false,
+                  "key": "before",
+                  "value": "<string>",
+                  "description": "`before` and `after` are both optional but only one of them can be in the query at a time.\n"
+                },
+                {
+                  "disabled": false,
+                  "key": "after",
+                  "value": "<string>",
+                  "description": "`before` and `after` are both optional but only one of them can be in the query at a time.\n"
+                },
+                {
+                  "disabled": false,
+                  "key": "include",
+                  "value": "<string>",
+                  "description": "Request that the response include the total count by specifying `include=[\"total_count\"]`.\n"
+                },
+                {
+                  "disabled": false,
+                  "key": "include",
+                  "value": "<string>",
+                  "description": "Request that the response include the total count by specifying `include=[\"total_count\"]`.\n"
+                },
+                {
+                  "disabled": false,
+                  "key": "date_created[key_0]",
+                  "value": "<string>",
+                  "description": "Filter by date created. Accepted formats are ISO-8601 date or datetime, e.g. `{ \"gt\": \"2012-01-01\", \"lt\": \"2012-01-31T12:34:56Z\" }` where `gt` is >, `lt` is <, `gte` is e, and `lte` is d."
+                },
+                {
+                  "disabled": false,
+                  "key": "date_created[key_1]",
+                  "value": "<string>",
+                  "description": "Filter by date created. Accepted formats are ISO-8601 date or datetime, e.g. `{ \"gt\": \"2012-01-01\", \"lt\": \"2012-01-31T12:34:56Z\" }` where `gt` is >, `lt` is <, `gte` is e, and `lte` is d."
+                },
+                {
+                  "disabled": false,
+                  "key": "date_created[key_2]",
+                  "value": "<string>",
+                  "description": "Filter by date created. Accepted formats are ISO-8601 date or datetime, e.g. `{ \"gt\": \"2012-01-01\", \"lt\": \"2012-01-31T12:34:56Z\" }` where `gt` is >, `lt` is <, `gte` is e, and `lte` is d."
+                },
+                {
+                  "disabled": false,
+                  "key": "campaign_id",
+                  "value": "<string>",
+                  "description": "Filters resources created by the provided campaign id, prefixed with `cmp_`. In the case of snap packs, booklets, and letters with size `us_legal`, however, the campaign id is prefixed with `camp_` instead of `cmp_`."
+                },
+                {
+                  "disabled": false,
+                  "key": "status",
+                  "value": "<string>",
+                  "description": "A string describing the render status:\n* `processed` - the rendering process is currently underway.\n* `rendered` - the rendering process has completed successfully.\n* `failed` - the rendering process has failed.\n"
+                },
+                {
+                  "disabled": false,
+                  "key": "color",
+                  "value": "<boolean>",
+                  "description": "Set to `true` to return only color letters. Set to `false` to return only black & white letters."
+                },
+                {
+                  "disabled": false,
+                  "key": "scheduled",
+                  "value": "<boolean>",
+                  "description": "* `true` - only return orders (past or future) where `send_date` is\ngreater than `date_created`\n* `false` - only return orders where `send_date` is equal to `date_created`\n"
+                },
+                {
+                  "disabled": false,
+                  "key": "mail_type",
+                  "value": "usps_first_class",
+                  "description": "A string designating the mail postage type: * `usps_first_class` - (default) * `usps_standard` - a <a href=\"https://lob.com/pricing/print-mail#compare\" target=\"_blank\">cheaper option</a> which is less predictable and takes longer to deliver. `usps_standard` cannot be used with `4x6` postcards or for any postcards sent outside of the United States.\n"
+                },
+                {
+                  "disabled": false,
+                  "key": "date_created",
+                  "value": "<string>",
+                  "description": "Sorts items by ascending or descending dates. Use either `date_created` or `send_date`, not both.\n"
+                },
+                {
+                  "disabled": false,
+                  "key": "send_date",
+                  "value": "<string>",
+                  "description": "Sorts items by ascending or descending dates. Use either `date_created` or `send_date`, not both.\n"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "942f39ef-2ae7-40e9-a7c8-dbcc91aa9c1f",
+              "name": "A dictionary with a data property that contains an array of up to `limit` letters. Each entry in the array is a separate letter. The previous and next page of letters can be retrieved by calling the endpoint contained in the `previous_url` and `next_url` fields in the API response respectively. If no more letters are available beyond the current set of returned results, the `next_url` field will be empty.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "letters"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "limit",
+                      "value": "10"
+                    },
+                    {
+                      "key": "before",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "after",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "include",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "include",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "date_created[key_0]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "date_created[key_1]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "campaign_id",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "status",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "color",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "scheduled",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "mail_type",
+                      "value": "usps_first_class"
+                    },
+                    {
+                      "key": "date_created",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "send_date",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": [\n    {\n      \"id\": \"ltr_5ba44b462c79f07c\",\n      \"description\": \"Demo Letter\",\n      \"metadata\": {},\n      \"to\": {\n        \"id\": \"adr_asdi2y3riuasasoi\",\n        \"description\": \"Harry - Office\",\n        \"name\": \"Harry Zhang\",\n        \"company\": \"Lob\",\n        \"phone\": \"5555555555\",\n        \"email\": \"harry@lob.com\",\n        \"metadata\": {},\n        \"address_line1\": \"370 WATER ST\",\n        \"address_line2\": \"\",\n        \"address_city\": \"SUMMERSIDE\",\n        \"address_state\": \"PRINCE EDWARD ISLAND\",\n        \"address_zip\": \"C1N 1C4\",\n        \"address_country\": \"CANADA\",\n        \"recipient_moved\": false,\n        \"date_created\": \"2019-09-20T00:14:00.361Z\",\n        \"date_modified\": \"2019-09-20T00:14:00.361Z\",\n        \"object\": \"address\"\n      },\n      \"from\": {\n        \"id\": \"adr_210a8d4b0b76d77b\",\n        \"description\": null,\n        \"name\": \"LEORE AVIDAR\",\n        \"company\": null,\n        \"phone\": null,\n        \"email\": null,\n        \"address_line1\": \"210 KING ST STE 6100\",\n        \"address_line2\": null,\n        \"address_city\": \"SAN FRANCISCO\",\n        \"address_state\": \"CA\",\n        \"address_zip\": \"94107-1741\",\n        \"address_country\": \"UNITED STATES\",\n        \"metadata\": {},\n        \"date_created\": \"2018-12-08T03:01:07.651Z\",\n        \"date_modified\": \"2018-12-08T03:01:07.651Z\",\n        \"object\": \"address\"\n      },\n      \"color\": true,\n      \"double_sided\": false,\n      \"address_placement\": \"top_first_page\",\n      \"return_envelope\": false,\n      \"perforated_page\": null,\n      \"extra_service\": \"certified\",\n      \"custom_envelope\": null,\n      \"template_id\": \"tmpl_a\",\n      \"template_version_id\": \"vrsn_a\",\n      \"mail_type\": \"usps_first_class\",\n      \"url\": \"https://lob-assets.com/letters/ltr_5ba44b462c79f07c.pdf?version=v1&expires=1568239830&signature=Ob-DUPLJLM4scWQeCDNadPJ4j33MZw16pykOxwv2us-bA7utTYi6oZ8WrEtBYDBBo09XkapR3gdJf0NEr90xAA\",\n      \"merge_variables\": null,\n      \"carrier\": \"USPS\",\n      \"tracking_number\": \"92071902358909000011275538\",\n      \"tracking_events\": [\n        {\n          \"id\": \"evnt_9e84094c9368cfb\",\n          \"type\": \"certified\",\n          \"name\": \"Delivered\",\n          \"details\": {\n            \"event\": \"delivered\",\n            \"description\": \"Package has been delivered.\",\n            \"notes\": \"Delivered, Front Desk/Reception/Mail Room\",\n            \"action_required\": false\n          },\n          \"location\": \"33408\",\n          \"time\": \"2019-10-08T19:41:00Z\",\n          \"date_created\": \"2019-10-08T19:41:00Z\",\n          \"date_modified\": \"2019-10-08T19:41:00Z\",\n          \"object\": \"tracking_event\"\n        }\n      ],\n      \"thumbnails\": [\n        {\n          \"small\": \"https://lob-assets.com/letters/ltr_5ba44b462c79f07c_thumb_small_1.png?version=v1&expires=1568239830&signature=xZUmE8rq8wSECHPEb9c37cUDZBzGUO3XK5LsIPZhI6dOXgm6zJEn8_7tKuZ3JWBmvNJNXdTl_ufkNu4avjQUDw\",\n          \"medium\": \"https://lob-assets.com/letters/ltr_5ba44b462c79f07c_thumb_medium_1.png?version=v1&expires=1568239830&signature=H7354Qpcm9S4aXbrMsBe6QJ6lSNi9IWPgMJtLWLi4Kyx9tHF8Mp9YEc_IL9x89Jfw4-yRzKDXA410X4W0PssBQ\",\n          \"large\": \"https://lob-assets.com/letters/ltr_5ba44b462c79f07c_thumb_large_1.png?version=v1&expires=1568239830&signature=54LUIDKZyItA9pnC87d1pJVAuw8bhKLCsMpNWkB3LgdVWxPxxb_c1IyIWAbSR-dyOYEOlDBCc40J4Kns-O_mAg\"\n        }\n      ],\n      \"expected_delivery_date\": \"2019-08-16\",\n      \"date_created\": \"2019-08-08T17:09:14.514Z\",\n      \"date_modified\": \"2019-08-08T17:09:16.850Z\",\n      \"send_date\": \"2019-08-08\",\n      \"use_type\": \"marketing\",\n      \"fsc\": false,\n      \"object\": \"letter\"\n    },\n    {\n      \"id\": \"ltr_da8267c6a6545cd6\",\n      \"description\": \"Demo Letter\",\n      \"metadata\": {},\n      \"to\": {\n        \"id\": \"adr_210a8d4b0b76d77b\",\n        \"description\": null,\n        \"name\": \"LEORE AVIDAR\",\n        \"company\": null,\n        \"phone\": null,\n        \"email\": null,\n        \"address_line1\": \"210 KING ST STE 6100\",\n        \"address_line2\": null,\n        \"address_city\": \"SAN FRANCISCO\",\n        \"address_state\": \"CA\",\n        \"address_zip\": \"94107-1741\",\n        \"address_country\": \"UNITED STATES\",\n        \"metadata\": {},\n        \"date_created\": \"2018-12-08T03:01:07.651Z\",\n        \"date_modified\": \"2018-12-08T03:01:07.651Z\",\n        \"object\": \"address\"\n      },\n      \"from\": {\n        \"id\": \"adr_210a8d4b0b76d77b\",\n        \"description\": null,\n        \"name\": \"LEORE AVIDAR\",\n        \"company\": null,\n        \"phone\": null,\n        \"email\": null,\n        \"address_line1\": \"210 KING ST STE 6100\",\n        \"address_line2\": null,\n        \"address_city\": \"SAN FRANCISCO\",\n        \"address_state\": \"CA\",\n        \"address_zip\": \"94107-1741\",\n        \"address_country\": \"UNITED STATES\",\n        \"metadata\": {},\n        \"date_created\": \"2018-12-08T03:01:07.651Z\",\n        \"date_modified\": \"2018-12-08T03:01:07.651Z\",\n        \"object\": \"address\"\n      },\n      \"color\": true,\n      \"double_sided\": false,\n      \"address_placement\": \"top_first_page\",\n      \"return_envelope\": false,\n      \"perforated_page\": null,\n      \"extra_service\": null,\n      \"custom_envelope\": null,\n      \"mail_type\": \"usps_first_class\",\n      \"url\": \"https://lob-assets.com/letters/ltr_da8267c6a6545cd6.pdf?version=v1&expires=1568239830&signature=HH-5RnbD4x0eJcnEC9HhqKSvQGsbkjovzvqSKgBijUHKIXwEKQJ4CbYhKs_U2q2A1k20Xefcaw7bfdPKozuqCQ\",\n      \"merge_variables\": null,\n      \"carrier\": \"USPS\",\n      \"tracking_number\": null,\n      \"tracking_events\": [],\n      \"thumbnails\": [\n        {\n          \"small\": \"https://lob-assets.com/letters/ltr_da8267c6a6545cd6_thumb_small_1.png?version=v1&expires=1568239830&signature=C1Rs83187HpWGhsg_pJIOhDIKlDtC_IgBBxHiocCEzJ8CncJwqrq5yHke-p97Dv7o81G_pfhFmirai589O6DCw\",\n          \"medium\": \"https://lob-assets.com/letters/ltr_da8267c6a6545cd6_thumb_medium_1.png?version=v1&expires=1568239830&signature=gz63l0yi3sK_sXjYfIVdLSvkknJFr_O5TWRulo_iKIgS-PosIl6J0tDR6bx_Tv5Ab_w7DABg3qdKZ846MZ7TCw\",\n          \"large\": \"https://lob-assets.com/letters/ltr_da8267c6a6545cd6_thumb_large_1.png?version=v1&expires=1568239830&signature=4Y1OIymaWkSO3aBIHCeshFAVnF-pDcF2FFqkx_jovaUFuk4FT1SI24L7_POwTRXQHlETMGlzkP_CGgqselRUAA\"\n        }\n      ],\n      \"expected_delivery_date\": \"2019-08-16\",\n      \"date_created\": \"2019-08-08T17:08:12.224Z\",\n      \"date_modified\": \"2019-08-08T17:08:13.990Z\",\n      \"send_date\": \"2019-08-08T17:08:12.224Z\",\n      \"cards\": null,\n      \"use_type\": \"marketing\",\n      \"fsc\": true,\n      \"object\": \"letter\"\n    }\n  ],\n  \"object\": \"list\",\n  \"next_url\": \"https://api.lob.com/v1/letters?limit=2&after=eyJkYXRlT2Zmc2V0IjoiMjAxOS0wOC0wOFQxNzowODoxMi4yMjRaIiwiaWRPZmZzZXQiOiJsdHJfZGE4MjY3YzZhNjU0NWNkNiJ9\",\n  \"previous_url\": null,\n  \"count\": 2\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "199bfbf4-c5f9-4b95-bdd8-311dae3779bd",
+              "name": "Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "letters"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "limit",
+                      "value": "10"
+                    },
+                    {
+                      "key": "before",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "after",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "include",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "include",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "date_created[key_0]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "date_created[key_1]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "campaign_id",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "status",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "color",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "scheduled",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "mail_type",
+                      "value": "usps_first_class"
+                    },
+                    {
+                      "key": "date_created",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "send_date",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": \"not_found\",\n    \"message\": \"to address not found\",\n    \"status_code\": 404\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "6859f2f1-feb0-4a20-806b-7e5dc6509e62",
+          "name": "Create",
+          "request": {
+            "name": "Create",
+            "description": {
+              "content": "Creates a new letter given information",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "letters"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "idempotency_key",
+                  "value": "<string>",
+                  "description": "A string of no longer than 256 characters that uniquely identifies this resource. For more help integrating idempotency keys, refer to our <a href=\"https://help.lob.com/print-and-mail/building-a-mail-strategy/managing-mail-settings#idempotent-requests-12\" target=\"_blank\">implementation guide</a>.\n"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "A string of no longer than 256 characters that uniquely identifies this resource. For more help integrating idempotency keys, refer to our <a href=\"https://help.lob.com/print-and-mail/building-a-mail-strategy/managing-mail-settings#idempotent-requests-12\" target=\"_blank\">implementation guide</a>.\n",
+                "key": "Idempotency-Key",
+                "value": "<string>"
+              },
+              {
+                "disabled": false,
+                "description": "A string representing the version of the API being used. Specifically for letters, if this header is set to `2024-01-01` and above, the `size` property is automatically included with the default value of `us_letter`. Refer to `size` for all possible values. For more information on versioning, refer to our [Versioning and Changelog](#tag/Versioning-and-Changelog) documentation.\n",
+                "key": "Lob-Version",
+                "value": "<string>"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/x-www-form-urlencoded"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": [
+                {
+                  "disabled": false,
+                  "key": "file",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "color",
+                  "value": "<boolean>"
+                },
+                {
+                  "disabled": false,
+                  "key": "use_type",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "description",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "mail_type",
+                  "value": "usps_first_class"
+                },
+                {
+                  "disabled": false,
+                  "key": "extra_service",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "cards",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "double_sided",
+                  "value": "true"
+                },
+                {
+                  "disabled": false,
+                  "key": "address_placement",
+                  "value": "top_first_page"
+                },
+                {
+                  "disabled": false,
+                  "key": "return_envelope",
+                  "value": "<boolean>"
+                },
+                {
+                  "disabled": false,
+                  "key": "perforated_page",
+                  "value": "<integer>"
+                },
+                {
+                  "disabled": false,
+                  "key": "custom_envelope",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "billing_group_id",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "position",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "redirect_url",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "width",
+                  "value": "<number>"
+                },
+                {
+                  "disabled": false,
+                  "key": "top",
+                  "value": "<number>"
+                },
+                {
+                  "disabled": false,
+                  "key": "right",
+                  "value": "<number>"
+                },
+                {
+                  "disabled": false,
+                  "key": "left",
+                  "value": "<number>"
+                },
+                {
+                  "disabled": false,
+                  "key": "bottom",
+                  "value": "<number>"
+                },
+                {
+                  "disabled": false,
+                  "key": "pages",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "logo",
+                  "value": "{\"url\":\"<string>\"}"
+                },
+                {
+                  "disabled": false,
+                  "key": "style",
+                  "value": "{\"background_color\":\"<string>\",\"foreground_color\":\"<string>\"}"
+                },
+                {
+                  "disabled": false,
+                  "key": "fsc",
+                  "value": "false"
+                },
+                {
+                  "disabled": false,
+                  "key": "size",
+                  "value": "us_letter"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "7592bdb8-2741-4b34-8597-89887563dfd9",
+              "name": "Returns a letter object",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "letters"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "idempotency_key",
+                      "value": "026e7634-24d7-486c-a0bb-4a17fd0eebc5"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "A string of no longer than 256 characters that uniquely identifies this resource. For more help integrating idempotency keys, refer to our <a href=\"https://help.lob.com/print-and-mail/building-a-mail-strategy/managing-mail-settings#idempotent-requests-12\" target=\"_blank\">implementation guide</a>.\n",
+                    "key": "Idempotency-Key",
+                    "value": "026e7634-24d7-486c-a0bb-4a17fd0eebc5"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "A string representing the version of the API being used. Specifically for letters, if this header is set to `2024-01-01` and above, the `size` property is automatically included with the default value of `us_letter`. Refer to `size` for all possible values. For more information on versioning, refer to our [Versioning and Changelog](#tag/Versioning-and-Changelog) documentation.\n",
+                    "key": "Lob-Version",
+                    "value": "2024-01-01"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "disabled": false,
+                      "key": "description",
+                      "value": "demo"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "to[description]",
+                      "value": "Harry - Office"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "to[name]",
+                      "value": "Harry Zhang"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "to[company]",
+                      "value": "Lob"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "to[email]",
+                      "value": "harry@lob.com"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "to[phone]",
+                      "value": "5555555555"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "to[address_line1]",
+                      "value": "210 King St"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "to[address_line2]",
+                      "value": "# 6100"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "to[address_city]",
+                      "value": "San Francisco"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "to[address_state]",
+                      "value": "CA"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "to[address_zip]",
+                      "value": "94107"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "to[address_country]",
+                      "value": "US"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "from[name]",
+                      "value": "Harry"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "from[address_line1]",
+                      "value": "210 King St"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "from[address_line2]",
+                      "value": "# 6100"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "from[address_city]",
+                      "value": "San Francisco"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "from[address_state]",
+                      "value": "CA"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "from[address_zip]",
+                      "value": "94107"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "file",
+                      "value": "<html style='padding-top: 3in; margin: .5in;'>HTML Letter for {{name}}</html>"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "color",
+                      "value": "true"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "cards",
+                      "value": "card_c51ae96f5cebf3e"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "double_sided",
+                      "value": "false"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "address_placement",
+                      "value": "top_first_page"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "mail_type",
+                      "value": "usps_first_class"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "return_envelope",
+                      "value": "true"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "perforated_page",
+                      "value": "1"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "merge_variables[name]",
+                      "value": "Harry"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "metadata[spiffy]",
+                      "value": "true"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "send_date",
+                      "value": "2017-11-01T00:00:00.000Z"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "extra_service",
+                      "value": "registered"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "use_type",
+                      "value": "marketing"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "position",
+                      "value": "relative"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "redirect_url",
+                      "value": "https://www.lob.com"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "width",
+                      "value": "2"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "bottom",
+                      "value": "2"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "right",
+                      "value": "2"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "pages",
+                      "value": "1,4"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "fsc",
+                      "value": "true"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "disabled": false,
+                  "description": "The rate limit for a given endpoint.",
+                  "key": "ratelimit-limit",
+                  "value": "150"
+                },
+                {
+                  "disabled": false,
+                  "description": "The number of requests remaining in the current window.",
+                  "key": "ratelimit-remaining",
+                  "value": "100"
+                },
+                {
+                  "disabled": false,
+                  "description": "The time at which the rate limit window resets in  <a href=\"https://en.wikipedia.org/wiki/Unix_time\" target=\"_blank\">UTC epoch seconds</a>\n",
+                  "key": "ratelimit-reset",
+                  "value": "1528749846"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"ltr_4868c3b754655f90\",\n  \"description\": \"Demo Letter\",\n  \"metadata\": {},\n  \"to\": {\n    \"id\": \"adr_d3489cd64c791ab5\",\n    \"description\": null,\n    \"name\": \"HARRY ZHANG\",\n    \"company\": null,\n    \"phone\": null,\n    \"email\": null,\n    \"address_line1\": \"210 KING ST STE 6100\",\n    \"address_line2\": null,\n    \"address_city\": \"SAN FRANCISCO\",\n    \"address_state\": \"CA\",\n    \"address_zip\": \"94107-1741\",\n    \"address_country\": \"UNITED STATES\",\n    \"metadata\": {},\n    \"date_created\": \"2017-09-05T15:54:53.264Z\",\n    \"date_modified\": \"2017-09-05T15:54:53.264Z\",\n    \"deleted\": true,\n    \"object\": \"address\"\n  },\n  \"from\": {\n    \"id\": \"adr_b8fb5acf3a2b55db\",\n    \"description\": null,\n    \"name\": \"LEORE AVIDAR\",\n    \"company\": null,\n    \"phone\": null,\n    \"email\": null,\n    \"address_line1\": \"210 KING ST STE 6100\",\n    \"address_line2\": null,\n    \"address_city\": \"SAN FRANCISCO\",\n    \"address_state\": \"CA\",\n    \"address_zip\": \"94107-1741\",\n    \"address_country\": \"UNITED STATES\",\n    \"metadata\": {},\n    \"date_created\": \"2017-09-05T15:54:53.264Z\",\n    \"date_modified\": \"2017-09-05T15:54:53.264Z\",\n    \"deleted\": true,\n    \"object\": \"address\"\n  },\n  \"color\": true,\n  \"double_sided\": true,\n  \"address_placement\": \"top_first_page\",\n  \"return_envelope\": false,\n  \"perforated_page\": null,\n  \"custom_envelope\": null,\n  \"extra_service\": null,\n  \"mail_type\": \"usps_first_class\",\n  \"url\": \"https://lob-assets.com/letters/ltr_4868c3b754655f90.pdf?expires=1540372221&signature=8r94fse8uam7wGWmW5baxXulU88X2CA\",\n  \"carrier\": \"USPS\",\n  \"tracking_number\": null,\n  \"tracking_events\": [],\n  \"thumbnails\": [\n    {\n      \"small\": \"https://lob-assets.com/letters/ltr_4868c3b754655f90_thumb_small_1.png?expires=1540372221&signature=a5fRBJ22ZA78Vgpg34M9UfmHWTS3eha\",\n      \"medium\": \"https://lob-assets.com/letters/ltr_4868c3b754655f90_thumb_medium_1.png?expires=1540372221&signature=bAzL8sv935PY09FWSkpDpWKkyvGSWYF\",\n      \"large\": \"https://lob-assets.com/letters/ltr_4868c3b754655f90_thumb_large_1.png?expires=1540372221&signature=gsKvxXgrm4v4iZD3bOibK7jApNkEMdW\"\n    }\n  ],\n  \"merge_variables\": {\n    \"name\": \"Harry\"\n  },\n  \"expected_delivery_date\": \"2017-09-12\",\n  \"date_created\": \"2017-09-05T15:54:53.346Z\",\n  \"date_modified\": \"2017-09-05T15:54:53.346Z\",\n  \"send_date\": \"2017-09-05T15:54:53.346Z\",\n  \"cards\": [\n    {\n      \"id\": \"card_c51ae96f5cebf3e\",\n      \"account_id\": \"fa9ea650fc7b31a89f92\",\n      \"description\": null,\n      \"url\": \"https://lob-assets.com/cards/card_c51ae96f5cebf3e.pdf?version=v1&expires=1636910992&signature=mnsDH2DAxdkN9VibdlLMxJC86sME5WYDqkNtmvGwdNsAaUWfbnv0rJhJ1mR8Ol4uxQq61j5wYZ0r3s-lBkQfDA\",\n      \"size\": \"2.125x3.375\",\n      \"auto_reorder\": false,\n      \"reorder_quantity\": null,\n      \"raw_url\": \"https://lob-assets.com/cards/card_c51ae96f5cebf3e_raw.pdf?version=v1&expires=1636910992&signature=-bZo31FMAp2vmNaZKyXn_Qa4APqwtNinw76FrQ7uyQejFZw6VBQQYfoiQ642iXh0H2K5i2aOo8_BAkt3UJdVDw\",\n      \"front_original_url\": \"https://lob-assets.com/cards/card_c51ae96f5cebf3e_raw.pdf?version=v1&expires=1636910992&signature=-bZo31FMAp2vmNaZKyXn_Qa4APqwtNinw76FrQ7uyQejFZw6VBQQYfoiQ642iXh0H2K5i2aOo8_BAkt3UJdVDw\",\n      \"back_original_url\": \"https://lob-assets.com/cards/card_c51ae96f5cebf3e_raw.pdf?version=v1&expires=1636910992&signature=-bZo31FMAp2vmNaZKyXn_Qa4APqwtNinw76FrQ7uyQejFZw6VBQQYfoiQ642iXh0H2K5i2aOo8_BAkt3UJdVDw\",\n      \"thumbnails\": [\n        {\n          \"small\": \"https://lob-assets.com/cards/card_c51ae96f5cebf3e_thumb_small_1.png?version=v1&expires=1636910992&signature=mrv8JDvpZK4I8WUGH0tPdtK-My5oes0Ltj_gL7BDw96SpCTTeZFHkz81SzclyFP9dQRtlsvAsjcuGcTBvCvOCg\",\n          \"medium\": \"https://lob-assets.com/cards/card_c51ae96f5cebf3e_thumb_medium_1.png?version=v1&expires=1636910992&signature=VgL_2Ckm_kxKiWGgWtdNoy9HHOn8dGYSVOn7UqyCbwdbVlUtx28TRN4Bo8Iru3n0keKp9He0YhKT1ILotznMDA\",\n          \"large\": \"https://lob-assets.com/cards/card_c51ae96f5cebf3e_thumb_large_1.png?version=v1&expires=1636910992&signature=FKSzymA13j-CQ0uk20cGHZTzT3vimzNBYrgp-xifLFg4mMdo1BZALR5O0aF_jVhsX614hKP35ONdYl47TQxXAw\"\n        },\n        {\n          \"small\": \"https://lob-assets.com/cards/card_c51ae96f5cebf3e_thumb_small_2.png?version=v1&expires=1636910992&signature=IWsmPa_ULlv2yyqjX564d_YfHHY_M7i9YxDnw-WXDr2jtOFcArmRZQbnHeE9g_rYxnddJbgosuv8-c2utiu7Cg\",\n          \"medium\": \"https://lob-assets.com/cards/card_c51ae96f5cebf3e_thumb_medium_2.png?version=v1&expires=1636910992&signature=zxK7VKGiTvz5Ywrkaydd0v3GcYf58R7A08J4tNfI7-aiNODDcTF3l0MqY13n9Pyc8RXSdD0XVBY-OpbA1VM-Ag\",\n          \"large\": \"https://lob-assets.com/cards/card_c51ae96f5cebf3e_thumb_large_2.png?version=v1&expires=1636910992&signature=r0OFUhh315ZwN0raMZdIwJd2oCIEYsz0BABaMxIuO1PKTD0ckGWrhcGdzk2dlWQ6vSvp0CUQ5k1RXGqkIIqkDw\"\n        }\n      ],\n      \"available_quantity\": 10000,\n      \"pending_quantity\": 0,\n      \"countries\": null,\n      \"status\": \"rendered\",\n      \"mode\": \"test\",\n      \"orientation\": \"horizontal\",\n      \"threshold_amount\": 0,\n      \"date_created\": \"2017-08-05T15:54:53.346Z\",\n      \"date_modified\": \"2017-08-05T15:54:53.346Z\",\n      \"object\": \"card\"\n    }\n  ],\n  \"use_type\": \"marketing\",\n  \"fsc\": false,\n  \"object\": \"letter\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "2f0324fb-80a2-4799-8275-a7fedbbe3c92",
+              "name": "Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "letters"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "idempotency_key",
+                      "value": "026e7634-24d7-486c-a0bb-4a17fd0eebc5"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "A string of no longer than 256 characters that uniquely identifies this resource. For more help integrating idempotency keys, refer to our <a href=\"https://help.lob.com/print-and-mail/building-a-mail-strategy/managing-mail-settings#idempotent-requests-12\" target=\"_blank\">implementation guide</a>.\n",
+                    "key": "Idempotency-Key",
+                    "value": "026e7634-24d7-486c-a0bb-4a17fd0eebc5"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "A string representing the version of the API being used. Specifically for letters, if this header is set to `2024-01-01` and above, the `size` property is automatically included with the default value of `us_letter`. Refer to `size` for all possible values. For more information on versioning, refer to our [Versioning and Changelog](#tag/Versioning-and-Changelog) documentation.\n",
+                    "key": "Lob-Version",
+                    "value": "2024-01-01"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "disabled": false,
+                      "key": "description",
+                      "value": "demo"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "to[description]",
+                      "value": "Harry - Office"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "to[name]",
+                      "value": "Harry Zhang"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "to[company]",
+                      "value": "Lob"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "to[email]",
+                      "value": "harry@lob.com"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "to[phone]",
+                      "value": "5555555555"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "to[address_line1]",
+                      "value": "210 King St"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "to[address_line2]",
+                      "value": "# 6100"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "to[address_city]",
+                      "value": "San Francisco"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "to[address_state]",
+                      "value": "CA"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "to[address_zip]",
+                      "value": "94107"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "to[address_country]",
+                      "value": "US"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "from[name]",
+                      "value": "Harry"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "from[address_line1]",
+                      "value": "210 King St"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "from[address_line2]",
+                      "value": "# 6100"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "from[address_city]",
+                      "value": "San Francisco"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "from[address_state]",
+                      "value": "CA"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "from[address_zip]",
+                      "value": "94107"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "file",
+                      "value": "<html style='padding-top: 3in; margin: .5in;'>HTML Letter for {{name}}</html>"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "color",
+                      "value": "true"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "cards",
+                      "value": "card_c51ae96f5cebf3e"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "double_sided",
+                      "value": "false"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "address_placement",
+                      "value": "top_first_page"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "mail_type",
+                      "value": "usps_first_class"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "return_envelope",
+                      "value": "true"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "perforated_page",
+                      "value": "1"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "merge_variables[name]",
+                      "value": "Harry"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "metadata[spiffy]",
+                      "value": "true"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "send_date",
+                      "value": "2017-11-01T00:00:00.000Z"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "extra_service",
+                      "value": "registered"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "use_type",
+                      "value": "marketing"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "position",
+                      "value": "relative"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "redirect_url",
+                      "value": "https://www.lob.com"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "width",
+                      "value": "2"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "bottom",
+                      "value": "2"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "right",
+                      "value": "2"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "pages",
+                      "value": "1,4"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "fsc",
+                      "value": "true"
+                    }
+                  ]
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": \"not_found\",\n    \"message\": \"to address not found\",\n    \"status_code\": 404\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.lob.com/v1",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "basic",
+    "basic": [
+      {
+        "key": "username",
+        "value": "{{basicAuthUsername}}"
+      },
+      {
+        "key": "password",
+        "value": "{{basicAuthPassword}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "e639c533-9487-4771-9a01-92c0b3a77099",
+    "name": "Lob Letters API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Experience direct mail like never before, with unmatched personalization and scalability \u0014 all in one intuitive platform.\n\nContact Support:\n Name: Lob Developer Experience\n Email: lob-openapi@lob.com",
+      "type": "text/plain"
+    }
+  }
+}

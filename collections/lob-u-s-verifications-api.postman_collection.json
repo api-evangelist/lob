@@ -1,0 +1,511 @@
+{
+  "item": [
+    {
+      "id": "e71ddc4c-98fe-43e8-906e-89764140661b",
+      "name": "U S  Verifications",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "3ad71039-16d1-451a-8580-656673d82ec8",
+          "name": "Bulk Verify",
+          "request": {
+            "name": "Bulk Verify",
+            "description": {
+              "content": "Verify a list of US or US territory addresses _with a live API key_. Requests to this endpoint with a test API key will return a dummy response based on the primary line you input.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "bulk",
+                "us_verifications"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "case",
+                  "value": "upper",
+                  "description": "Casing of the verified address. Possible values are `upper` and `proper` for uppercased (e.g. \"PO BOX\") and proper-cased (e.g. \"PO Box\"), respectively. Only affects `recipient`, `primary_line`, `secondary_line`, `urbanization`, and `last_line`. Default casing is `upper`."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/x-www-form-urlencoded"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": [
+                {
+                  "disabled": false,
+                  "key": "addresses",
+                  "value": "{\"primary_line\":\"<string>\",\"recipient\":\"<string>\",\"secondary_line\":\"<string>\",\"urbanization\":\"<string>\",\"city\":\"<string>\",\"state\":\"<string>\",\"zip_code\":\"<string>\"}",
+                  "description": "(Required) "
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "8ac50252-ae55-4d70-81ac-3e412d8f2b37",
+              "name": "Returns a list of US verification objects.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "bulk",
+                    "us_verifications"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "case",
+                      "value": "upper"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) ",
+                        "type": "text/plain"
+                      },
+                      "key": "addresses",
+                      "value": "{\"primary_line\":\"210 King Street\",\"city\":\"San Francisco\",\"state\":\"CA\",\"zip_code\":\"94107\"}"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) ",
+                        "type": "text/plain"
+                      },
+                      "key": "addresses",
+                      "value": "{\"recipient\":\"Walgreens\",\"primary_line\":\"Ave Wilson Churchill 123\",\"secondary_line\":\"\",\"urbanization\":\"URB FAIR OAKS\",\"city\":\"RIO PIEDRAS\",\"state\":\"PR\",\"zip_code\":926}"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "disabled": false,
+                  "description": "The rate limit for a given endpoint.",
+                  "key": "ratelimit-limit",
+                  "value": "150"
+                },
+                {
+                  "disabled": false,
+                  "description": "The number of requests remaining in the current window.",
+                  "key": "ratelimit-remaining",
+                  "value": "100"
+                },
+                {
+                  "disabled": false,
+                  "description": "The time at which the rate limit window resets in  <a href=\"https://en.wikipedia.org/wiki/Unix_time\" target=\"_blank\">UTC epoch seconds</a>\n",
+                  "key": "ratelimit-reset",
+                  "value": "1528749846"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"addresses\": [\n    {\n      \"id\": \"us_ver_c7cb63d68f8d6\",\n      \"recipient\": \"LOB.COM\",\n      \"primary_line\": \"210 KING ST\",\n      \"secondary_line\": \"\",\n      \"urbanization\": \"\",\n      \"last_line\": \"SAN FRANCISCO CA 94107-1702\",\n      \"deliverability\": \"deliverable\",\n      \"valid_address\": true,\n      \"components\": {\n        \"primary_number\": \"210\",\n        \"street_predirection\": \"\",\n        \"street_name\": \"KING\",\n        \"street_suffix\": \"ST\",\n        \"street_postdirection\": \"\",\n        \"secondary_designator\": \"\",\n        \"secondary_number\": \"\",\n        \"pmb_designator\": \"\",\n        \"pmb_number\": \"\",\n        \"extra_secondary_designator\": \"\",\n        \"extra_secondary_number\": \"\",\n        \"city\": \"SAN FRANCISCO\",\n        \"state\": \"CA\",\n        \"zip_code\": \"94107\",\n        \"zip_code_plus_4\": \"1702\",\n        \"zip_code_type\": \"standard\",\n        \"delivery_point_barcode\": \"941071728506\",\n        \"address_type\": \"commercial\",\n        \"record_type\": \"street\",\n        \"default_building_address\": false,\n        \"county\": \"SAN FRANCISCO\",\n        \"county_fips\": \"06075\",\n        \"carrier_route\": \"C032\",\n        \"carrier_route_type\": \"city_delivery\",\n        \"po_box_only_flag\": \"N\",\n        \"latitude\": 37.77597542841264,\n        \"longitude\": -122.3929557343685\n      },\n      \"deliverability_analysis\": {\n        \"dpv_confirmation\": \"Y\",\n        \"dpv_cmra\": \"N\",\n        \"dpv_vacant\": \"N\",\n        \"dpv_active\": \"Y\",\n        \"dpv_inactive_reason\": \"\",\n        \"dpv_throwback\": \"N\",\n        \"dpv_non_delivery_day_flag\": \"N\",\n        \"dpv_non_delivery_day_values\": \"\",\n        \"dpv_no_secure_location\": \"N\",\n        \"dpv_door_not_accessible\": \"N\",\n        \"dpv_footnotes\": [\n          \"AA\",\n          \"BB\"\n        ],\n        \"ews_match\": false,\n        \"lacs_indicator\": \"\",\n        \"lacs_return_code\": \"\",\n        \"suite_return_code\": \"\"\n      },\n      \"lob_confidence_score\": {\n        \"score\": 100,\n        \"level\": \"high\"\n      },\n      \"object\": \"us_verification\"\n    }\n  ],\n  \"errors\": false\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "2ff142f4-50e3-4068-ae79-34c9ba3f9211",
+              "name": "Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "bulk",
+                    "us_verifications"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "case",
+                      "value": "upper"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) ",
+                        "type": "text/plain"
+                      },
+                      "key": "addresses",
+                      "value": "{\"primary_line\":\"210 King Street\",\"city\":\"San Francisco\",\"state\":\"CA\",\"zip_code\":\"94107\"}"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) ",
+                        "type": "text/plain"
+                      },
+                      "key": "addresses",
+                      "value": "{\"recipient\":\"Walgreens\",\"primary_line\":\"Ave Wilson Churchill 123\",\"secondary_line\":\"\",\"urbanization\":\"URB FAIR OAKS\",\"city\":\"RIO PIEDRAS\",\"state\":\"PR\",\"zip_code\":926}"
+                    }
+                  ]
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": \"invalid\",\n    \"message\": \"primary_line is required or address is required\",\n    \"status_code\": 422\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "795bbb9a-61a4-4625-b829-1f029148745d",
+          "name": "Single Verify",
+          "request": {
+            "name": "Single Verify",
+            "description": {
+              "content": "Verify a US or US territory address _with a live API key_. The address can be in components (e.g. `primary_line` is \"210 King Street\", `zip_code` is \"94107\") or as a single string (e.g. \"210 King Street 94107\"), but not as both. Requests using a test API key validate required fields but return empty values unless specific `primary_line` values are provided. See the [US Verifications Test Environment](#section/US-Verifications-Test-Env) for details.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "us_verifications"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "case",
+                  "value": "upper",
+                  "description": "Casing of the verified address. Possible values are `upper` and `proper` for uppercased (e.g. \"PO BOX\") and proper-cased (e.g. \"PO Box\"), respectively. Only affects `recipient`, `primary_line`, `secondary_line`, `urbanization`, and `last_line`. Default casing is `upper`."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/x-www-form-urlencoded"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": [
+                {
+                  "disabled": false,
+                  "key": "primary_line",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "recipient",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "secondary_line",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "urbanization",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "city",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "state",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "zip_code",
+                  "value": "<string>"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "a8012613-21be-4460-a3db-8a93766b4d7a",
+              "name": "Returns a US verification object.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "us_verifications"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "case",
+                      "value": "upper"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "disabled": false,
+                      "key": "primary_line",
+                      "value": "210 King Street"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "city",
+                      "value": "San Francisco"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "state",
+                      "value": "CA"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "zip_code",
+                      "value": "94107"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "disabled": false,
+                  "description": "The rate limit for a given endpoint.",
+                  "key": "ratelimit-limit",
+                  "value": "150"
+                },
+                {
+                  "disabled": false,
+                  "description": "The number of requests remaining in the current window.",
+                  "key": "ratelimit-remaining",
+                  "value": "100"
+                },
+                {
+                  "disabled": false,
+                  "description": "The time at which the rate limit window resets in  <a href=\"https://en.wikipedia.org/wiki/Unix_time\" target=\"_blank\">UTC epoch seconds</a>\n",
+                  "key": "ratelimit-reset",
+                  "value": "1528749846"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"us_ver_c7cb63d68f8d6\",\n  \"recipient\": \"LOB.COM\",\n  \"primary_line\": \"210 KING ST\",\n  \"secondary_line\": \"\",\n  \"urbanization\": \"\",\n  \"last_line\": \"SAN FRANCISCO CA 94107-1702\",\n  \"deliverability\": \"deliverable\",\n  \"valid_address\": true,\n  \"components\": {\n    \"primary_number\": \"210\",\n    \"street_predirection\": \"\",\n    \"street_name\": \"KING\",\n    \"street_suffix\": \"ST\",\n    \"street_postdirection\": \"\",\n    \"secondary_designator\": \"\",\n    \"secondary_number\": \"\",\n    \"pmb_designator\": \"\",\n    \"pmb_number\": \"\",\n    \"extra_secondary_designator\": \"\",\n    \"extra_secondary_number\": \"\",\n    \"city\": \"SAN FRANCISCO\",\n    \"state\": \"CA\",\n    \"zip_code\": \"94107\",\n    \"zip_code_plus_4\": \"1702\",\n    \"zip_code_type\": \"standard\",\n    \"delivery_point_barcode\": \"941071702108\",\n    \"address_type\": \"commercial\",\n    \"record_type\": \"street\",\n    \"default_building_address\": false,\n    \"county\": \"SAN FRANCISCO\",\n    \"county_fips\": \"06075\",\n    \"carrier_route\": \"C032\",\n    \"carrier_route_type\": \"city_delivery\",\n    \"po_box_only_flag\": \"N\",\n    \"latitude\": 37.77597542841264,\n    \"longitude\": -122.3929557343685\n  },\n  \"deliverability_analysis\": {\n    \"dpv_confirmation\": \"Y\",\n    \"dpv_cmra\": \"N\",\n    \"dpv_vacant\": \"N\",\n    \"dpv_active\": \"Y\",\n    \"dpv_inactive_reason\": \"\",\n    \"dpv_throwback\": \"N\",\n    \"dpv_non_delivery_day_flag\": \"N\",\n    \"dpv_non_delivery_day_values\": \"\",\n    \"dpv_no_secure_location\": \"N\",\n    \"dpv_door_not_accessible\": \"N\",\n    \"dpv_footnotes\": [\n      \"AA\",\n      \"BB\"\n    ],\n    \"ews_match\": false,\n    \"lacs_indicator\": \"\",\n    \"lacs_return_code\": \"\",\n    \"suite_return_code\": \"\"\n  },\n  \"lob_confidence_score\": {\n    \"score\": 100,\n    \"level\": \"high\"\n  },\n  \"object\": \"us_verification\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "cf60fb73-5f8c-4d58-a23e-8f3f4caf37b1",
+              "name": "Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "us_verifications"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "case",
+                      "value": "upper"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "disabled": false,
+                      "key": "primary_line",
+                      "value": "210 King Street"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "city",
+                      "value": "San Francisco"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "state",
+                      "value": "CA"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "zip_code",
+                      "value": "94107"
+                    }
+                  ]
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": \"invalid\",\n    \"message\": \"primary_line is required or address is required\",\n    \"status_code\": 422\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.lob.com/v1",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "basic",
+    "basic": [
+      {
+        "key": "username",
+        "value": "{{basicAuthUsername}}"
+      },
+      {
+        "key": "password",
+        "value": "{{basicAuthPassword}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "4ea2170a-0870-469b-83ad-84f0a237a4c6",
+    "name": "Lob U S  Verifications API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Experience direct mail like never before, with unmatched personalization and scalability \u0014 all in one intuitive platform.\n\nContact Support:\n Name: Lob Developer Experience\n Email: lob-openapi@lob.com",
+      "type": "text/plain"
+    }
+  }
+}

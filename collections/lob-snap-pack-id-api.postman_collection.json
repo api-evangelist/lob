@@ -1,0 +1,341 @@
+{
+  "item": [
+    {
+      "id": "71dd881e-87ed-47ae-bd61-9aa15b2441b3",
+      "name": "Snap_pack_id",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "660bd208-30c3-4d53-af7e-11f125a7b818",
+          "name": "Retrieve",
+          "request": {
+            "name": "Retrieve",
+            "description": {
+              "content": "Retrieves the details of an existing snap_pack. You need to only supply the unique snap_pack identifier that was returned upon snap_pack creation.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "snap_packs",
+                ":snap_pack_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "snap_pack_id",
+                  "description": "(Required) id of the snap_pack"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "c88f8084-5e63-4922-bf2b-4a515f60a5c7",
+              "name": "Returns a snap_pack object",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "snap_packs",
+                    ":snap_pack_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "snap_pack_id",
+                      "description": "(Required) id of the snap_pack"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"ord_0d6a16a3fff6318ac8f8008dc1\",\n  \"description\": \"April Campaign\",\n  \"to\": {\n    \"id\": \"adr_bae820679f3f536b\",\n    \"description\": null,\n    \"name\": \"HARRY ZHANG\",\n    \"company\": null,\n    \"phone\": null,\n    \"email\": null,\n    \"address_line1\": \"210 KING ST STE 6100\",\n    \"address_line2\": null,\n    \"address_city\": \"SAN FRANCISCO\",\n    \"address_state\": \"CA\",\n    \"address_zip\": \"94107-1741\",\n    \"address_country\": \"UNITED STATES\",\n    \"metadata\": {},\n    \"date_created\": \"2017-09-05T17:47:53.767Z\",\n    \"date_modified\": \"2017-09-05T17:47:53.767Z\",\n    \"deleted\": true,\n    \"object\": \"address\"\n  },\n  \"from\": {\n    \"id\": \"adr_210a8d4b0b76d77b\",\n    \"description\": null,\n    \"name\": \"LEORE AVIDAR\",\n    \"company\": null,\n    \"phone\": null,\n    \"email\": null,\n    \"address_line1\": \"210 KING ST STE 6100\",\n    \"address_line2\": null,\n    \"address_city\": \"SAN FRANCISCO\",\n    \"address_state\": \"CA\",\n    \"address_zip\": \"94107-1741\",\n    \"address_country\": \"UNITED STATES\",\n    \"metadata\": {},\n    \"date_created\": \"2017-09-05T17:47:53.767Z\",\n    \"date_modified\": \"2017-09-05T17:47:53.767Z\",\n    \"deleted\": true,\n    \"object\": \"address\"\n  },\n  \"url\": \"https://lob-assets.com/order-creatives/ord_0d6a16a3fff6318ac8f8008dc1_comp_a20fd48ba4efda76ee827400d.pdf?version=v1&expires=1618512040&signature=qvyCqXI1ndBvc4AjvG8FlirqLXEcfmYo4sDrRtabaXMOsX88to9G3K49uIk_aqevvZXe8HoRYD_nWydbQHqaCA\",\n  \"outside_template_id\": \"tmpl_a3cb937f26d7eec\",\n  \"inside_template_id\": \"tmpl_a3cb937f26d7eec\",\n  \"inside_template_version_id\": \"vrsn_bfdf70893b00a85\",\n  \"outside_template_version_id\": \"vrsn_bfdf70893b00a85\",\n  \"carrier\": \"USPS\",\n  \"tracking_events\": [],\n  \"thumbnails\": [\n    {\n      \"small\": \"https://lob-assets.com/order-creatives/ord_0d6a16a3fff6318ac8f8008dc1_comp_a20fd48ba4efda76ee827400d_thumb_small_1.png?version=v1&expires=1618512040&signature=-bipeUHP-hAMcCBSrWM0ZH1VwRdSPNVGGZN9hAZKr6Lh4ly6uxvratVd5LXJCK_zOEMYk_mTWASt0ge7OY6SDA\",\n      \"medium\": \"https://lob-assets.com/order-creatives/ord_0d6a16a3fff6318ac8f8008dc1_comp_a20fd48ba4efda76ee827400d_thumb_medium_1.png?version=v1&expires=1618512040&signature=ryxN7bsXGtw_GRFSP3Cs3A3IYjxZi3cW9BHDCNgMt6p3nobVmsc_iFHt2e-S7ndAXhhN7nP-MQVov3bt3r37BQ\",\n      \"large\": \"https://lob-assets.com/order-creatives/ord_0d6a16a3fff6318ac8f8008dc1_comp_a20fd48ba4efda76ee827400d_thumb_large_1.png?version=v1&expires=1618512040&signature=kBrm00xkyCkJNJRHxH8HshFaebtOxnzjVWOs1VVmGMuw8H6OBNcMAMxt9s49K0jlpHoh3Nr9uSncEZMQaaNjAg\"\n    },\n    {\n      \"small\": \"https://lob-assets.com/order-creatives/ord_0d6a16a3fff6318ac8f8008dc1_comp_a20fd48ba4efda76ee827400d_thumb_small_2.png?version=v1&expires=1618512040&signature=3gTgU7Fd3KoT_vNlQnTGptRps5ZgnkhSnPrAwk7L98higIzSwfKoLvuu_DIpMM48dHbxckKT9waR8euJ4KSDBQ\",\n      \"medium\": \"https://lob-assets.com/order-creatives/ord_0d6a16a3fff6318ac8f8008dc1_comp_a20fd48ba4efda76ee827400d_thumb_medium_2.png?version=v1&expires=1618512040&signature=Ue1lw5CMj7KRx6cMQL8xPeazaHCdJzWcACd1w3acuYPnWkVIpSt62OIO7hAtpAQK9xm1dhhlFj0rqRZMdRMMBA\",\n      \"large\": \"https://lob-assets.com/order-creatives/ord_0d6a16a3fff6318ac8f8008dc1_comp_a20fd48ba4efda76ee827400d_thumb_large_2.png?version=v1&expires=1618512040&signature=cICc7HEm1xG_eyM4a_wtvPk2FqoLRmtgGa29kJisWnMIYBL0OkyzG4ZCYGMhp-5cZpJlSpXfTgGKh_Qmeo1TDw\"\n    }\n  ],\n  \"merge_variables\": {\n    \"name\": null\n  },\n  \"size\": \"8.5x11\",\n  \"mail_type\": \"usps_first_class\",\n  \"expected_delivery_date\": \"2021-03-24\",\n  \"date_created\": \"2021-03-16T18:40:40.504Z\",\n  \"date_modified\": \"2021-03-16T18:40:40.504Z\",\n  \"send_date\": \"2021-03-16T18:45:40.493Z\",\n  \"use_type\": \"marketing\",\n  \"fsc\": false,\n  \"color\": false,\n  \"object\": \"snap_pack\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "fabfcdf2-b878-4291-83a6-1c46b2363edf",
+              "name": "Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "snap_packs",
+                    ":snap_pack_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "snap_pack_id",
+                      "description": "(Required) id of the snap_pack"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": \"not_found\",\n    \"message\": \"to address not found\",\n    \"status_code\": 404\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "0fe633cf-677f-4f6d-bbf8-d734aedace12",
+          "name": "Delete",
+          "request": {
+            "name": "Delete",
+            "description": {
+              "content": "Completely removes a snap pack from production. This can only be done if the snap pack's `send_date` has not yet passed. If the snap pack is successfully canceled, you will not be charged for it.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "snap_packs",
+                ":snap_pack_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "snap_pack_id",
+                  "description": "(Required) id of the snap_pack"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "05e1a45e-1629-49ef-8d92-b072c8a1b155",
+              "name": "Deleted",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "snap_packs",
+                    ":snap_pack_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "snap_pack_id",
+                      "description": "(Required) id of the snap_pack"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"ord_0d6a16a3fff6318ac8f8008dc1\",\n  \"deleted\": true\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ff2d5a7f-b70f-4ba4-b052-d90e8578f553",
+              "name": "Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "snap_packs",
+                    ":snap_pack_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "snap_pack_id",
+                      "description": "(Required) id of the snap_pack"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": \"not_found\",\n    \"message\": \"to address not found\",\n    \"status_code\": 404\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.lob.com/v1",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "basic",
+    "basic": [
+      {
+        "key": "username",
+        "value": "{{basicAuthUsername}}"
+      },
+      {
+        "key": "password",
+        "value": "{{basicAuthPassword}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "4d73d0db-69ed-4d5b-bf57-23625ed8238c",
+    "name": "Lob Snap_pack_id API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Experience direct mail like never before, with unmatched personalization and scalability \u0014 all in one intuitive platform.\n\nContact Support:\n Name: Lob Developer Experience\n Email: lob-openapi@lob.com",
+      "type": "text/plain"
+    }
+  }
+}

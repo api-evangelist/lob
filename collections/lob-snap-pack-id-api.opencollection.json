@@ -1,0 +1,63 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Lob Snap_pack_id API",
+    "version": "1.20.2"
+  },
+  "request": {
+    "auth": {
+      "type": "basic",
+      "username": "{{username}}",
+      "password": "{{password}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Snap_pack_id",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Retrieve",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.lob.com/v1/snap_packs/:snap_pack_id",
+            "params": [
+              {
+                "name": "snap_pack_id",
+                "value": "",
+                "type": "path",
+                "description": "id of the snap_pack"
+              }
+            ]
+          },
+          "docs": "Retrieves the details of an existing snap_pack. You need to only supply the unique snap_pack identifier that was returned upon snap_pack creation."
+        },
+        {
+          "info": {
+            "name": "Delete",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.lob.com/v1/snap_packs/:snap_pack_id",
+            "params": [
+              {
+                "name": "snap_pack_id",
+                "value": "",
+                "type": "path",
+                "description": "id of the snap_pack"
+              }
+            ]
+          },
+          "docs": "Completely removes a snap pack from production. This can only be done if the snap pack's `send_date` has not yet passed. If the snap pack is successfully canceled, you will not be charged for it."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

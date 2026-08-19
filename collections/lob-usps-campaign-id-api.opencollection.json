@@ -1,0 +1,67 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Lob Usps_campaign_id API",
+    "version": "1.20.2"
+  },
+  "request": {
+    "auth": {
+      "type": "basic",
+      "username": "{{username}}",
+      "password": "{{password}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Usps_campaign_id",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Retrieve",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.lob.com/v1/informed_delivery_campaigns/:usps_campaign_id",
+            "params": [
+              {
+                "name": "usps_campaign_id",
+                "value": "",
+                "type": "path",
+                "description": "usps_campaign_id of the Informed Delivery campaign"
+              }
+            ]
+          },
+          "docs": "Retrieves the details of an existing Informed Delivery campaign. You need only supply the `usps_campaign_id` returned in the campaign creation request."
+        },
+        {
+          "info": {
+            "name": "Update",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.lob.com/v1/informed_delivery_campaigns/:usps_campaign_id",
+            "params": [
+              {
+                "name": "usps_campaign_id",
+                "value": "",
+                "type": "path",
+                "description": "usps_campaign_id of the Informed Delivery campaign"
+              }
+            ],
+            "body": {
+              "type": "multipart-form",
+              "data": []
+            }
+          },
+          "docs": "Update the details of an existing Informed Delivery campaign.<br> **NOTE:** you can only update a campaign in the `pending_approval` status."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

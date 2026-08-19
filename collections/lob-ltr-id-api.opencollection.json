@@ -1,0 +1,63 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Lob Ltr_id API",
+    "version": "1.20.2"
+  },
+  "request": {
+    "auth": {
+      "type": "basic",
+      "username": "{{username}}",
+      "password": "{{password}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Ltr_id",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Retrieve",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.lob.com/v1/letters/:ltr_id",
+            "params": [
+              {
+                "name": "ltr_id",
+                "value": "",
+                "type": "path",
+                "description": "id of the letter"
+              }
+            ]
+          },
+          "docs": "Retrieves the details of an existing letter. You need only supply the unique letter identifier that was returned upon letter creation."
+        },
+        {
+          "info": {
+            "name": "Cancel",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.lob.com/v1/letters/:ltr_id",
+            "params": [
+              {
+                "name": "ltr_id",
+                "value": "",
+                "type": "path",
+                "description": "id of the letter"
+              }
+            ]
+          },
+          "docs": "Completely removes a letter from production. This can only be done if the letter has a `send_date` and the `send_date` has not yet passed. If the letter is successfully canceled, you will not be charged for it. Read more on [cancellation windows](#section/Cancellation-Windows) and [scheduling](#section/Scheduled-Mailings). Scheduling and cancellation is a premium feature. Upgrade to the appropriate <a href=\"https://dashboard.lob.com/#/settings/editions\" target=\"_blank\">Print & Mail Edition</a> t"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

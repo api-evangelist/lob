@@ -1,0 +1,383 @@
+{
+  "item": [
+    {
+      "id": "f98b171f-33ed-4065-915e-7b1183309f23",
+      "name": "Crv_id",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "503cad49-8b15-4211-b756-6d77aef1cae0",
+          "name": "Retrieve",
+          "request": {
+            "name": "Retrieve",
+            "description": {
+              "content": "Retrieves the details of an existing creative. You need only supply the unique creative identifier that was returned upon creative creation.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "creatives",
+                ":crv_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "crv_id",
+                  "description": "(Required) id of the creative"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "5fa26128-a949-43a0-b63a-523e3d548cd6",
+              "name": "Returns a creative object",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "creatives",
+                    ":crv_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "crv_id",
+                      "description": "(Required) id of the creative"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"crv_2a3b096c409b32c\",\n  \"description\": \"Our 4x6 postcard creative\",\n  \"from\": \"adr_210a8d4b0b76d77b\",\n  \"resource_type\": \"postcard\",\n  \"details\": {},\n  \"metadata\": {},\n  \"template_preview_urls\": {},\n  \"template_previews\": [],\n  \"campaigns\": [],\n  \"date_created\": \"2017-09-05T17:47:53.767Z\",\n  \"date_modified\": \"2017-09-05T17:47:53.767Z\",\n  \"object\": \"creative\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e770d613-0c0d-4919-914f-71698bde922c",
+              "name": "Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "creatives",
+                    ":crv_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "crv_id",
+                      "description": "(Required) id of the creative"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": \"not_found\",\n    \"message\": \"creative not found\",\n    \"status_code\": 404\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "ed0278bb-7229-4096-b667-823eaf005d90",
+          "name": "Update",
+          "request": {
+            "name": "Update",
+            "description": {
+              "content": "Update the details of an existing creative. You need only supply the unique identifier that was returned upon creative creation.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "creatives",
+                ":crv_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "crv_id",
+                  "description": "(Required) id of the creative"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/x-www-form-urlencoded"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PATCH",
+            "auth": null,
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": [
+                {
+                  "disabled": false,
+                  "key": "from",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "description",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "metadata",
+                  "value": "A}7LdSK_Pwdc'`ka`?}OO0w6W|$Fefj>9RgOf0Te_G8wvjGK&WP%K,]<[soT7N;8bl_jGp!e3!b!|biCOKo:Q.$!+sSQeKVYLM_J]%;HKgE9_:xoSZ3.Ee,(|7"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "811e8c35-e3d3-4338-b1af-05b8fae29372",
+              "name": "Returns a creative object",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "creatives",
+                    ":crv_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "crv_id",
+                      "description": "(Required) id of the creative"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "disabled": false,
+                      "key": "description",
+                      "value": "Test creative"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"crv_2a3b096c409b32c\",\n  \"description\": \"Our 4x6 postcard creative\",\n  \"from\": \"adr_210a8d4b0b76d77b\",\n  \"resource_type\": \"postcard\",\n  \"details\": {},\n  \"metadata\": {},\n  \"template_preview_urls\": {},\n  \"template_previews\": [],\n  \"campaigns\": [],\n  \"date_created\": \"2017-09-05T17:47:53.767Z\",\n  \"date_modified\": \"2017-09-05T17:47:53.767Z\",\n  \"object\": \"creative\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f84833d8-984f-4b1c-8ade-f61ec8953794",
+              "name": "Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "creatives",
+                    ":crv_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "crv_id",
+                      "description": "(Required) id of the creative"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "disabled": false,
+                      "key": "description",
+                      "value": "Test creative"
+                    }
+                  ]
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"code\": \"not_found\",\n    \"message\": \"creative not found\",\n    \"status_code\": 404\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.lob.com/v1",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "basic",
+    "basic": [
+      {
+        "key": "username",
+        "value": "{{basicAuthUsername}}"
+      },
+      {
+        "key": "password",
+        "value": "{{basicAuthPassword}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "bbb8d0ab-79f7-48b3-accb-325c1e9b4f35",
+    "name": "Lob Crv_id API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Experience direct mail like never before, with unmatched personalization and scalability \u0014 all in one intuitive platform.\n\nContact Support:\n Name: Lob Developer Experience\n Email: lob-openapi@lob.com",
+      "type": "text/plain"
+    }
+  }
+}

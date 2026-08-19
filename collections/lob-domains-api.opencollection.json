@@ -1,0 +1,109 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Lob Domains API",
+    "version": "1.20.2"
+  },
+  "request": {
+    "auth": {
+      "type": "basic",
+      "username": "{{username}}",
+      "password": "{{password}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Domains",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Retrieve a domain",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.lob.com/v1/domains/:domain_id",
+            "params": [
+              {
+                "name": "domain_id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier for a domain."
+              }
+            ]
+          },
+          "docs": "Retrieve details for a single domain."
+        },
+        {
+          "info": {
+            "name": "Delete a Domain",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.lob.com/v1/domains/:domain_id",
+            "params": [
+              {
+                "name": "domain_id",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier for a domain."
+              }
+            ]
+          },
+          "docs": "Delete a registered domain. This operation can only be performed if all associated links with the domain are deleted."
+        },
+        {
+          "info": {
+            "name": "List all domains",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.lob.com/v1/domains",
+            "params": [
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "How many results to return."
+              },
+              {
+                "name": "before/after",
+                "value": "",
+                "type": "query",
+                "description": "`before` and `after` are both optional but only one of them can be in the query at a time.\n"
+              },
+              {
+                "name": "status",
+                "value": "",
+                "type": "query",
+                "description": "Filter domains by their configuration status."
+              }
+            ]
+          },
+          "docs": "Retrieve a list of all created domains."
+        },
+        {
+          "info": {
+            "name": "Create Domain",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.lob.com/v1/domains",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Add a new custom domain that can be used to create custom links."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}
