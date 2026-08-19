@@ -27,7 +27,7 @@ access: 3rd-Party
 position: Consuming
 created: '2024-07-02'
 modified: '2026-08-08'
-specificationVersion: '0.19'
+specificationVersion: '0.23'
 apis:
 - aid: lob:lob-accounts-api
   name: Lob Accounts API
