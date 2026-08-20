@@ -34,6 +34,8 @@ apis:
   description: The Accounts API from Lob — 1 operation(s) for accounts.
   humanURL: https://docs.lob.com/
   tags:
+  - Account
+  tags_raw:
   - Accounts
   properties:
   - type: OpenAPI
@@ -61,6 +63,8 @@ apis:
   description: The Bank  Accounts API from Lob — 1 operation(s) for bank  accounts.
   humanURL: https://docs.lob.com/
   tags:
+  - Bank Accounts
+  tags_raw:
   - Bank  Accounts
   properties:
   - type: OpenAPI
@@ -72,6 +76,8 @@ apis:
   description: The Bank_id API from Lob — 2 operation(s) for bank_id.
   humanURL: https://docs.lob.com/
   tags:
+  - BankID
+  tags_raw:
   - Bank_id
   properties:
   - type: OpenAPI
@@ -94,6 +100,8 @@ apis:
   description: The Billing  Groups API from Lob — 1 operation(s) for billing  groups.
   humanURL: https://docs.lob.com/
   tags:
+  - Billing Groups
+  tags_raw:
   - Billing  Groups
   properties:
   - type: OpenAPI
@@ -254,6 +262,8 @@ apis:
   description: The Exports API from Lob — 2 operation(s) for exports.
   humanURL: https://docs.lob.com/
   tags:
+  - Export
+  tags_raw:
   - Exports
   properties:
   - type: OpenAPI
@@ -265,6 +275,8 @@ apis:
   description: The Files API from Lob — 1 operation(s) for files.
   humanURL: https://docs.lob.com/
   tags:
+  - File
+  tags_raw:
   - Files
   properties:
   - type: OpenAPI
@@ -347,6 +359,8 @@ apis:
   description: The Orders API from Lob — 2 operation(s) for orders.
   humanURL: https://docs.lob.com/
   tags:
+  - Order
+  tags_raw:
   - Orders
   properties:
   - type: OpenAPI
@@ -385,6 +399,8 @@ apis:
   description: The Q R  Codes API from Lob — 1 operation(s) for q r  codes.
   humanURL: https://docs.lob.com/
   tags:
+  - QR Codes
+  tags_raw:
   - Q R  Codes
   properties:
   - type: OpenAPI
@@ -418,6 +434,8 @@ apis:
   description: The Self  Mailers API from Lob — 1 operation(s) for self  mailers.
   humanURL: https://docs.lob.com/
   tags:
+  - Self-Mailers
+  tags_raw:
   - Self  Mailers
   properties:
   - type: OpenAPI
@@ -498,6 +516,8 @@ apis:
   description: The U R L  Shortener API from Lob — 2 operation(s) for u r l  shortener.
   humanURL: https://docs.lob.com/
   tags:
+  - URL Shortener
+  tags_raw:
   - U R L  Shortener
   properties:
   - type: OpenAPI
