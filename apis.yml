@@ -44,12 +44,13 @@ apis:
     url: https://docs.lob.com/
 - aid: lob:lob-addresses-api
   name: Lob Addresses API
-  description: 'To add an address to your address book, you create a new address object. You can retrieve
-    and delete individual
+  description: >-
+    To add an address to your address book, you create a new address object. You can retrieve and delete
+    individual
 
     addresses as well as get a list of addresses. Addresses are identified by a unique random ID.
 
-    <div class="back-to-top" ><a href="#" onclick="toTopLink()">back to top</a></div>'
+    <div class="back-to-top" ><a href="#" onclick="toTopLink()">back to top</a></div>
   humanURL: https://docs.lob.com/
   tags:
   - Addresses
@@ -143,14 +144,15 @@ apis:
     url: https://docs.lob.com/
 - aid: lob:lob-buckslips-api
   name: Lob Buckslips API
-  description: 'The Buckslips endpoint allows you to easily create buckslips that can later be used as
-    add-ons for Letters Campaigns. Note that a Letter Campaign with Buckslip add-on requires a minimum
-    send quantity of 5,000 letters.
+  description: >-
+    The Buckslips endpoint allows you to easily create buckslips that can later be used as add-ons for
+    Letters Campaigns. Note that a Letter Campaign with Buckslip add-on requires a minimum send quantity
+    of 5,000 letters.
 
     The API provides endpoints for creating buckslips, retrieving individual buckslips, creating buckslip
     orders, and retrieving a list of buckslips.
 
-    <div class="back-to-top" ><a href="#" onclick="toTopLink()">back to top</a></div>'
+    <div class="back-to-top" ><a href="#" onclick="toTopLink()">back to top</a></div>
   humanURL: https://docs.lob.com/
   tags:
   - Buckslips
@@ -172,13 +174,14 @@ apis:
     url: https://docs.lob.com/
 - aid: lob:lob-campaigns-api
   name: Lob Campaigns API
-  description: 'The campaigns endpoint allows you to create and view campaigns that can be used to send
-    multiple letters or postcards.
+  description: >-
+    The campaigns endpoint allows you to create and view campaigns that can be used to send multiple letters
+    or postcards.
 
     The API provides endpoints for creating campaigns, updating campaigns, retrieving individual campaigns,
     listing campaigns, and deleting
 
-    campaigns.'
+    campaigns.
   humanURL: https://docs.lob.com/
   tags:
   - Campaigns
@@ -189,12 +192,13 @@ apis:
     url: https://docs.lob.com/
 - aid: lob:lob-cards-api
   name: Lob Cards API
-  description: 'The cards endpoint allows you to easily create cards that can later be affixed to Letters.
+  description: >-
+    The cards endpoint allows you to easily create cards that can later be affixed to Letters.
 
     The API provides endpoints for creating cards, retrieving individual cards, creating card orders,
     and retrieving a list of cards.
 
-    <div class="back-to-top" ><a href="#" onclick="toTopLink()">back to top</a></div>'
+    <div class="back-to-top" ><a href="#" onclick="toTopLink()">back to top</a></div>
   humanURL: https://docs.lob.com/
   tags:
   - Cards
@@ -205,11 +209,12 @@ apis:
     url: https://docs.lob.com/
 - aid: lob:lob-checks-api
   name: Lob Checks API
-  description: 'Checks allow you to send payments via physical checks. The API provides endpoints
+  description: >-
+    Checks allow you to send payments via physical checks. The API provides endpoints
 
     for creating checks, retrieving individual checks, canceling checks, and retrieving a list of checks.
 
-    <div class="back-to-top" ><a href="#" onclick="toTopLink()">back to top</a></div>'
+    <div class="back-to-top" ><a href="#" onclick="toTopLink()">back to top</a></div>
   humanURL: https://docs.lob.com/
   tags:
   - Checks
@@ -220,13 +225,13 @@ apis:
     url: https://docs.lob.com/
 - aid: lob:lob-creatives-api
   name: Lob Creatives API
-  description: 'The creatives endpoint allows you to create and view creatives. Creatives are used to
-    create
+  description: >-
+    The creatives endpoint allows you to create and view creatives. Creatives are used to create
 
     reusable letter and postcard templates. The API provides endpoints for creating creatives, updating
     creatives,
 
-    retrieving individual creatives, and deleting creatives.'
+    retrieving individual creatives, and deleting creatives.
   humanURL: https://docs.lob.com/
   tags:
   - Creatives
@@ -296,7 +301,8 @@ apis:
     url: https://docs.lob.com/
 - aid: lob:lob-informed-delivery-campaign-api
   name: Lob Informed  Delivery  Campaign API
-  description: The Informed  Delivery  Campaign API from Lob — 1 operation(s) for informed  delivery  campaign.
+  description: >-
+    The Informed  Delivery  Campaign API from Lob — 1 operation(s) for informed  delivery  campaign.
   humanURL: https://docs.lob.com/
   tags:
   - Informed  Delivery  Campaign
@@ -318,12 +324,12 @@ apis:
     url: https://docs.lob.com/
 - aid: lob:lob-letters-api
   name: Lob Letters API
-  description: 'The letters endpoint allows you to easily print and mail letters. The API provides endpoints
-    for
+  description: >-
+    The letters endpoint allows you to easily print and mail letters. The API provides endpoints for
 
     creating letters, retrieving individual letters, canceling letters, and retrieving a list of letters.
 
-    <div class="back-to-top" ><a href="#" onclick="toTopLink()">back to top</a></div>'
+    <div class="back-to-top" ><a href="#" onclick="toTopLink()">back to top</a></div>
   humanURL: https://docs.lob.com/
   tags:
   - Letters
@@ -369,12 +375,13 @@ apis:
     url: https://docs.lob.com/
 - aid: lob:lob-postcards-api
   name: Lob Postcards API
-  description: 'The postcards endpoint allows you to easily print and mail postcards. The API provides
-    endpoints for creating postcards,
+  description: >-
+    The postcards endpoint allows you to easily print and mail postcards. The API provides endpoints for
+    creating postcards,
 
     retrieving individual postcards, canceling postcards, and retrieving a list of postcards.
 
-    <div class="back-to-top" ><a href="#" onclick="toTopLink()">back to top</a></div>'
+    <div class="back-to-top" ><a href="#" onclick="toTopLink()">back to top</a></div>
   humanURL: https://docs.lob.com/
   tags:
   - Postcards
@@ -420,7 +427,8 @@ apis:
     url: https://docs.lob.com/
 - aid: lob:lob-reverse-geocode-lookups-api
   name: Lob Reverse  Geocode  Lookups API
-  description: The Reverse  Geocode  Lookups API from Lob — 1 operation(s) for reverse  geocode  lookups.
+  description: >-
+    The Reverse  Geocode  Lookups API from Lob — 1 operation(s) for reverse  geocode  lookups.
   humanURL: https://docs.lob.com/
   tags:
   - Reverse  Geocode  Lookups
@@ -499,10 +507,11 @@ apis:
     url: https://docs.lob.com/
 - aid: lob:lob-templates-api
   name: Lob Templates API
-  description: 'These API endpoints allow you to create, retrieve, update and delete reusable HTML templates
-    for use with the Print & Mail API.
+  description: >-
+    These API endpoints allow you to create, retrieve, update and delete reusable HTML templates for use
+    with the Print & Mail API.
 
-    <div class="back-to-top" ><a href="#" onclick="toTopLink()">back to top</a></div>'
+    <div class="back-to-top" ><a href="#" onclick="toTopLink()">back to top</a></div>
   humanURL: https://docs.lob.com/
   tags:
   - Templates
@@ -548,8 +557,8 @@ apis:
     url: https://docs.lob.com/
 - aid: lob:lob-uploads-api
   name: Lob Uploads API
-  description: 'The uploads endpoint allows you to upload audience files that are then associated with
-    a given campaign.
+  description: >-
+    The uploads endpoint allows you to upload audience files that are then associated with a given campaign.
 
     At this time, only CSV files are allowed. The API provides endpoints for creating uploads, uploading
     audience files,
@@ -557,7 +566,7 @@ apis:
     and marking uploaded files as ready for processing. The API also provides endpoints for downloading
     files that
 
-    describe the results, both successful and not, of the processing.'
+    describe the results, both successful and not, of the processing.
   humanURL: https://docs.lob.com/
   tags:
   - Uploads
@@ -610,6 +619,24 @@ apis:
     url: openapi/lob-zip-lookups-api-openapi.yml
   - type: Documentation
     url: https://docs.lob.com/
+- aid: lob:lob-events-api
+  name: Lob Events API
+  description: The Events API from Lob — 0 operation(s) for events.
+  humanURL: https://docs.lob.com/
+  tags:
+  - Events
+  properties:
+  - type: OpenAPI
+    url: openapi/lob-events-api-openapi.yml
+- aid: lob:lob-tracking-events-api
+  name: Lob Tracking Events API
+  description: The Tracking Events API from Lob — 0 operation(s) for tracking events.
+  humanURL: https://docs.lob.com/
+  tags:
+  - Tracking Events
+  properties:
+  - type: OpenAPI
+    url: openapi/lob-tracking-events-api-openapi.yml
 common:
 - type: TrustCenter
   url: security/lob-trust-center.yml
