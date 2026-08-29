@@ -5,6 +5,18 @@ description: Lob is a software platform that automates the process of sending di
   bringing the convenience of email marketing to traditional mail by integrating with existing CRM systems
   and automating printing, addressing, and postage processes.
 kind: contract
+deliveryModel:
+  model: saas
+  open_source: false
+  commercial: true
+  callable_host: true
+  label: Hosted service · you call their endpoint
+  confidence: high
+  source:
+  - openapi
+  - pricing
+  generated: '2026-08-28'
+  method: derived
 accessModel:
   pricing: freemium
   onboarding: unknown
@@ -638,6 +650,9 @@ apis:
   - type: OpenAPI
     url: openapi/lob-tracking-events-api-openapi.yml
 common:
+- type: CapabilityMap
+  url: capabilities/lob-capability-edges.yml
+  name: Lob Business Capability Map
 - type: TrustCenter
   url: security/lob-trust-center.yml
 - type: DomainSecurity
