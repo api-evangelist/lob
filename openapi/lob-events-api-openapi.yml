@@ -1,0 +1,150 @@
+openapi: 3.2.0
+info:
+  title: Lob Events API
+  version: 1.20.2
+  contact:
+    name: Lob Developer Experience
+    url: https://support.lob.com/
+    email: lob-openapi@lob.com
+  license:
+    name: MIT
+    url: https://mit-license.org/
+  termsOfService: https://www.lob.com/legal
+  description: 'Operations tagged Events across 46 of this provider''s published API definitions: lob-accounts-api-openapi.yml, lob-addresses-api-openapi.yml, lob-bank-accounts-api-openapi.yml, lob-bank-id-api-openapi.yml, lob-bg-id-api-openapi.yml, lob-billing-groups-api-openapi.yml, lob-booklet-id-api-openapi.yml, lob-booklets-api-openapi.yml, lob-buckslip-id-api-openapi.yml, lob-buckslips-api-openapi.yml, lob-bulk-api-openapi.yml, lob-campaigns-api-openapi.yml, lob-cards-api-openapi.yml, lob-checks-api-openapi.yml, lob-creatives-api-openapi.yml, lob-crv-id-api-openapi.yml, lob-domains-api-openapi.yml, lob-exports-api-openapi.yml, lob-files-api-openapi.yml, lob-identity-validation-api-openapi.yml, lob-informed-delivery-campaign-api-openapi.yml, lob-intl-verifications-api-openapi.yml, lob-letters-api-openapi.yml, lob-links-api-openapi.yml, lob-ltr-id-api-openapi.yml, lob-orders-api-openapi.yml, lob-postcards-api-openapi.yml, lob-psc-id-api-openapi.yml, lob-q-r-codes-api-openapi.yml, lob-reports-api-openapi.yml, lob-reverse-geocode-lookups-api-openapi.yml, lob-self-mailers-api-openapi.yml, lob-send-api-openapi.yml, lob-sfm-id-api-openapi.yml, lob-snap-pack-id-api-openapi.yml, lob-snap-packs-api-openapi.yml, lob-template-versions-api-openapi.yml, lob-templates-api-openapi.yml, lob-u-r-l-shortener-api-openapi.yml, lob-u-s-autocompletions-api-openapi.yml, lob-u-s-verifications-api-openapi.yml, lob-uploads-api-openapi.yml, lob-usps-campaign-id-api-openapi.yml, lob-verify-api-openapi.yml, lob-versions-api-openapi.yml, lob-zip-lookups-api-openapi.yml. Each path carries the servers of the definition it was published in.'
+servers:
+- url: https://api.lob.com/v1
+  description: production
+security:
+- basicAuth: []
+tags:
+- name: Events
+paths: {}
+webhooks:
+  events:
+    post:
+      summary: Events
+      description: Information about an event
+      operationId: event
+      tags:
+      - Events
+      responses:
+        '200':
+          $ref: '#/components/responses/events'
+    servers:
+    - url: https://api.lob.com/v1
+      description: production
+components:
+  securitySchemes:
+    basicAuth:
+      type: http
+      scheme: basic
+x-refined-from:
+- lob-accounts-api-openapi.yml
+- lob-addresses-api-openapi.yml
+- lob-bank-accounts-api-openapi.yml
+- lob-bank-id-api-openapi.yml
+- lob-bg-id-api-openapi.yml
+- lob-billing-groups-api-openapi.yml
+- lob-booklet-id-api-openapi.yml
+- lob-booklets-api-openapi.yml
+- lob-buckslip-id-api-openapi.yml
+- lob-buckslips-api-openapi.yml
+- lob-bulk-api-openapi.yml
+- lob-campaigns-api-openapi.yml
+- lob-cards-api-openapi.yml
+- lob-checks-api-openapi.yml
+- lob-creatives-api-openapi.yml
+- lob-crv-id-api-openapi.yml
+- lob-domains-api-openapi.yml
+- lob-exports-api-openapi.yml
+- lob-files-api-openapi.yml
+- lob-identity-validation-api-openapi.yml
+- lob-informed-delivery-campaign-api-openapi.yml
+- lob-intl-verifications-api-openapi.yml
+- lob-letters-api-openapi.yml
+- lob-links-api-openapi.yml
+- lob-ltr-id-api-openapi.yml
+- lob-orders-api-openapi.yml
+- lob-postcards-api-openapi.yml
+- lob-psc-id-api-openapi.yml
+- lob-q-r-codes-api-openapi.yml
+- lob-reports-api-openapi.yml
+- lob-reverse-geocode-lookups-api-openapi.yml
+- lob-self-mailers-api-openapi.yml
+- lob-send-api-openapi.yml
+- lob-sfm-id-api-openapi.yml
+- lob-snap-pack-id-api-openapi.yml
+- lob-snap-packs-api-openapi.yml
+- lob-template-versions-api-openapi.yml
+- lob-templates-api-openapi.yml
+- lob-u-r-l-shortener-api-openapi.yml
+- lob-u-s-autocompletions-api-openapi.yml
+- lob-u-s-verifications-api-openapi.yml
+- lob-uploads-api-openapi.yml
+- lob-usps-campaign-id-api-openapi.yml
+- lob-verify-api-openapi.yml
+- lob-versions-api-openapi.yml
+- lob-zip-lookups-api-openapi.yml
+x-tagGroups:
+- name: Overview
+  tags:
+  - Introduction
+  - Authentication
+  - Getting Started
+  - SDKs and Tools
+- name: Address Book
+  tags:
+  - Addresses
+  - National Change of Address
+- name: Print and Mail API
+  tags:
+  - Postcards
+  - Self Mailers
+  - Letters
+  - Checks
+  - Snap Packs
+  - Booklets
+  - Bank Accounts
+  - Templates
+  - Template Versions
+  - Template Design
+  - Manage Mail
+- name: Campaigns API (BETA)
+  tags:
+  - Campaigns
+  - Creatives
+  - Uploads
+- name: Informed Delivery Campaign API
+  tags:
+  - Informed Delivery Campaign
+- name: Address Verification API
+  tags:
+  - US Verifications
+  - US Verification Types
+  - US Autocompletions
+  - Reverse Geocode Lookups
+  - Zip Lookups
+  - Identity Validation
+  - Intl Verifications
+- name: Webhooks
+  tags:
+  - Webhooks
+  - Events
+  - Tracking Events
+- name: Special Features
+  tags:
+  - Billing Groups
+  - Buckslips
+  - Buckslip Orders
+  - Cards
+  - Card Orders
+  - QR Codes
+  - URL Shortener
+- name: Appendix
+  tags:
+  - Beta Program
+  - Errors
+  - Rate Limiting
+  - Requests and Responses
+  - Test and Live Environments
+  - Versioning and Changelog
