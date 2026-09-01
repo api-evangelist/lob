@@ -76,7 +76,7 @@ apis:
   description: The Bank  Accounts API from Lob — 1 operation(s) for bank  accounts.
   humanURL: https://docs.lob.com/
   tags:
-  - Bank  Accounts
+  - Bank Accounts
   tags_raw:
   - Bank  Accounts
   properties:
@@ -89,7 +89,7 @@ apis:
   description: The Bank_id API from Lob — 2 operation(s) for bank_id.
   humanURL: https://docs.lob.com/
   tags:
-  - Bank_id
+  - BankID
   tags_raw:
   - Bank_id
   properties:
@@ -113,7 +113,7 @@ apis:
   description: The Billing  Groups API from Lob — 1 operation(s) for billing  groups.
   humanURL: https://docs.lob.com/
   tags:
-  - Billing  Groups
+  - Billing Groups
   tags_raw:
   - Billing  Groups
   properties:
@@ -418,7 +418,7 @@ apis:
   description: The Q R  Codes API from Lob — 1 operation(s) for q r  codes.
   humanURL: https://docs.lob.com/
   tags:
-  - Q R  Codes
+  - QR Codes
   tags_raw:
   - Q R  Codes
   properties:
@@ -454,7 +454,7 @@ apis:
   description: The Self  Mailers API from Lob — 1 operation(s) for self  mailers.
   humanURL: https://docs.lob.com/
   tags:
-  - Self  Mailers
+  - Self-Mailers
   tags_raw:
   - Self  Mailers
   properties:
@@ -537,7 +537,7 @@ apis:
   description: The U R L  Shortener API from Lob — 2 operation(s) for u r l  shortener.
   humanURL: https://docs.lob.com/
   tags:
-  - U R L  Shortener
+  - URL Shortener
   tags_raw:
   - U R L  Shortener
   properties:
