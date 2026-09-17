@@ -413,19 +413,6 @@ apis:
     url: openapi/lob-psc-id-api-openapi.yml
   - type: Documentation
     url: https://docs.lob.com/
-- aid: lob:lob-q-r-codes-api
-  name: Lob Q R  Codes API
-  description: The Q R  Codes API from Lob — 1 operation(s) for q r  codes.
-  humanURL: https://docs.lob.com/
-  tags:
-  - QR Codes
-  tags_raw:
-  - Q R  Codes
-  properties:
-  - type: OpenAPI
-    url: openapi/lob-q-r-codes-api-openapi.yml
-  - type: Documentation
-    url: https://docs.lob.com/
 - aid: lob:lob-reports-api
   name: Lob Reports API
   description: The Reports API from Lob — 1 operation(s) for reports.
@@ -530,19 +517,6 @@ apis:
   properties:
   - type: OpenAPI
     url: openapi/lob-templates-api-openapi.yml
-  - type: Documentation
-    url: https://docs.lob.com/
-- aid: lob:lob-u-r-l-shortener-api
-  name: Lob U R L  Shortener API
-  description: The U R L  Shortener API from Lob — 2 operation(s) for u r l  shortener.
-  humanURL: https://docs.lob.com/
-  tags:
-  - URL Shortener
-  tags_raw:
-  - U R L  Shortener
-  properties:
-  - type: OpenAPI
-    url: openapi/lob-u-r-l-shortener-api-openapi.yml
   - type: Documentation
     url: https://docs.lob.com/
 - aid: lob:lob-u-s-autocompletions-api
@@ -651,6 +625,28 @@ apis:
   properties:
   - type: OpenAPI
     url: openapi/lob-tracking-events-api-openapi.yml
+- aid: lob:lob-qr-codes-api
+  name: Lob QR Codes API
+  description: The QR Codes API from Lob — 1 operation(s) for qr codes.
+  humanURL: https://docs.lob.com/
+  tags:
+  - QR Codes
+  properties:
+  - type: OpenAPI
+    url: openapi/lob-qr-codes-api-openapi.yml
+  - type: Documentation
+    url: https://docs.lob.com/
+- aid: lob:lob-url-shortener-api
+  name: Lob URL Shortener API
+  description: The URL Shortener API from Lob — 2 operation(s) for url shortener.
+  humanURL: https://docs.lob.com/
+  tags:
+  - URL Shortener
+  properties:
+  - type: OpenAPI
+    url: openapi/lob-url-shortener-api-openapi.yml
+  - type: Documentation
+    url: https://docs.lob.com/
 common:
 - type: CapabilityMap
   url: capabilities/lob-capability-edges.yml
