@@ -246,6 +246,8 @@ apis:
     retrieving individual creatives, and deleting creatives.
   humanURL: https://docs.lob.com/
   tags:
+  - Creative
+  tags_raw:
   - Creatives
   properties:
   - type: OpenAPI
@@ -641,6 +643,8 @@ apis:
   description: The URL Shortener API from Lob — 2 operation(s) for url shortener.
   humanURL: https://docs.lob.com/
   tags:
+  - URL Shorteners
+  tags_raw:
   - URL Shortener
   properties:
   - type: OpenAPI
