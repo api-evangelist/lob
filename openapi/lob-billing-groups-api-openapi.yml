@@ -1,8 +1,8 @@
-openapi: 3.0.3
+openapi: 3.2.0
 info:
-  title: Lob Billing  Groups API
+  title: Lob Billing Groups API
   version: 1.20.2
-  description: "Experience direct mail like never before, with unmatched personalization and scalability \x14 all in one intuitive platform."
+  description: Experience direct mail like never before, with unmatched personalization and scalability all in one intuitive platform.
   license:
     name: MIT
     url: https://mit-license.org/
@@ -17,7 +17,7 @@ servers:
 security:
 - basicAuth: []
 tags:
-- name: Billing  Groups
+- name: Billing Groups
 paths:
   /billing_groups:
     get:
@@ -25,7 +25,7 @@ paths:
       summary: List
       description: Returns a list of your billing_groups. The billing_groups are returned sorted by creation date, with the most recently created billing_groups appearing first.
       tags:
-      - Billing  Groups
+      - Billing Groups
       parameters:
       - $ref: '#/components/parameters/limit'
       - $ref: '#/components/parameters/offset'
@@ -109,7 +109,7 @@ paths:
       summary: Create
       description: Creates a new billing_group with the provided properties.
       tags:
-      - Billing  Groups
+      - Billing Groups
       requestBody:
         required: true
         content:
@@ -154,11 +154,120 @@ paths:
         source: "var context = context.Background()\ncontext = context.WithValue(suite.ctx, lob.ContextBasicAuth, lob.BasicAuth{UserName: os.Getenv(\"<YOUR_API_KEY>\")})\n\nvar apiClient = *lob.NewAPIClient(configuration)\n\n\nvar bgCreate = *lob.NewBillingGroupEditable()\nbgCreate.SetDescription(\"Usage group used for the Marketing Department's resource sends\")\nbgCreate.SetName(\"Marketing Department\")\n\n\n\ncreatedbg, _, err := apiClient.BillingGroupsApi.Create(context).BillingGroupEditable(bgCreate).Execute()\n\nif err != nil {\n    return err\n}\n"
         label: GO
 components:
+  responses:
+    post_billing_group:
+      description: Returns a billing group object
+      headers:
+        ratelimit-limit:
+          $ref: '#/components/headers/ratelimit-limit'
+        ratelimit-remaining:
+          $ref: '#/components/headers/ratelimit-remaining'
+        ratelimit-reset:
+          $ref: '#/components/headers/ratelimit-reset'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/billing_group'
+          example:
+            id: bg_c94e83ca2cd5121
+            name: Marketing Dept
+            description: Usage group used for the Marketing Dept resource sends
+            date_created: '2017-11-07T22:56:10.962Z'
+            date_modified: '2017-11-07T22:56:10.962Z'
+            object: billing_group
+    billing_group_error:
+      description: Error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/error'
+          example:
+            error:
+              code: invalid
+              message: message about incorrect parameter
+              status_code: 422
+    billing_group_list_error:
+      description: Error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/error'
+          example:
+            error:
+              code: not_found
+              message: billing_group not found
+              status_code: 404
   schemas:
+    list:
+      type: object
+      description: Multiple items returned in order
+      properties:
+        object:
+          $ref: '#/components/schemas/object'
+        next_url:
+          type:
+          - string
+          - 'null'
+          description: Url of next page of items in list.
+        previous_url:
+          type:
+          - string
+          - 'null'
+          description: Url of previous page of items in list.
+        count:
+          $ref: '#/components/schemas/count'
+        total_count:
+          type: integer
+          description: Indicates the total number of records. Provided when the request specifies an "include" query parameter
+    billing_group_editable:
+      allOf:
+      - $ref: '#/components/schemas/billing_group_base'
+      - required:
+        - name
+    date_filter:
+      type: object
+      additionalProperties:
+        type: string
+      description: 'Filter by ISO-8601 date or datetime, e.g. `{ "gt": "2012-01-01", "lt": "2012-01-31T12:34:56Z" }` where `gt` is >, `lt` is <, `gte` is e, and `lte` is d.'
+    name:
+      type: string
+      description: Name of the billing group.
+      maxLength: 255
+    failure_status_code:
+      type: integer
+      enum:
+      - 401
+      - 403
+      - 404
+      - 413
+      - 422
+      - 429
+      - 500
+      description: "A conventional HTTP status code:\n  * `401` - Authorization error with your API key or account\n  * `403` - Forbidden error with your API key or account\n  * `404` - The requested item does not exist\n  * `413` - Payload too large\n  * `422` - The query or body parameters did not pass validation\n  * `429` - Too many requests have been sent with an API key in a given amount of time\n  * `500` - An internal server error occurred, please contact support@lob.com\n"
     date_created:
       type: string
       format: date-time
       description: A timestamp in ISO 8601 format of the date the resource was created.
+    count:
+      type: integer
+      description: number of resources in a set
+    billing_group:
+      allOf:
+      - $ref: '#/components/schemas/billing_group_base'
+      - type: object
+        properties:
+          id:
+            $ref: '#/components/schemas/bg_id'
+          date_created:
+            $ref: '#/components/schemas/date_created'
+          date_modified:
+            $ref: '#/components/schemas/date_modified'
+          object:
+            type: string
+            description: Value is resource type.
+            enum:
+            - billing_group
+            default: billing_group
     error:
       type: object
       description: Lob uses RESTful HTTP response codes to indicate success or failure of an API request. In general, 2xx indicates success, 4xx indicate an input error, and 5xx indicates an error on Lob's end.
@@ -337,14 +446,6 @@ components:
                 * `unauthorized_token` - 401: token isn''t authorized.
 
                 '
-    count:
-      type: integer
-      description: number of resources in a set
-    date_filter:
-      type: object
-      additionalProperties:
-        type: string
-      description: 'Filter by ISO-8601 date or datetime, e.g. `{ "gt": "2012-01-01", "lt": "2012-01-31T12:34:56Z" }` where `gt` is >, `lt` is <, `gte` is e, and `lte` is d.'
     billing_group_base:
       type: object
       properties:
@@ -352,86 +453,22 @@ components:
           $ref: '#/components/schemas/bg_description'
         name:
           $ref: '#/components/schemas/name'
-    bg_id:
-      type: string
-      description: Unique identifier prefixed with `bg_`.
-      pattern: ^bg_[a-zA-Z0-9]+$
-    bg_description:
-      type: string
-      description: Description of the billing group.
-      maxLength: 255
-    failure_status_code:
-      type: integer
-      enum:
-      - 401
-      - 403
-      - 404
-      - 413
-      - 422
-      - 429
-      - 500
-      description: "A conventional HTTP status code:\n  * `401` - Authorization error with your API key or account\n  * `403` - Forbidden error with your API key or account\n  * `404` - The requested item does not exist\n  * `413` - Payload too large\n  * `422` - The query or body parameters did not pass validation\n  * `429` - Too many requests have been sent with an API key in a given amount of time\n  * `500` - An internal server error occurred, please contact support@lob.com\n"
-    name:
-      type: string
-      description: Name of the billing group.
-      maxLength: 255
-    object:
-      type: string
-      description: Value is resource type.
     date_modified:
       type: string
       format: date-time
       description: A timestamp in ISO 8601 format of the date the resource was last modified.
-    billing_group:
-      allOf:
-      - $ref: '#/components/schemas/billing_group_base'
-      - type: object
-        properties:
-          id:
-            $ref: '#/components/schemas/bg_id'
-          date_created:
-            $ref: '#/components/schemas/date_created'
-          date_modified:
-            $ref: '#/components/schemas/date_modified'
-          object:
-            type: string
-            description: Value is resource type.
-            enum:
-            - billing_group
-            default: billing_group
-    list:
-      type: object
-      description: Multiple items returned in order
-      properties:
-        object:
-          $ref: '#/components/schemas/object'
-        next_url:
-          type: string
-          description: Url of next page of items in list.
-          nullable: true
-        previous_url:
-          type: string
-          description: Url of previous page of items in list.
-          nullable: true
-        count:
-          $ref: '#/components/schemas/count'
-        total_count:
-          type: integer
-          description: Indicates the total number of records. Provided when the request specifies an "include" query parameter
-    billing_group_editable:
-      allOf:
-      - $ref: '#/components/schemas/billing_group_base'
-      - required:
-        - name
+    bg_description:
+      type: string
+      description: Description of the billing group.
+      maxLength: 255
+    object:
+      type: string
+      description: Value is resource type.
+    bg_id:
+      type: string
+      description: Unique identifier prefixed with `bg_`.
+      pattern: ^bg_[a-zA-Z0-9]+$
   parameters:
-    date_modified:
-      in: query
-      name: date_modified
-      description: 'Filter by date modified. Accepted formats are ISO-8601 date or datetime, e.g. `{ "gt": "2012-01-01", "lt": "2012-01-31T12:34:56Z" }` where `gt` is >, `lt` is <, `gte` is e, and `lte` is d.'
-      schema:
-        $ref: '#/components/schemas/date_filter'
-      style: deepObject
-      explode: true
     offset:
       in: query
       name: offset
@@ -470,7 +507,20 @@ components:
         default: 10
         maximum: 100
         example: 10
+    date_modified:
+      in: query
+      name: date_modified
+      description: 'Filter by date modified. Accepted formats are ISO-8601 date or datetime, e.g. `{ "gt": "2012-01-01", "lt": "2012-01-31T12:34:56Z" }` where `gt` is >, `lt` is <, `gte` is e, and `lte` is d.'
+      schema:
+        $ref: '#/components/schemas/date_filter'
+      style: deepObject
+      explode: true
   headers:
+    ratelimit-limit:
+      description: The rate limit for a given endpoint.
+      schema:
+        type: integer
+        example: 150
     ratelimit-reset:
       description: 'The time at which the rate limit window resets in  <a href="https://en.wikipedia.org/wiki/Unix_time" target="_blank">UTC epoch seconds</a>
 
@@ -483,79 +533,10 @@ components:
       schema:
         type: integer
         example: 100
-    ratelimit-limit:
-      description: The rate limit for a given endpoint.
-      schema:
-        type: integer
-        example: 150
-  responses:
-    billing_group_list_error:
-      description: Error
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/error'
-          example:
-            error:
-              code: not_found
-              message: billing_group not found
-              status_code: 404
-    billing_group_error:
-      description: Error
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/error'
-          example:
-            error:
-              code: invalid
-              message: message about incorrect parameter
-              status_code: 422
-    post_billing_group:
-      description: Returns a billing group object
-      headers:
-        ratelimit-limit:
-          $ref: '#/components/headers/ratelimit-limit'
-        ratelimit-remaining:
-          $ref: '#/components/headers/ratelimit-remaining'
-        ratelimit-reset:
-          $ref: '#/components/headers/ratelimit-reset'
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/billing_group'
-          example:
-            id: bg_c94e83ca2cd5121
-            name: Marketing Dept
-            description: Usage group used for the Marketing Dept resource sends
-            date_created: '2017-11-07T22:56:10.962Z'
-            date_modified: '2017-11-07T22:56:10.962Z'
-            object: billing_group
   securitySchemes:
     basicAuth:
       type: http
       scheme: basic
-x-webhooks:
-  events:
-    post:
-      summary: Events
-      description: Information about an event
-      operationId: event
-      tags:
-      - Events
-      responses:
-        '200':
-          $ref: '#/components/responses/events'
-  tracking_events:
-    post:
-      summary: Tracking Events
-      description: Information about tracking events
-      operationId: tracking_event
-      tags:
-      - Tracking Events
-      responses:
-        '200':
-          $ref: '#/components/responses/tracking_events'
 x-tagGroups:
 - name: Overview
   tags:

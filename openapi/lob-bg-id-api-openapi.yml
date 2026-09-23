@@ -1,8 +1,8 @@
-openapi: 3.0.3
+openapi: 3.2.0
 info:
-  title: Lob Bg_id API
+  title: Lob Bg ID API
   version: 1.20.2
-  description: "Experience direct mail like never before, with unmatched personalization and scalability \x14 all in one intuitive platform."
+  description: Experience direct mail like never before, with unmatched personalization and scalability all in one intuitive platform.
   license:
     name: MIT
     url: https://mit-license.org/
@@ -111,14 +111,6 @@ paths:
           $ref: '#/components/responses/billing_group_error'
 components:
   schemas:
-    date_created:
-      type: string
-      format: date-time
-      description: A timestamp in ISO 8601 format of the date the resource was created.
-    bg_id:
-      type: string
-      description: Unique identifier prefixed with `bg_`.
-      pattern: ^bg_[a-zA-Z0-9]+$
     error:
       type: object
       description: Lob uses RESTful HTTP response codes to indicate success or failure of an API request. In general, 2xx indicates success, 4xx indicate an input error, and 5xx indicates an error on Lob's end.
@@ -297,6 +289,14 @@ components:
                 * `unauthorized_token` - 401: token isn''t authorized.
 
                 '
+    bg_description:
+      type: string
+      description: Description of the billing group.
+      maxLength: 255
+    name:
+      type: string
+      description: Name of the billing group.
+      maxLength: 255
     failure_status_code:
       type: integer
       enum:
@@ -308,10 +308,21 @@ components:
       - 429
       - 500
       description: "A conventional HTTP status code:\n  * `401` - Authorization error with your API key or account\n  * `403` - Forbidden error with your API key or account\n  * `404` - The requested item does not exist\n  * `413` - Payload too large\n  * `422` - The query or body parameters did not pass validation\n  * `429` - Too many requests have been sent with an API key in a given amount of time\n  * `500` - An internal server error occurred, please contact support@lob.com\n"
-    date_modified:
+    date_created:
       type: string
       format: date-time
-      description: A timestamp in ISO 8601 format of the date the resource was last modified.
+      description: A timestamp in ISO 8601 format of the date the resource was created.
+    billing_group_base:
+      type: object
+      properties:
+        description:
+          $ref: '#/components/schemas/bg_description'
+        name:
+          $ref: '#/components/schemas/name'
+    bg_id:
+      type: string
+      description: Unique identifier prefixed with `bg_`.
+      pattern: ^bg_[a-zA-Z0-9]+$
     billing_group:
       allOf:
       - $ref: '#/components/schemas/billing_group_base'
@@ -329,62 +340,11 @@ components:
             enum:
             - billing_group
             default: billing_group
-    bg_description:
+    date_modified:
       type: string
-      description: Description of the billing group.
-      maxLength: 255
-    billing_group_base:
-      type: object
-      properties:
-        description:
-          $ref: '#/components/schemas/bg_description'
-        name:
-          $ref: '#/components/schemas/name'
-    name:
-      type: string
-      description: Name of the billing group.
-      maxLength: 255
-  headers:
-    ratelimit-limit:
-      description: The rate limit for a given endpoint.
-      schema:
-        type: integer
-        example: 150
-    ratelimit-reset:
-      description: 'The time at which the rate limit window resets in  <a href="https://en.wikipedia.org/wiki/Unix_time" target="_blank">UTC epoch seconds</a>
-
-        '
-      schema:
-        type: integer
-        example: 1528749846
-    ratelimit-remaining:
-      description: The number of requests remaining in the current window.
-      schema:
-        type: integer
-        example: 100
+      format: date-time
+      description: A timestamp in ISO 8601 format of the date the resource was last modified.
   responses:
-    billing_group_list_error:
-      description: Error
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/error'
-          example:
-            error:
-              code: not_found
-              message: billing_group not found
-              status_code: 404
-    billing_group_error:
-      description: Error
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/error'
-          example:
-            error:
-              code: invalid
-              message: message about incorrect parameter
-              status_code: 422
     post_billing_group:
       description: Returns a billing group object
       headers:
@@ -405,31 +365,50 @@ components:
             date_created: '2017-11-07T22:56:10.962Z'
             date_modified: '2017-11-07T22:56:10.962Z'
             object: billing_group
+    billing_group_error:
+      description: Error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/error'
+          example:
+            error:
+              code: invalid
+              message: message about incorrect parameter
+              status_code: 422
+    billing_group_list_error:
+      description: Error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/error'
+          example:
+            error:
+              code: not_found
+              message: billing_group not found
+              status_code: 404
+  headers:
+    ratelimit-remaining:
+      description: The number of requests remaining in the current window.
+      schema:
+        type: integer
+        example: 100
+    ratelimit-reset:
+      description: 'The time at which the rate limit window resets in  <a href="https://en.wikipedia.org/wiki/Unix_time" target="_blank">UTC epoch seconds</a>
+
+        '
+      schema:
+        type: integer
+        example: 1528749846
+    ratelimit-limit:
+      description: The rate limit for a given endpoint.
+      schema:
+        type: integer
+        example: 150
   securitySchemes:
     basicAuth:
       type: http
       scheme: basic
-x-webhooks:
-  events:
-    post:
-      summary: Events
-      description: Information about an event
-      operationId: event
-      tags:
-      - Events
-      responses:
-        '200':
-          $ref: '#/components/responses/events'
-  tracking_events:
-    post:
-      summary: Tracking Events
-      description: Information about tracking events
-      operationId: tracking_event
-      tags:
-      - Tracking Events
-      responses:
-        '200':
-          $ref: '#/components/responses/tracking_events'
 x-tagGroups:
 - name: Overview
   tags:

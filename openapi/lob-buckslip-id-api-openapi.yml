@@ -1,8 +1,8 @@
-openapi: 3.0.3
+openapi: 3.2.0
 info:
-  title: Lob Buckslip_id API
+  title: Lob Buckslip ID API
   version: 1.20.2
-  description: "Experience direct mail like never before, with unmatched personalization and scalability \x14 all in one intuitive platform."
+  description: Experience direct mail like never before, with unmatched personalization and scalability all in one intuitive platform.
   license:
     name: MIT
     url: https://mit-license.org/
@@ -281,10 +281,67 @@ paths:
         label: CURL
 components:
   schemas:
+    list:
+      type: object
+      description: Multiple items returned in order
+      properties:
+        object:
+          $ref: '#/components/schemas/object'
+        next_url:
+          type:
+          - string
+          - 'null'
+          description: Url of next page of items in list.
+        previous_url:
+          type:
+          - string
+          - 'null'
+          description: Url of previous page of items in list.
+        count:
+          $ref: '#/components/schemas/count'
+        total_count:
+          type: integer
+          description: Indicates the total number of records. Provided when the request specifies an "include" query parameter
+    buckslip_base:
+      type: object
+      properties:
+        description:
+          $ref: '#/components/schemas/buckslip_description'
+        size:
+          description: The size of the buckslip
+          enum:
+          - 8.75x3.75
+          type: string
+          default: 8.75x3.75
+    buckslip_deletion:
+      description: Lob uses RESTful HTTP response codes to indicate success or failure of an API request. In general, 2xx indicates success, 4xx indicate an input error, and 5xx indicates an error on Lob's end.
+      properties:
+        id:
+          $ref: '#/components/schemas/buckslip_id'
+        deleted:
+          $ref: '#/components/schemas/deleted'
+    failure_status_code:
+      type: integer
+      enum:
+      - 401
+      - 403
+      - 404
+      - 413
+      - 422
+      - 429
+      - 500
+      description: "A conventional HTTP status code:\n  * `401` - Authorization error with your API key or account\n  * `403` - Forbidden error with your API key or account\n  * `404` - The requested item does not exist\n  * `413` - Payload too large\n  * `422` - The query or body parameters did not pass validation\n  * `429` - Too many requests have been sent with an API key in a given amount of time\n  * `500` - An internal server error occurred, please contact support@lob.com\n"
     date_created:
       type: string
       format: date-time
       description: A timestamp in ISO 8601 format of the date the resource was created.
+    count:
+      type: integer
+      description: number of resources in a set
+    buckslip_id:
+      type: string
+      description: Unique identifier prefixed with `bck_`.
+      pattern: ^bck_[a-zA-Z0-9]+$
     error:
       type: object
       description: Lob uses RESTful HTTP response codes to indicate success or failure of an API request. In general, 2xx indicates success, 4xx indicate an input error, and 5xx indicates an error on Lob's end.
@@ -463,6 +520,29 @@ components:
                 * `unauthorized_token` - 401: token isn''t authorized.
 
                 '
+    buckslip_description:
+      type:
+      - string
+      - 'null'
+      description: Description of the buckslip.
+      maxLength: 255
+    buckslip_order_editable:
+      type: object
+      required:
+      - quantity
+      properties:
+        quantity:
+          type: integer
+          description: The quantity of buckslips in the order (minimum 5,000).
+          minimum: 5000
+          maximum: 10000000
+    date_modified:
+      type: string
+      format: date-time
+      description: A timestamp in ISO 8601 format of the date the resource was last modified.
+    deleted:
+      type: boolean
+      description: Only returned if the resource has been successfully deleted.
     buckslip_order:
       allOf:
       - $ref: '#/components/schemas/lob_base'
@@ -504,57 +584,6 @@ components:
             type: string
             format: date-time
             description: The fixed deadline for the buckslips to be printed.
-    signed_link:
-      type: string
-      description: A [signed link](#section/Asset-URLs) served over HTTPS. The link returned will expire in 30 days to prevent mis-sharing. Each time a GET request is initiated, a new signed URL will be generated.
-      pattern: ^https://lob-assets.com/(letters|postcards|bank-accounts|checks|self-mailers|cards|order-creatives)/([a-z]{3,4}_[a-z0-9]{15,16}|[a-z]{3}_[a-z0-9]{26}_[a-z]{4}_[a-z0-9]{26})('|_signature)(.pdf|_thumb_[a-z]+_[0-9]+.png|.png)?(version=[a-z0-9]*&)expires=[0-9]{10}&signature=[a-zA-Z0-9-_]+
-    count:
-      type: integer
-      description: number of resources in a set
-    bo_id:
-      type: string
-      description: Unique identifier prefixed with `bo_`.
-      pattern: ^bo_[a-zA-Z0-9]+$
-    buckslip_base:
-      type: object
-      properties:
-        description:
-          $ref: '#/components/schemas/buckslip_description'
-        size:
-          description: The size of the buckslip
-          enum:
-          - 8.75x3.75
-          type: string
-          default: 8.75x3.75
-    buckslip_order_editable:
-      type: object
-      required:
-      - quantity
-      properties:
-        quantity:
-          type: integer
-          description: The quantity of buckslips in the order (minimum 5,000).
-          minimum: 5000
-          maximum: 10000000
-    thumbnail:
-      type: object
-      properties:
-        small:
-          $ref: '#/components/schemas/signed_link'
-        medium:
-          $ref: '#/components/schemas/signed_link'
-        large:
-          $ref: '#/components/schemas/signed_link'
-    buckslip_deletion:
-      description: Lob uses RESTful HTTP response codes to indicate success or failure of an API request. In general, 2xx indicates success, 4xx indicate an input error, and 5xx indicates an error on Lob's end.
-      properties:
-        id:
-          $ref: '#/components/schemas/buckslip_id'
-        deleted:
-          $ref: '#/components/schemas/deleted'
-    deleted:
-      type: boolean
-      description: Only returned if the resource has been successfully deleted.
     lob_base:
       type: object
       required:
@@ -570,52 +599,19 @@ components:
           $ref: '#/components/schemas/deleted'
         object:
           $ref: '#/components/schemas/object'
-    buckslip_description:
-      type: string
-      description: Description of the buckslip.
-      maxLength: 255
-      nullable: true
-    failure_status_code:
-      type: integer
-      enum:
-      - 401
-      - 403
-      - 404
-      - 413
-      - 422
-      - 429
-      - 500
-      description: "A conventional HTTP status code:\n  * `401` - Authorization error with your API key or account\n  * `403` - Forbidden error with your API key or account\n  * `404` - The requested item does not exist\n  * `413` - Payload too large\n  * `422` - The query or body parameters did not pass validation\n  * `429` - Too many requests have been sent with an API key in a given amount of time\n  * `500` - An internal server error occurred, please contact support@lob.com\n"
-    object:
-      type: string
-      description: Value is resource type.
-    buckslip_id:
-      type: string
-      description: Unique identifier prefixed with `bck_`.
-      pattern: ^bck_[a-zA-Z0-9]+$
-    date_modified:
-      type: string
-      format: date-time
-      description: A timestamp in ISO 8601 format of the date the resource was last modified.
-    list:
+    buckslip_updatable:
       type: object
-      description: Multiple items returned in order
       properties:
-        object:
-          $ref: '#/components/schemas/object'
-        next_url:
-          type: string
-          description: Url of next page of items in list.
-          nullable: true
-        previous_url:
-          type: string
-          description: Url of previous page of items in list.
-          nullable: true
-        count:
-          $ref: '#/components/schemas/count'
-        total_count:
-          type: integer
-          description: Indicates the total number of records. Provided when the request specifies an "include" query parameter
+        description:
+          $ref: '#/components/schemas/buckslip_description'
+        auto_reorder:
+          description: Allows for auto reordering
+          type: boolean
+        reorder_quantity:
+          description: The quantity of items to be reordered (only required when auto_reorder is true).
+          type: number
+          minimum: 5000
+          maximum: 10000000
     buckslip:
       allOf:
       - $ref: '#/components/schemas/lob_base'
@@ -653,8 +649,9 @@ components:
             default: false
           reorder_quantity:
             description: The number of buckslips to be reordered.
-            type: integer
-            nullable: true
+            type:
+            - integer
+            - 'null'
           threshold_amount:
             description: The threshold amount of the buckslip
             type: integer
@@ -743,20 +740,56 @@ components:
             - buckslip
             type: string
             default: buckslip
-    buckslip_updatable:
+    bo_id:
+      type: string
+      description: Unique identifier prefixed with `bo_`.
+      pattern: ^bo_[a-zA-Z0-9]+$
+    object:
+      type: string
+      description: Value is resource type.
+    thumbnail:
       type: object
       properties:
-        description:
-          $ref: '#/components/schemas/buckslip_description'
-        auto_reorder:
-          description: Allows for auto reordering
-          type: boolean
-        reorder_quantity:
-          description: The quantity of items to be reordered (only required when auto_reorder is true).
-          type: number
-          minimum: 5000
-          maximum: 10000000
+        small:
+          $ref: '#/components/schemas/signed_link'
+        medium:
+          $ref: '#/components/schemas/signed_link'
+        large:
+          $ref: '#/components/schemas/signed_link'
+    signed_link:
+      type: string
+      description: A [signed link](#section/Asset-URLs) served over HTTPS. The link returned will expire in 30 days to prevent mis-sharing. Each time a GET request is initiated, a new signed URL will be generated.
+      pattern: ^https://lob-assets.com/(letters|postcards|bank-accounts|checks|self-mailers|cards|order-creatives)/([a-z]{3,4}_[a-z0-9]{15,16}|[a-z]{3}_[a-z0-9]{26}_[a-z]{4}_[a-z0-9]{26})('|_signature)(.pdf|_thumb_[a-z]+_[0-9]+.png|.png)?(version=[a-z0-9]*&)expires=[0-9]{10}&signature=[a-zA-Z0-9-_]+
+  parameters:
+    offset:
+      in: query
+      name: offset
+      required: false
+      description: An integer that designates the offset at which to begin returning results. Defaults to 0.
+      schema:
+        type: integer
+        default: 0
+    limit:
+      in: query
+      name: limit
+      required: false
+      description: How many results to return.
+      schema:
+        type: integer
+        minimum: 1
+        default: 10
+        maximum: 100
+        example: 10
   responses:
+    buckslip_deleted:
+      description: Deleted the buckslip
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/buckslip_deletion'
+          example:
+            id: buckslip_123456789
+            deleted: true
     buckslip_error:
       description: Error
       content:
@@ -779,60 +812,10 @@ components:
               code: not_found
               message: buckslip not found
               status_code: 404
-    buckslip_deleted:
-      description: Deleted the buckslip
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/buckslip_deletion'
-          example:
-            id: buckslip_123456789
-            deleted: true
-  parameters:
-    offset:
-      in: query
-      name: offset
-      required: false
-      description: An integer that designates the offset at which to begin returning results. Defaults to 0.
-      schema:
-        type: integer
-        default: 0
-    limit:
-      in: query
-      name: limit
-      required: false
-      description: How many results to return.
-      schema:
-        type: integer
-        minimum: 1
-        default: 10
-        maximum: 100
-        example: 10
   securitySchemes:
     basicAuth:
       type: http
       scheme: basic
-x-webhooks:
-  events:
-    post:
-      summary: Events
-      description: Information about an event
-      operationId: event
-      tags:
-      - Events
-      responses:
-        '200':
-          $ref: '#/components/responses/events'
-  tracking_events:
-    post:
-      summary: Tracking Events
-      description: Information about tracking events
-      operationId: tracking_event
-      tags:
-      - Tracking Events
-      responses:
-        '200':
-          $ref: '#/components/responses/tracking_events'
 x-tagGroups:
 - name: Overview
   tags:

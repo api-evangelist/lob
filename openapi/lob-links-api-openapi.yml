@@ -1,8 +1,8 @@
-openapi: 3.0.3
+openapi: 3.2.0
 info:
   title: Lob Links API
   version: 1.20.2
-  description: "Experience direct mail like never before, with unmatched personalization and scalability \x14 all in one intuitive platform."
+  description: Experience direct mail like never before, with unmatched personalization and scalability all in one intuitive platform.
   license:
     name: MIT
     url: https://mit-license.org/
@@ -199,7 +199,7 @@ paths:
     get:
       operationId: links_list
       summary: List all links
-      description: Retrieves a list of shortened links. The list is sorted by  creation date, with the most recently created appearing first.
+      description: Retrieves a list of shortened links. The list is sorted by creation date, with the most recently created appearing first.
       tags:
       - Links
       parameters:
@@ -258,35 +258,52 @@ paths:
         source: "var context = context.Background()\ncontext = context.WithValue(suite.ctx, lob.ContextBasicAuth, lob.BasicAuth{UserName: os.Getenv(\"<YOUR_API_KEY>\")})\n\nvar apiClient = *lob.NewAPIClient(configuration)\nLinksList = apiClient.LinksApi.List(context).Execute()\nif err != nil {\n    return err\n}\n"
         label: GO
 components:
+  parameters:
+    campaign_id:
+      in: query
+      name: campaign_id
+      required: false
+      description: Filters resources created by the provided campaign id, prefixed with `cmp_`. In the case of snap packs, booklets, and letters with size `us_legal`, however, the campaign id is prefixed with `camp_` instead of `cmp_`.
+      schema:
+        $ref: '#/components/schemas/campaign_id'
+    before_after:
+      in: query
+      name: before/after
+      required: false
+      description: '`before` and `after` are both optional but only one of them can be in the query at a time.
+
+        '
+      schema:
+        allOf:
+        - type: object
+          properties:
+            before:
+              type: string
+              description: 'A reference to a list entry used for paginating to the previous set of entries. This field is pre-populated in the `previous_url` field in the return response.
+
+                '
+            after:
+              type: string
+              description: 'A reference to a list entry used for paginating to the next set of entries. This field is pre-populated in the `next_url` field in the return response.
+
+                '
+        - oneOf:
+          - required:
+            - before
+          - required:
+            - after
+    limit:
+      in: query
+      name: limit
+      required: false
+      description: How many results to return.
+      schema:
+        type: integer
+        minimum: 1
+        default: 10
+        maximum: 100
+        example: 10
   schemas:
-    object:
-      type: string
-      description: Value is resource type.
-    link_response:
-      type: object
-      properties:
-        id:
-          description: Unique identifier prefixed with `lnk_`.
-          type: string
-        title:
-          description: The title of the URL.
-          type: string
-        domain_id:
-          description: A unique identifier for the registered domain.
-          type: string
-        redirect_link:
-          $ref: '#/components/schemas/redirect_link'
-        short_link:
-          description: The shortened URL for the associated original URL.
-          type: string
-        metadata:
-          $ref: '#/components/schemas/metadata'
-        created_at:
-          description: The date and time the link was created.
-          type: string
-        updated_at:
-          description: The date and time the link was last updated.
-          type: string
     error:
       type: object
       description: Lob uses RESTful HTTP response codes to indicate success or failure of an API request. In general, 2xx indicates success, 4xx indicate an input error, and 5xx indicates an error on Lob's end.
@@ -465,9 +482,63 @@ components:
                 * `unauthorized_token` - 401: token isn''t authorized.
 
                 '
-    count:
-      type: integer
-      description: number of resources in a set
+    campaign_id:
+      title: campaign_id
+      description: Denotes resources created by the provided campaign id, prefixed with `cmp_`. In the case of snap packs, booklets, and letters with size `us_legal`, however, the campaign id is prefixed with `camp_` instead of `cmp_`.
+      type:
+      - string
+      - 'null'
+      pattern: ^(cmp|camp)_[a-zA-Z0-9]+$
+    list:
+      type: object
+      description: Multiple items returned in order
+      properties:
+        object:
+          $ref: '#/components/schemas/object'
+        next_url:
+          type:
+          - string
+          - 'null'
+          description: Url of next page of items in list.
+        previous_url:
+          type:
+          - string
+          - 'null'
+          description: Url of previous page of items in list.
+        count:
+          $ref: '#/components/schemas/count'
+        total_count:
+          type: integer
+          description: Indicates the total number of records. Provided when the request specifies an "include" query parameter
+    metadata:
+      type: object
+      additionalProperties:
+        type: string
+      description: 'Use metadata to store custom information for tagging and labeling back to your internal systems. Must be an object with up to 20 key-value pairs. Keys must be at most 40 characters and values must be at most 500 characters. Neither can contain the characters `"` and `\`. i.e. ''{"customer_id" : "NEWYORK2015"}'' Nested objects are not supported.  See [Metadata](#section/Metadata) for more information.'
+      maxLength: 500
+      pattern: '[^"\\]{0,500}'
+    links_response:
+      allOf:
+      - $ref: '#/components/schemas/list'
+      - type: object
+        properties:
+          data:
+            type: array
+            description: List of links
+            items:
+              $ref: '#/components/schemas/link_response'
+    link_update:
+      type: object
+      required:
+      - redirect_link
+      properties:
+        title:
+          description: The title of the URL.
+          type: string
+        redirect_link:
+          $ref: '#/components/schemas/redirect_link'
+        metadata:
+          $ref: '#/components/schemas/metadata'
     link_delete_response:
       type: object
       properties:
@@ -477,6 +548,48 @@ components:
         deleted:
           description: Only returned if the link was successfully deleted.
           type: boolean
+    failure_status_code:
+      type: integer
+      enum:
+      - 401
+      - 403
+      - 404
+      - 413
+      - 422
+      - 429
+      - 500
+      description: "A conventional HTTP status code:\n  * `401` - Authorization error with your API key or account\n  * `403` - Forbidden error with your API key or account\n  * `404` - The requested item does not exist\n  * `413` - Payload too large\n  * `422` - The query or body parameters did not pass validation\n  * `429` - Too many requests have been sent with an API key in a given amount of time\n  * `500` - An internal server error occurred, please contact support@lob.com\n"
+    link_response:
+      type: object
+      properties:
+        id:
+          description: Unique identifier prefixed with `lnk_`.
+          type: string
+        title:
+          description: The title of the URL.
+          type: string
+        domain_id:
+          description: A unique identifier for the registered domain.
+          type: string
+        redirect_link:
+          $ref: '#/components/schemas/redirect_link'
+        short_link:
+          description: The shortened URL for the associated original URL.
+          type: string
+        metadata:
+          $ref: '#/components/schemas/metadata'
+        created_at:
+          description: The date and time the link was created.
+          type: string
+        updated_at:
+          description: The date and time the link was last updated.
+          type: string
+    object:
+      type: string
+      description: Value is resource type.
+    redirect_link:
+      type: string
+      description: The original target URL.
     link_single:
       type: object
       required:
@@ -496,144 +609,13 @@ components:
           type: string
         metadata:
           $ref: '#/components/schemas/metadata'
-    link_update:
-      type: object
-      required:
-      - redirect_link
-      properties:
-        title:
-          description: The title of the URL.
-          type: string
-        redirect_link:
-          $ref: '#/components/schemas/redirect_link'
-        metadata:
-          $ref: '#/components/schemas/metadata'
-    list:
-      type: object
-      description: Multiple items returned in order
-      properties:
-        object:
-          $ref: '#/components/schemas/object'
-        next_url:
-          type: string
-          description: Url of next page of items in list.
-          nullable: true
-        previous_url:
-          type: string
-          description: Url of previous page of items in list.
-          nullable: true
-        count:
-          $ref: '#/components/schemas/count'
-        total_count:
-          type: integer
-          description: Indicates the total number of records. Provided when the request specifies an "include" query parameter
-    links_response:
-      allOf:
-      - $ref: '#/components/schemas/list'
-      - type: object
-        properties:
-          data:
-            type: array
-            description: List of links
-            items:
-              $ref: '#/components/schemas/link_response'
-    campaign_id:
-      title: campaign_id
-      description: Denotes resources created by the provided campaign id, prefixed with `cmp_`. In the case of snap packs, booklets, and letters with size `us_legal`, however, the campaign id is prefixed with `camp_` instead of `cmp_`.
-      type: string
-      pattern: ^(cmp|camp)_[a-zA-Z0-9]+$
-      nullable: true
-    metadata:
-      type: object
-      additionalProperties:
-        type: string
-      description: 'Use metadata to store custom information for tagging and labeling back to your internal systems. Must be an object with up to 20 key-value pairs. Keys must be at most 40 characters and values must be at most 500 characters. Neither can contain the characters `"` and `\`. i.e. ''{"customer_id" : "NEWYORK2015"}'' Nested objects are not supported.  See [Metadata](#section/Metadata) for more information.'
-      maxLength: 500
-      pattern: '[^"\\]{0,500}'
-    failure_status_code:
+    count:
       type: integer
-      enum:
-      - 401
-      - 403
-      - 404
-      - 413
-      - 422
-      - 429
-      - 500
-      description: "A conventional HTTP status code:\n  * `401` - Authorization error with your API key or account\n  * `403` - Forbidden error with your API key or account\n  * `404` - The requested item does not exist\n  * `413` - Payload too large\n  * `422` - The query or body parameters did not pass validation\n  * `429` - Too many requests have been sent with an API key in a given amount of time\n  * `500` - An internal server error occurred, please contact support@lob.com\n"
-    redirect_link:
-      type: string
-      description: The original target URL.
-  parameters:
-    campaign_id:
-      in: query
-      name: campaign_id
-      required: false
-      description: Filters resources created by the provided campaign id, prefixed with `cmp_`. In the case of snap packs, booklets, and letters with size `us_legal`, however, the campaign id is prefixed with `camp_` instead of `cmp_`.
-      schema:
-        $ref: '#/components/schemas/campaign_id'
-    before_after:
-      in: query
-      name: before/after
-      required: false
-      description: '`before` and `after` are both optional but only one of them can be in the query at a time.
-
-        '
-      schema:
-        allOf:
-        - type: object
-          properties:
-            before:
-              type: string
-              description: 'A reference to a list entry used for paginating to the previous set of entries. This field is pre-populated in the `previous_url` field in the return response.
-
-                '
-            after:
-              type: string
-              description: 'A reference to a list entry used for paginating to the next set of entries. This field is pre-populated in the `next_url` field in the return response.
-
-                '
-        - oneOf:
-          - required:
-            - before
-          - required:
-            - after
-    limit:
-      in: query
-      name: limit
-      required: false
-      description: How many results to return.
-      schema:
-        type: integer
-        minimum: 1
-        default: 10
-        maximum: 100
-        example: 10
+      description: number of resources in a set
   securitySchemes:
     basicAuth:
       type: http
       scheme: basic
-x-webhooks:
-  events:
-    post:
-      summary: Events
-      description: Information about an event
-      operationId: event
-      tags:
-      - Events
-      responses:
-        '200':
-          $ref: '#/components/responses/events'
-  tracking_events:
-    post:
-      summary: Tracking Events
-      description: Information about tracking events
-      operationId: tracking_event
-      tags:
-      - Tracking Events
-      responses:
-        '200':
-          $ref: '#/components/responses/tracking_events'
 x-tagGroups:
 - name: Overview
   tags:

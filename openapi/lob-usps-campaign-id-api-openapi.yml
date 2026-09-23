@@ -1,8 +1,8 @@
-openapi: 3.0.3
+openapi: 3.2.0
 info:
-  title: Lob Usps_campaign_id API
+  title: Lob Usps Campaign ID API
   version: 1.20.2
-  description: "Experience direct mail like never before, with unmatched personalization and scalability \x14 all in one intuitive platform."
+  description: Experience direct mail like never before, with unmatched personalization and scalability all in one intuitive platform.
   license:
     name: MIT
     url: https://mit-license.org/
@@ -72,7 +72,9 @@ paths:
     patch:
       operationId: informed_delivery_campaign_update
       summary: Update
-      description: Update the details of an existing Informed Delivery campaign.<br> **NOTE:** you can only update a campaign in the `pending_approval` status.
+      description: 'Update the details of an existing Informed Delivery campaign.
+
+        **NOTE:** you can only update a campaign in the `pending_approval` status.'
       tags:
       - Usps_campaign_id
       requestBody:
@@ -121,10 +123,6 @@ paths:
         label: CURL
 components:
   schemas:
-    date_created:
-      type: string
-      format: date-time
-      description: A timestamp in ISO 8601 format of the date the resource was created.
     error:
       type: object
       description: Lob uses RESTful HTTP response codes to indicate success or failure of an API request. In general, 2xx indicates success, 4xx indicate an input error, and 5xx indicates an error on Lob's end.
@@ -303,6 +301,100 @@ components:
                 * `unauthorized_token` - 401: token isn''t authorized.
 
                 '
+    usps_campaign_id:
+      type: string
+      description: A numberical string up to 12 characters long.
+      pattern: ^[0-9]+$
+      example: '1200772869'
+    update:
+      allOf:
+      - $ref: '#/components/schemas/writable_base'
+      - type: object
+        properties:
+          status:
+            type: string
+            enum:
+            - approved
+            description: 'After setting an Informed Delivery campaign to approved said campaign will activate, and you can start sending mail using it.
+
+              You will no longer be able to edit an Informed Delivery campaign in this status.
+
+              '
+    common:
+      allOf:
+      - type: object
+        properties:
+          quantity:
+            type: integer
+            minimum: 2
+            maximum: 10000000
+            description: 'The number of mail pieces that will be part of this Informed Delivery campaign. USPS requires that IMB Codes are in sequence, so any mail pieces sent beyond this quantity will be rejected.
+
+              '
+          status:
+            type: string
+          ride_along_url:
+            type: string
+            minLength: 10
+            maxLength: 255
+            pattern: ^https:\/\/.{5,247}$
+            description: 'To qualify as part of a promotion, the base domain must match the domain used to register the promotion.
+
+              I.e. If the promo was registered with https://lob.com then you could use any variation of https://lob.com such as
+
+              https://lob.com/promotions/promo_123
+
+              '
+          start_date:
+            type: string
+            format: date
+            description: 'The first date that mail can be handed off to USPS and still included in the informed delivery campaign.
+
+              The start date must be at least two days in the future. The end date will be automatically calculated to be 45 days from the start.
+
+              For Target Delivery Date, recommended to set the start date to the earliest possible date (2 days from now).
+
+              '
+          brand_name:
+            type: string
+            description: The brand name you would like included in the informed delivery email. Will default to the company on the users account.
+          usps_title:
+            type: string
+            description: Unique title for the campaign. One will be auto generated if not provided.
+          lob_campaign_id:
+            type:
+            - string
+            - 'null'
+            pattern: ^cmp_[a-zA-Z0-9]+$
+            description: 'When sending as part of Lobs campaign workflow, include the lob_campaign_id as part of the request to associate this Informed Delivery campaign with the Lob campaign
+
+              '
+    writable_base:
+      allOf:
+      - $ref: '#/components/schemas/common'
+      - type: object
+        properties:
+          ride_along_image:
+            type: object
+            description: JPG Image. Maximum file size is 200 KBs. Maximum pixel size is 300 pixels wide x 200 pixels high
+          representative_image:
+            type: object
+            description: JPG Image. Maximum file size is 200 KBs. Maximum pixel size is 300 pixels wide x 200 pixels high
+    failure_status_code:
+      type: integer
+      enum:
+      - 401
+      - 403
+      - 404
+      - 413
+      - 422
+      - 429
+      - 500
+      description: "A conventional HTTP status code:\n  * `401` - Authorization error with your API key or account\n  * `403` - Forbidden error with your API key or account\n  * `404` - The requested item does not exist\n  * `413` - Payload too large\n  * `422` - The query or body parameters did not pass validation\n  * `429` - Too many requests have been sent with an API key in a given amount of time\n  * `500` - An internal server error occurred, please contact support@lob.com\n"
+    date_created:
+      type: string
+      format: date-time
+      description: A timestamp in ISO 8601 format of the date the resource was created.
     response:
       allOf:
       - $ref: '#/components/schemas/common'
@@ -348,16 +440,18 @@ components:
             format: date-time
             description: A timestamp in ISO 8601 format of the date the campaign ends.
           start_serial:
-            type: integer
-            nullable: true
+            type:
+            - integer
+            - 'null'
             description: 'The first serial number in the range of serial numbers for this campaign.
 
               Only non-null when campaign is approved.
 
               '
           end_serial:
-            type: integer
-            nullable: true
+            type:
+            - integer
+            - 'null'
             description: 'The last serial number in the range of serial numbers for this campaign.
 
               Only non-null when campaign is approved.
@@ -367,8 +461,9 @@ components:
             type: string
             description: A URL link to the campaigns ride along image.
           representative_image_s3_link:
-            type: string
-            nullable: true
+            type:
+            - string
+            - 'null'
             description: A URL link to the campaigns representative image.
           date_created:
             $ref: '#/components/schemas/date_created'
@@ -387,107 +482,19 @@ components:
             type: string
             description: The campaign code associated with the Informed Delivery campaign.
           service_request_number:
-            type: string
-            nullable: true
+            type:
+            - string
+            - 'null'
             description: The USPS promotion service request number used to create this campaign (if there was one used).
-    writable_base:
-      allOf:
-      - $ref: '#/components/schemas/common'
-      - type: object
-        properties:
-          ride_along_image:
-            type: object
-            description: JPG Image. Maximum file size is 200 KBs. Maximum pixel size is 300 pixels wide x 200 pixels high
-          representative_image:
-            type: object
-            description: JPG Image. Maximum file size is 200 KBs. Maximum pixel size is 300 pixels wide x 200 pixels high
-    common:
-      allOf:
-      - type: object
-        properties:
-          quantity:
-            type: integer
-            minimum: 2
-            maximum: 10000000
-            description: 'The number of mail pieces that will be part of this Informed Delivery campaign. USPS requires that IMB Codes are in sequence, so any mail pieces sent beyond this quantity will be rejected.
-
-              '
-          status:
-            type: string
-          ride_along_url:
-            type: string
-            minLength: 10
-            maxLength: 255
-            pattern: ^https:\/\/.{5,247}$
-            description: 'To qualify as part of a promotion, the base domain must match the domain used to register the promotion.
-
-              I.e. If the promo was registered with https://lob.com then you could use any variation of https://lob.com such as
-
-              https://lob.com/promotions/promo_123
-
-              '
-          start_date:
-            type: string
-            format: date
-            description: 'The first date that mail can be handed off to USPS and still included in the informed delivery campaign.
-
-              The start date must be at least two days in the future. The end date will be automatically calculated to be 45 days from the start.
-
-              For Target Delivery Date, recommended to set the start date to the earliest possible date (2 days from now).
-
-              '
-          brand_name:
-            type: string
-            description: The brand name you would like included in the informed delivery email. Will default to the company on the users account.
-          usps_title:
-            type: string
-            description: Unique title for the campaign. One will be auto generated if not provided.
-          lob_campaign_id:
-            type: string
-            pattern: ^cmp_[a-zA-Z0-9]+$
-            nullable: true
-            description: 'When sending as part of Lobs campaign workflow, include the lob_campaign_id as part of the request to associate this Informed Delivery campaign with the Lob campaign
-
-              '
-    usps_campaign_id:
-      type: string
-      description: A numberical string up to 12 characters long.
-      pattern: ^[0-9]+$
-      example: '1200772869'
-    date_modified:
-      type: string
-      format: date-time
-      description: A timestamp in ISO 8601 format of the date the resource was last modified.
-    update:
-      allOf:
-      - $ref: '#/components/schemas/writable_base'
-      - type: object
-        properties:
-          status:
-            type: string
-            enum:
-            - approved
-            description: 'After setting an Informed Delivery campaign to approved said campaign will activate, and you can start sending mail using it.
-
-              You will no longer be able to edit an Informed Delivery campaign in this status.
-
-              '
-    failure_status_code:
-      type: integer
-      enum:
-      - 401
-      - 403
-      - 404
-      - 413
-      - 422
-      - 429
-      - 500
-      description: "A conventional HTTP status code:\n  * `401` - Authorization error with your API key or account\n  * `403` - Forbidden error with your API key or account\n  * `404` - The requested item does not exist\n  * `413` - Payload too large\n  * `422` - The query or body parameters did not pass validation\n  * `429` - Too many requests have been sent with an API key in a given amount of time\n  * `500` - An internal server error occurred, please contact support@lob.com\n"
     infd_id:
       type: string
       description: Unique identifier prefixed with `infd_`.
       pattern: ^infd_[a-zA-Z0-9]+$
       example: infd_23g423g4234g342
+    date_modified:
+      type: string
+      format: date-time
+      description: A timestamp in ISO 8601 format of the date the resource was last modified.
   responses:
     writeable_422:
       description: Error
@@ -515,27 +522,6 @@ components:
     basicAuth:
       type: http
       scheme: basic
-x-webhooks:
-  events:
-    post:
-      summary: Events
-      description: Information about an event
-      operationId: event
-      tags:
-      - Events
-      responses:
-        '200':
-          $ref: '#/components/responses/events'
-  tracking_events:
-    post:
-      summary: Tracking Events
-      description: Information about tracking events
-      operationId: tracking_event
-      tags:
-      - Tracking Events
-      responses:
-        '200':
-          $ref: '#/components/responses/tracking_events'
 x-tagGroups:
 - name: Overview
   tags:

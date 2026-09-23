@@ -1,8 +1,8 @@
-openapi: 3.0.3
+openapi: 3.2.0
 info:
   title: Lob Send API
   version: 1.20.2
-  description: "Experience direct mail like never before, with unmatched personalization and scalability \x14 all in one intuitive platform."
+  description: Experience direct mail like never before, with unmatched personalization and scalability all in one intuitive platform.
   license:
     name: MIT
     url: https://mit-license.org/
@@ -65,16 +65,184 @@ paths:
         label: CURL
 components:
   schemas:
-    date_created:
+    letter_details_returned:
+      description: Properties that the letters in your Creative should have. See the `qr_code` attribute below to add a QR code to your creative.
+      properties:
+        address_placement:
+          $ref: '#/components/schemas/address_placement'
+        buckslips:
+          description: A single-element array containing an existing buckslip id in a string format. See [buckslips](#tag/Buckslips) for more information.
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/buckslip_id'
+          minItems: 0
+          maxItems: 1
+        cards:
+          description: A single-element array containing an existing card id in a string format. See [cards](#tag/Cards) for more information.
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/card_id'
+          minItems: 0
+          maxItems: 1
+        custom_envelope:
+          $ref: '#/components/schemas/custom_envelope_returned'
+        color:
+          $ref: '#/components/schemas/color'
+        double_sided:
+          $ref: '#/components/schemas/double_sided'
+        extra_service:
+          $ref: '#/components/schemas/extra_service'
+        file_original_url:
+          description: The original URL of the `file` template.
+          type: string
+        mail_type:
+          $ref: '#/components/schemas/mail_type'
+    self_mailer_size:
       type: string
-      format: date-time
-      description: A timestamp in ISO 8601 format of the date the resource was created.
-    upl_id:
+      enum:
+      - 6x18_bifold
+      - 11x9_bifold
+      - 12x9_bifold
+      - 17.75x9_trifold
+      description: Specifies the size of the self mailer. The `17.75x9_trifold` size is in beta. Contact support@lob.com or your account contact to learn more.
+      default: 6x18_bifold
+    postcard_size:
       type: string
-      description: Unique identifier prefixed with `upl_`.
-      pattern: ^upl_[a-zA-Z0-9]+$
+      enum:
+      - 4x6
+      - 6x9
+      - 6x11
+      description: 'Specifies the size of the postcard. Only `4x6` postcards can be sent to international destinations.
+
+        '
+      default: 4x6
+    adr_id:
+      type: string
+      description: Unique identifier prefixed with `adr_`.
+      pattern: ^adr_[a-zA-Z0-9]+$
+    resource_description:
+      type:
+      - string
+      - 'null'
+      description: 'An internal description that identifies this resource. Must be no longer than 255 characters.
+
+        '
+      maxLength: 255
+    upload:
+      allOf:
+      - $ref: '#/components/schemas/upload_writable'
+      - type: object
+        required:
+        - id
+        - accountId
+        - campaignId
+        - requiredAddressColumnMapping
+        - optionalAddressColumnMapping
+        - metadata
+        - mergeVariableColumnMapping
+        - mode
+        - state
+        - totalMailpieces
+        - failedMailpieces
+        - validatedMailpieces
+        - bytesProcessed
+        - dateCreated
+        - dateModified
+        properties:
+          id:
+            $ref: '#/components/schemas/upl_id'
+          accountId:
+            title: Account ID
+            type: string
+            description: Account ID that made the request
+            example: fa9ea650fc7b31a89f92
+          mode:
+            enum:
+            - test
+            - live
+            type: string
+            description: The environment in which the mailpieces were created. Today, will only be `live`.
+          failuresUrl:
+            title: Failures URL
+            type: string
+            example: https://www.example.com
+            description: Url where your campaign mailpiece failures can be retrieved
+          originalFilename:
+            title: Original Filename
+            type: string
+            example: my_audience.csv
+            description: Filename of the upload
+          state:
+            $ref: '#/components/schemas/upload_state'
+          totalMailpieces:
+            title: Total Mailpieces
+            type: integer
+            example: 100
+            description: Total number of recipients for the campaign
+          failedMailpieces:
+            title: Failed Mailpieces
+            type: integer
+            example: 5
+            description: Number of mailpieces that failed to create
+          validatedMailpieces:
+            title: Validated Mailpieces
+            type: integer
+            example: 95
+            description: Number of mailpieces that were successfully created
+          bytesProcessed:
+            title: Bytes Processed
+            type: integer
+            example: 17268
+            description: Number of bytes processed in your CSV
+          dateCreated:
+            title: Date Created
+            type: string
+            format: date-time
+            description: A timestamp in ISO 8601 format of the date the upload was created
+          dateModified:
+            title: Date Modified
+            type: string
+            format: date-time
+            description: A timestamp in ISO 8601 format of the date the upload was last modified
+    cmp_id:
+      type: string
+      title: Campaign id
+      description: Unique identifier prefixed with `cmp_`.
+      pattern: ^cmp_[a-zA-Z0-9]+$
+    from_attribute:
+      title: From
+      description: Must either be an address ID or an inline object with correct address parameters. All addresses will be standardized into uppercase without being modified by verification.
+      oneOf:
+      - $ref: '#/components/schemas/adr_id'
+      - $ref: '#/components/schemas/inline_address_us'
+    color:
+      type: boolean
+      description: Set this key to `true` if you would like to print in color. Set to `false` if you would like to print in black and white.
+    mail_type:
+      type: string
+      enum:
+      - usps_first_class
+      - usps_standard
+      description: 'A string designating the mail postage type:
+
+        * `usps_first_class` - (default)
+
+        * `usps_standard` - a <a href="https://lob.com/pricing/print-mail#compare" target="_blank">cheaper option</a> which is
+
+        less predictable and takes longer to deliver. `usps_standard` cannot be used with `4x6`
+
+        postcards or for any postcards sent outside of the United States.
+
+        '
+      default: usps_first_class
     custom_envelope_returned:
-      type: object
+      type:
+      - object
+      - 'null'
       description: A nested custom envelope object containing more information about the custom envelope used or `null` if a custom envelope was not used.
       required:
       - id
@@ -93,17 +261,6 @@ components:
           enum:
           - envelope
           default: envelope
-      nullable: true
-    merge_variable_column_mapping:
-      title: Merge Variable Mapping
-      type: object
-      nullable: true
-      default: null
-      example:
-        name: recipient_name
-        gift_code: code
-        qr_code_redirect_url: redirect_url
-      description: The mapping of column headers in your file to the merge variables present in your creative. See our <a href="https://help.lob.com/print-and-mail/building-a-mail-strategy/campaign-or-triggered-sends/campaign-audience-guide#step-3-map-merge-variable-data-if-applicable-7" target="_blank">Campaign Audience Guide</a> for additional details. <br />If a merge variable has the same "name" as a "key" in the `requiredAddressColumnMapping` or `optionalAddressColumnMapping` objects, then they **CANNOT** have a different value in this object. If a different value is provided, then when the campaign is processing it will get overwritten with the mapped value present in the `requiredAddressColumnMapping` or `optionalAddressColumnMapping` objects. The redirect URLs for QR codes can also be customized using this mapping. If the URL has a variable and the variable mapping existsing here, then data from the respective column in the audience file will be merged into the URL template.
     optional_address_column_mapping:
       title: Optional Address Columns
       type: object
@@ -113,18 +270,21 @@ components:
       - address_country
       properties:
         address_line2:
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
           default: null
           description: The column header from the csv file that should be mapped to the optional field "address_line2"
         company:
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
           default: null
           description: The column header from the csv file that should be mapped to the optional field "company"
         address_country:
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
           default: null
           description: The column header from the csv file that should be mapped to the optional field "address_country"
       example:
@@ -132,24 +292,199 @@ components:
         company: company
         address_country: country,
       description: The mapping of column headers in your file to Lob-optional fields for the resource created. See our <a href="https://help.lob.com/print-and-mail/building-a-mail-strategy/campaign-or-triggered-sends/campaign-audience-guide#optional-columns-3" target="_blank">Campaign Audience Guide</a> for additional details.
-    uploads_metadata:
-      title: Metadata
+    address_placement:
+      type: string
+      enum:
+      - top_first_page
+      - insert_blank_page
+      - bottom_first_page_center
+      - bottom_first_page
+      description: "Specifies the location of the address information that will show through the double-window envelope. To see how this will impact your letter design, view our letter template.\nSome values are exclusive to certain customers. Upgrade to the appropriate <a href=\"https://dashboard.lob.com/#/settings/editions\" target=\"_blank\">Print & Mail Edition</a> to gain access.\n  * `top_first_page` - (default) print address information at the top of your provided first page\n  * `insert_blank_page` - insert a blank address page at the beginning of your file (you will be charged for the extra page)\n  * `bottom_first_page_center` - **(exclusive, deprecation planned within a few months)** print address information at the bottom center of your provided first page\n  * `bottom_first_page` - **(exclusive)** print address information at the bottom of your provided first page\n"
+      default: top_first_page
+    metadata:
+      type: object
+      additionalProperties:
+        type: string
+      description: 'Use metadata to store custom information for tagging and labeling back to your internal systems. Must be an object with up to 20 key-value pairs. Keys must be at most 40 characters and values must be at most 500 characters. Neither can contain the characters `"` and `\`. i.e. ''{"customer_id" : "NEWYORK2015"}'' Nested objects are not supported.  See [Metadata](#section/Metadata) for more information.'
+      maxLength: 500
+      pattern: '[^"\\]{0,500}'
+    extra_service:
+      type:
+      - string
+      - 'null'
+      enum:
+      - certified
+      - certified_return_receipt
+      - registered
+      - null
+      description: "Add an extra service to your letter. Can only be non-`null` if `mail_type` isn't `usps_standard`. See <a href=\"https://www.lob.com/pricing/print-mail#compare\" target=\"_blank\">pricing</a> for extra costs incurred.\n  * `certified` - track and confirm delivery for domestic destinations. An extra sheet (1 PDF page single-sided or 2 PDF pages double-sided) is added to the beginning of your letter for address and barcode information. See here for templates: <a href=\"https://s3-us-west-2.amazonaws.com/public.lob.com/assets/templates/letter_certified_template.pdf\" target=\"_blank\">#10 envelope</a> and <a href=\"https://s3-us-west-2.amazonaws.com/public.lob.com/assets/templates/letter_certified_flat_template.pdf\" target=\"_blank\">flat envelope</a> (used for letters over 6 pages single-sided or 12 pages double-sided). You will not be charged for this extra sheet.\n  * `certified_return_receipt` - request an electronic copy of the recipient's signature to prove delivery of your certified letter\n  * `registered` - provides tracking and confirmation for international addresses\n  \nNot available for `us_legal` letter size.\n"
+    cmp_schedule_type:
+      description: How the campaign should be scheduled. Only value available today is `immediate`.
+      type: string
+      enum:
+      - immediate
+    campaign:
+      allOf:
+      - $ref: '#/components/schemas/lob_base'
+      - $ref: '#/components/schemas/campaign_writable'
+      - type: object
+        required:
+        - id
+        - name
+        - description
+        - schedule_type
+        - use_type
+        - is_draft
+        - creatives
+        - uploads
+        - auto_cancel_if_ncoa
+        - date_created
+        - date_modified
+        - object
+        properties:
+          id:
+            $ref: '#/components/schemas/cmp_id'
+          is_draft:
+            description: Whether or not the campaign is still a draft.
+            type: boolean
+            default: true
+          creatives:
+            description: An array of creatives that have been associated with this campaign.
+            type: array
+            items:
+              $ref: '#/components/schemas/creative'
+            minItems: 0
+          uploads:
+            description: A single-element array containing the upload object that is assocated with this campaign.
+            type: array
+            items:
+              $ref: '#/components/schemas/upload'
+            minItems: 0
+            maxItems: 1
+          object:
+            type: string
+            description: Value is resource type.
+            enum:
+            - campaign
+            default: campaign
+          use_type:
+            $ref: '#/components/schemas/cmp_use_type'
+    failure_status_code:
+      type: integer
+      enum:
+      - 401
+      - 403
+      - 404
+      - 413
+      - 422
+      - 429
+      - 500
+      description: "A conventional HTTP status code:\n  * `401` - Authorization error with your API key or account\n  * `403` - Forbidden error with your API key or account\n  * `404` - The requested item does not exist\n  * `413` - Payload too large\n  * `422` - The query or body parameters did not pass validation\n  * `429` - Too many requests have been sent with an API key in a given amount of time\n  * `500` - An internal server error occurred, please contact support@lob.com\n"
+    date_created:
+      type: string
+      format: date-time
+      description: A timestamp in ISO 8601 format of the date the resource was created.
+    self_mailer_details_returned:
+      description: Properties that the self mailers in your Creative should have. See the `qr_code` attribute below to add a QR code to your creative.
+      properties:
+        mail_type:
+          $ref: '#/components/schemas/mail_type'
+        size:
+          $ref: '#/components/schemas/self_mailer_size'
+        inside_original_url:
+          description: The original URL of the `inside` template.
+          maxLength: 2083
+          minLength: 1
+          type: string
+          format: uri
+        outside_original_url:
+          description: The original URL of the `outside` template.
+          maxLength: 2083
+          minLength: 1
+          type: string
+          format: uri
+    buckslip_id:
+      type: string
+      description: Unique identifier prefixed with `bck_`.
+      pattern: ^bck_[a-zA-Z0-9]+$
+    address_fields_us:
       type: object
       required:
-      - columns
+      - address_line1
+      - address_city
+      - address_state
+      - address_zip
       properties:
-        columns:
-          type: array
-          description: The list of column names from the csv file which you want associated with each of your mailpieces
-          default: []
-          items:
+        address_line1:
+          type: string
+          description: The primary number, street name, and directional information.
+          maxLength: 64
+        address_line2:
+          type:
+          - string
+          - 'null'
+          description: An optional field containing any information which can't fit into line 1.
+          maxLength: 64
+        address_city:
+          type: string
+          maxLength: 200
+        address_state:
+          type: string
+          description: 2 letter state short-name code
+          pattern: ^[a-zA-Z]{2}$
+        address_zip:
+          type: string
+          description: 'Must follow the ZIP format of `12345` or ZIP+4 format of `12345-1234`.
+
+            '
+          pattern: ^\d{5}(-\d{4})?$
+    creative:
+      allOf:
+      - $ref: '#/components/schemas/lob_base'
+      - $ref: '#/components/schemas/returned_resource'
+      - type: object
+        required:
+        - id
+        - description
+        - from
+        - resource_type
+        - details
+        - metadata
+        - template_preview_urls
+        - template_previews
+        - campaigns
+        - date_created
+        - date_modified
+        - object
+        - deleted
+        properties:
+          deleted:
+            type: boolean
+            description: Whether the resource has been deleted.
+          id:
+            $ref: '#/components/schemas/crv_id'
+          template_preview_urls:
+            title: Template Preview URLs
+            type: object
+            description: Preview URLs associated with a creative's artwork asset(s) if the creative uses HTML templates as assets. An empty object will be returned if no `template_preview`s have been generated.
+          template_previews:
+            title: Template Previews
+            type: array
+            items:
+              type: object
+            description: A list of template preview objects if the creative uses HTML template(s) as artwork asset(s). An empty array will be returned if no `template_preview`s have been generated for the creative.
+          campaigns:
+            $ref: '#/components/schemas/campaign_list'
+          object:
             type: string
-      default:
-        columns: []
-      example:
-        columns:
-        - recipient_name
-      description: The list of column headers in your file as an array that you want as metadata associated with each mailpiece. See our <a href="https://help.lob.com/print-and-mail/building-a-mail-strategy/campaign-or-triggered-sends/campaign-audience-guide#required-columns-2" target="_blank">Campaign Audience Guide</a> for additional details.
+            description: Value is resource type.
+            enum:
+            - creative
+            default: creative
+    card_id:
+      type: string
+      description: Unique identifier prefixed with `card_`.
+      pattern: ^card_[a-zA-Z0-9]+$
     error:
       type: object
       description: Lob uses RESTful HTTP response codes to indicate success or failure of an API request. In general, 2xx indicates success, 4xx indicate an input error, and 5xx indicates an error on Lob's end.
@@ -328,22 +663,155 @@ components:
                 * `unauthorized_token` - 401: token isn''t authorized.
 
                 '
-    adr_id:
+    double_sided:
+      type: boolean
+      description: Set this attribute to `true` for double sided printing, or `false` for for single sided printing. Defaults to `true`.
+      default: true
+    upload_writable:
+      type: object
+      required:
+      - campaignId
+      properties:
+        campaignId:
+          allOf:
+          - $ref: '#/components/schemas/cmp_id'
+          - description: Associated Campaign ID
+            type: string
+            example: cmp_1933ad629bae1408
+        requiredAddressColumnMapping:
+          $ref: '#/components/schemas/required_address_column_mapping'
+        optionalAddressColumnMapping:
+          $ref: '#/components/schemas/optional_address_column_mapping'
+        metadata:
+          $ref: '#/components/schemas/uploads_metadata'
+        mergeVariableColumnMapping:
+          $ref: '#/components/schemas/merge_variable_column_mapping'
+          description: test
+    merge_variable_column_mapping:
+      title: Merge Variable Mapping
+      type:
+      - object
+      - 'null'
+      default: null
+      example:
+        name: recipient_name
+        gift_code: code
+        qr_code_redirect_url: redirect_url
+      description: The mapping of column headers in your file to the merge variables present in your creative. See our <a href="https://help.lob.com/print-and-mail/building-a-mail-strategy/campaign-or-triggered-sends/campaign-audience-guide#step-3-map-merge-variable-data-if-applicable-7" target="_blank">Campaign Audience Guide</a> for additional details. <br />If a merge variable has the same "name" as a "key" in the `requiredAddressColumnMapping` or `optionalAddressColumnMapping` objects, then they **CANNOT** have a different value in this object. If a different value is provided, then when the campaign is processing it will get overwritten with the mapped value present in the `requiredAddressColumnMapping` or `optionalAddressColumnMapping` objects. The redirect URLs for QR codes can also be customized using this mapping. If the URL has a variable and the variable mapping existsing here, then data from the respective column in the audience file will be merged into the URL template.
+    address_editable_us:
+      allOf:
+      - $ref: '#/components/schemas/address_fields_us'
+      - type: object
+        anyOf:
+        - title: address obj with `name` defined
+          required:
+          - name
+        - title: address obj with `company` defined
+          required:
+          - company
+        properties:
+          description:
+            $ref: '#/components/schemas/resource_description'
+          name:
+            type:
+            - string
+            - 'null'
+            description: 'Either `name` or `company` is required, you may also add both. Must be no longer than 40 characters. If both `name` and `company` are provided, they will be printed on two separate lines above the rest of the address.
+
+              '
+            maxLength: 40
+          company:
+            $ref: '#/components/schemas/company'
+          phone:
+            type:
+            - string
+            - 'null'
+            description: Must be no longer than 40 characters.
+            maxLength: 40
+          email:
+            type:
+            - string
+            - 'null'
+            description: Must be no longer than 100 characters.
+            maxLength: 100
+          address_country:
+            type: string
+            enum:
+            - US
+            default: US
+          metadata:
+            $ref: '#/components/schemas/metadata'
+    upload_state:
+      title: Upload State
+      enum:
+      - Preprocessing
+      - Draft
+      - Ready for Validation
+      - Validating
+      - Scheduled
+      - Cancelled
+      - Errored
+      default: Draft
       type: string
-      description: Unique identifier prefixed with `adr_`.
-      pattern: ^adr_[a-zA-Z0-9]+$
-    crv_id:
-      type: string
-      description: Unique identifier prefixed with `crv_`.
-      pattern: ^crv_[a-zA-Z0-9]+$
-      example: crv_2a3b096c409b32c
+      description: The `state` property on the `upload` object. As the file is processed, the `state` will change from `Ready for Validation` to `Validating` and then will be either `Scheduled` (successfully processed) or `Errored` (Unsuccessfully processed).
     company:
-      type: string
+      type:
+      - string
+      - 'null'
       description: 'Either `name` or `company` is required, you may also add both. Must be no longer than 40 characters. If both `name` and `company` are provided, they will be printed on two separate lines above the rest of the address. This field can be used for any secondary recipient information which is not part of the actual mailing address (Company Name, Department, Attention Line, etc).
 
         '
       maxLength: 40
-      nullable: true
+    date_modified:
+      type: string
+      format: date-time
+      description: A timestamp in ISO 8601 format of the date the resource was last modified.
+    creative_base:
+      type: object
+      properties:
+        from:
+          $ref: '#/components/schemas/from_attribute'
+        description:
+          $ref: '#/components/schemas/resource_description'
+        metadata:
+          $ref: '#/components/schemas/metadata'
+    deleted:
+      type: boolean
+      description: Only returned if the resource has been successfully deleted.
+    returned:
+      description: Properties that the postcards in your Creative should have. See the `qr_code` attribute below to add a QR code to your creative.
+      properties:
+        mail_type:
+          $ref: '#/components/schemas/mail_type'
+        size:
+          $ref: '#/components/schemas/postcard_size'
+        front_original_url:
+          description: The original URL of the `front` template.
+          maxLength: 2083
+          minLength: 1
+          type: string
+          format: uri
+        back_original_url:
+          description: The original URL of the `back` template.
+          maxLength: 2083
+          minLength: 1
+          type: string
+          format: uri
+    lob_base:
+      type: object
+      required:
+      - date_created
+      - date_modified
+      - object
+      properties:
+        date_created:
+          $ref: '#/components/schemas/date_created'
+        date_modified:
+          $ref: '#/components/schemas/date_modified'
+        deleted:
+          $ref: '#/components/schemas/deleted'
+        object:
+          $ref: '#/components/schemas/object'
     returned_resource:
       oneOf:
       - allOf:
@@ -389,27 +857,32 @@ components:
             details:
               $ref: '#/components/schemas/self_mailer_details_returned'
         - $ref: '#/components/schemas/creative_base'
-    creative_base:
+    uploads_metadata:
+      title: Metadata
       type: object
+      required:
+      - columns
       properties:
-        from:
-          $ref: '#/components/schemas/from_attribute'
-        description:
-          $ref: '#/components/schemas/resource_description'
-        metadata:
-          $ref: '#/components/schemas/metadata'
-    extra_service:
+        columns:
+          type: array
+          description: The list of column names from the csv file which you want associated with each of your mailpieces
+          default: []
+          items:
+            type: string
+      default:
+        columns: []
+      example:
+        columns:
+        - recipient_name
+      description: The list of column headers in your file as an array that you want as metadata associated with each mailpiece. See our <a href="https://help.lob.com/print-and-mail/building-a-mail-strategy/campaign-or-triggered-sends/campaign-audience-guide#required-columns-2" target="_blank">Campaign Audience Guide</a> for additional details.
+    object:
       type: string
-      enum:
-      - certified
-      - certified_return_receipt
-      - registered
-      - null
-      description: "Add an extra service to your letter. Can only be non-`null` if `mail_type` isn't `usps_standard`. See <a href=\"https://www.lob.com/pricing/print-mail#compare\" target=\"_blank\">pricing</a> for extra costs incurred.\n  * `certified` - track and confirm delivery for domestic destinations. An extra sheet (1 PDF page single-sided or 2 PDF pages double-sided) is added to the beginning of your letter for address and barcode information. See here for templates: <a href=\"https://s3-us-west-2.amazonaws.com/public.lob.com/assets/templates/letter_certified_template.pdf\" target=\"_blank\">#10 envelope</a> and <a href=\"https://s3-us-west-2.amazonaws.com/public.lob.com/assets/templates/letter_certified_flat_template.pdf\" target=\"_blank\">flat envelope</a> (used for letters over 6 pages single-sided or 12 pages double-sided). You will not be charged for this extra sheet.\n  * `certified_return_receipt` - request an electronic copy of the recipient's signature to prove delivery of your certified letter\n  * `registered` - provides tracking and confirmation for international addresses\n  \nNot available for `us_legal` letter size.\n"
-      nullable: true
-    color:
-      type: boolean
-      description: Set this key to `true` if you would like to print in color. Set to `false` if you would like to print in black and white.
+      description: Value is resource type.
+    crv_id:
+      type: string
+      description: Unique identifier prefixed with `crv_`.
+      pattern: ^crv_[a-zA-Z0-9]+$
+      example: crv_2a3b096c409b32c
     required_address_column_mapping:
       title: Required Address Columns
       type: object
@@ -421,28 +894,33 @@ components:
       - address_zip
       properties:
         name:
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
           default: null
           description: The column header from the csv file that should be mapped to the required field `name`
         address_line1:
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
           default: null
           description: The column header from the csv file that should be mapped to the required field `address_line1`
         address_city:
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
           default: null
           description: The column header from the csv file that should be mapped to the required field `address_city`
         address_state:
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
           default: null
           description: The column header from the csv file that should be mapped to the required field `address_state`
         address_zip:
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
           default: null
           description: The column header from the csv file that should be mapped to the required field `address_zip`
       example:
@@ -452,82 +930,86 @@ components:
         address_state: state
         address_zip: zip_code
       description: The mapping of column headers in your file to Lob-required fields for the resource created. See our <a href="https://help.lob.com/print-and-mail/building-a-mail-strategy/campaign-or-triggered-sends/campaign-audience-guide#required-columns-2" target="_blank">Campaign Audience Guide</a> for additional details.
-    inline_address_us:
-      allOf:
-      - $ref: '#/components/schemas/address_editable_us'
-      - type: object
-        required:
-        - address_line1
-        - address_city
-        - address_state
-        - address_zip
-    cmp_schedule_type:
-      description: How the campaign should be scheduled. Only value available today is `immediate`.
-      type: string
-      enum:
-      - immediate
-    card_id:
-      type: string
-      description: Unique identifier prefixed with `card_`.
-      pattern: ^card_[a-zA-Z0-9]+$
-    resource_description:
-      type: string
-      description: 'An internal description that identifies this resource. Must be no longer than 255 characters.
-
-        '
-      maxLength: 255
-      nullable: true
-    upload_writable:
+    campaign_writable:
       type: object
       required:
-      - campaignId
+      - name
+      - schedule_type
+      - use_type
       properties:
-        campaignId:
-          allOf:
-          - $ref: '#/components/schemas/cmp_id'
-          - description: Associated Campaign ID
-            type: string
-            example: cmp_1933ad629bae1408
-        requiredAddressColumnMapping:
-          $ref: '#/components/schemas/required_address_column_mapping'
-        optionalAddressColumnMapping:
-          $ref: '#/components/schemas/optional_address_column_mapping'
+        billing_group_id:
+          type:
+          - string
+          - 'null'
+          description: Unique identifier prefixed with `bg_`.
+          pattern: ^bg_[a-zA-Z0-9]+$
+        name:
+          description: Name of the campaign.
+          type: string
+        description:
+          $ref: '#/components/schemas/resource_description'
+        schedule_type:
+          $ref: '#/components/schemas/cmp_schedule_type'
+        target_delivery_date:
+          description: If `schedule_type` is `target_delivery_date`, provide a targeted delivery date for mail pieces in this campaign.
+          type:
+          - string
+          - 'null'
+          format: date-time
+        send_date:
+          description: If `schedule_type` is `scheduled_send_date`, provide a date to send this campaign.
+          type:
+          - string
+          - 'null'
+          format: date-time
+        cancel_window_campaign_minutes:
+          description: A window, in minutes, within which the campaign can be canceled.
+          type:
+          - integer
+          - 'null'
         metadata:
-          $ref: '#/components/schemas/uploads_metadata'
-        mergeVariableColumnMapping:
-          $ref: '#/components/schemas/merge_variable_column_mapping'
-          description: test
-    address_placement:
+          $ref: '#/components/schemas/metadata'
+        use_type:
+          $ref: '#/components/schemas/cmp_use_type'
+        auto_cancel_if_ncoa:
+          description: Whether or not a mail piece should be automatically canceled and not sent if the address is updated via NCOA.
+          type: boolean
+    upl_id:
       type: string
+      description: Unique identifier prefixed with `upl_`.
+      pattern: ^upl_[a-zA-Z0-9]+$
+    cmp_use_type:
+      description: The use type for each mailpiece. Can be one of marketing, operational, or null. Null use_type is only allowed if an account default use_type is selected in Account Settings. For more information on use_type, see our  [Help Center article](https://help.lob.com/print-and-mail/building-a-mail-strategy/managing-mail-settings/declaring-mail-use-type).
+      type:
+      - string
+      - 'null'
       enum:
-      - top_first_page
-      - insert_blank_page
-      - bottom_first_page_center
-      - bottom_first_page
-      description: "Specifies the location of the address information that will show through the double-window envelope. To see how this will impact your letter design, view our letter template.\nSome values are exclusive to certain customers. Upgrade to the appropriate <a href=\"https://dashboard.lob.com/#/settings/editions\" target=\"_blank\">Print & Mail Edition</a> to gain access.\n  * `top_first_page` - (default) print address information at the top of your provided first page\n  * `insert_blank_page` - insert a blank address page at the beginning of your file (you will be charged for the extra page)\n  * `bottom_first_page_center` - **(exclusive, deprecation planned within a few months)** print address information at the bottom center of your provided first page\n  * `bottom_first_page` - **(exclusive)** print address information at the bottom of your provided first page\n"
-      default: top_first_page
-    self_mailer_size:
-      type: string
-      enum:
-      - 6x18_bifold
-      - 11x9_bifold
-      - 12x9_bifold
-      - 17.75x9_trifold
-      description: Specifies the size of the self mailer. The `17.75x9_trifold` size is in beta. Contact support@lob.com or your account contact to learn more.
-      default: 6x18_bifold
-    upload_state:
-      title: Upload State
-      enum:
-      - Preprocessing
-      - Draft
-      - Ready for Validation
-      - Validating
-      - Scheduled
-      - Cancelled
-      - Errored
-      default: Draft
-      type: string
-      description: The `state` property on the `upload` object. As the file is processed, the `state` will change from `Ready for Validation` to `Validating` and then will be either `Scheduled` (successfully processed) or `Errored` (Unsuccessfully processed).
+      - marketing
+      - operational
+      - null
+    campaign_list:
+      type: array
+      description: Array of campaigns associated with the creative ID
+      items:
+        $ref: '#/components/schemas/campaign_item'
+      example:
+      - id: cmp_ed76e33e7ac4d0bd
+        name: My postman Campaign 2
+        description: Created via postman again
+        schedule_type: immediate
+        send_date: null
+        target_delivery_date: null
+        cancel_window_campaign_minutes: null
+        metadata: {}
+        use_type: null
+        is_draft: true
+        deleted: false
+        creatives: []
+        uploads: []
+        auto_cancel_if_ncoa: false
+        date_created: '2022-07-26T20:20:25.016Z'
+        date_modified: '2022-07-26T20:20:25.016Z'
+        object: campaign
     campaign_item:
       allOf:
       - $ref: '#/components/schemas/campaign_writable'
@@ -572,473 +1054,15 @@ components:
             $ref: '#/components/schemas/date_modified'
           deleted:
             $ref: '#/components/schemas/deleted'
-    postcard_size:
-      type: string
-      enum:
-      - 4x6
-      - 6x9
-      - 6x11
-      description: 'Specifies the size of the postcard. Only `4x6` postcards can be sent to international destinations.
-
-        '
-      default: 4x6
-    double_sided:
-      type: boolean
-      description: Set this attribute to `true` for double sided printing, or `false` for for single sided printing. Defaults to `true`.
-      default: true
-    campaign:
+    inline_address_us:
       allOf:
-      - $ref: '#/components/schemas/lob_base'
-      - $ref: '#/components/schemas/campaign_writable'
+      - $ref: '#/components/schemas/address_editable_us'
       - type: object
         required:
-        - id
-        - name
-        - description
-        - schedule_type
-        - use_type
-        - is_draft
-        - creatives
-        - uploads
-        - auto_cancel_if_ncoa
-        - date_created
-        - date_modified
-        - object
-        properties:
-          id:
-            $ref: '#/components/schemas/cmp_id'
-          is_draft:
-            description: Whether or not the campaign is still a draft.
-            type: boolean
-            default: true
-          creatives:
-            description: An array of creatives that have been associated with this campaign.
-            type: array
-            items:
-              $ref: '#/components/schemas/creative'
-            minItems: 0
-          uploads:
-            description: A single-element array containing the upload object that is assocated with this campaign.
-            type: array
-            items:
-              $ref: '#/components/schemas/upload'
-            minItems: 0
-            maxItems: 1
-          object:
-            type: string
-            description: Value is resource type.
-            enum:
-            - campaign
-            default: campaign
-          use_type:
-            $ref: '#/components/schemas/cmp_use_type'
-    mail_type:
-      type: string
-      enum:
-      - usps_first_class
-      - usps_standard
-      description: 'A string designating the mail postage type:
-
-        * `usps_first_class` - (default)
-
-        * `usps_standard` - a <a href="https://lob.com/pricing/print-mail#compare" target="_blank">cheaper option</a> which is
-
-        less predictable and takes longer to deliver. `usps_standard` cannot be used with `4x6`
-
-        postcards or for any postcards sent outside of the United States.
-
-        '
-      default: usps_first_class
-    deleted:
-      type: boolean
-      description: Only returned if the resource has been successfully deleted.
-    from_attribute:
-      title: From
-      description: Must either be an address ID or an inline object with correct address parameters. All addresses will be standardized into uppercase without being modified by verification.
-      oneOf:
-      - $ref: '#/components/schemas/adr_id'
-      - $ref: '#/components/schemas/inline_address_us'
-    creative:
-      allOf:
-      - $ref: '#/components/schemas/lob_base'
-      - $ref: '#/components/schemas/returned_resource'
-      - type: object
-        required:
-        - id
-        - description
-        - from
-        - resource_type
-        - details
-        - metadata
-        - template_preview_urls
-        - template_previews
-        - campaigns
-        - date_created
-        - date_modified
-        - object
-        - deleted
-        properties:
-          deleted:
-            type: boolean
-            description: Whether the resource has been deleted.
-          id:
-            $ref: '#/components/schemas/crv_id'
-          template_preview_urls:
-            title: Template Preview URLs
-            type: object
-            description: Preview URLs associated with a creative's artwork asset(s) if the creative uses HTML templates as assets. An empty object will be returned if no `template_preview`s have been generated.
-          template_previews:
-            title: Template Previews
-            type: array
-            items:
-              type: object
-            description: A list of template preview objects if the creative uses HTML template(s) as artwork asset(s). An empty array will be returned if no `template_preview`s have been generated for the creative.
-          campaigns:
-            $ref: '#/components/schemas/campaign_list'
-          object:
-            type: string
-            description: Value is resource type.
-            enum:
-            - creative
-            default: creative
-    letter_details_returned:
-      description: Properties that the letters in your Creative should have. See the `qr_code` attribute below to add a QR code to your creative.
-      properties:
-        address_placement:
-          $ref: '#/components/schemas/address_placement'
-        buckslips:
-          description: A single-element array containing an existing buckslip id in a string format. See [buckslips](#tag/Buckslips) for more information.
-          type: array
-          items:
-            $ref: '#/components/schemas/buckslip_id'
-          minItems: 0
-          maxItems: 1
-          nullable: true
-        cards:
-          description: A single-element array containing an existing card id in a string format. See [cards](#tag/Cards) for more information.
-          type: array
-          items:
-            $ref: '#/components/schemas/card_id'
-          minItems: 0
-          maxItems: 1
-          nullable: true
-        custom_envelope:
-          $ref: '#/components/schemas/custom_envelope_returned'
-        color:
-          $ref: '#/components/schemas/color'
-        double_sided:
-          $ref: '#/components/schemas/double_sided'
-        extra_service:
-          $ref: '#/components/schemas/extra_service'
-        file_original_url:
-          description: The original URL of the `file` template.
-          type: string
-        mail_type:
-          $ref: '#/components/schemas/mail_type'
-    upload:
-      allOf:
-      - $ref: '#/components/schemas/upload_writable'
-      - type: object
-        required:
-        - id
-        - accountId
-        - campaignId
-        - requiredAddressColumnMapping
-        - optionalAddressColumnMapping
-        - metadata
-        - mergeVariableColumnMapping
-        - mode
-        - state
-        - totalMailpieces
-        - failedMailpieces
-        - validatedMailpieces
-        - bytesProcessed
-        - dateCreated
-        - dateModified
-        properties:
-          id:
-            $ref: '#/components/schemas/upl_id'
-          accountId:
-            title: Account ID
-            type: string
-            description: Account ID that made the request
-            example: fa9ea650fc7b31a89f92
-          mode:
-            enum:
-            - test
-            - live
-            type: string
-            description: The environment in which the mailpieces were created. Today, will only be `live`.
-          failuresUrl:
-            title: Failures URL
-            type: string
-            example: https://www.example.com
-            description: Url where your campaign mailpiece failures can be retrieved
-          originalFilename:
-            title: Original Filename
-            type: string
-            example: my_audience.csv
-            description: Filename of the upload
-          state:
-            $ref: '#/components/schemas/upload_state'
-          totalMailpieces:
-            title: Total Mailpieces
-            type: integer
-            example: 100
-            description: Total number of recipients for the campaign
-          failedMailpieces:
-            title: Failed Mailpieces
-            type: integer
-            example: 5
-            description: Number of mailpieces that failed to create
-          validatedMailpieces:
-            title: Validated Mailpieces
-            type: integer
-            example: 95
-            description: Number of mailpieces that were successfully created
-          bytesProcessed:
-            title: Bytes Processed
-            type: integer
-            example: 17268
-            description: Number of bytes processed in your CSV
-          dateCreated:
-            title: Date Created
-            type: string
-            format: date-time
-            description: A timestamp in ISO 8601 format of the date the upload was created
-          dateModified:
-            title: Date Modified
-            type: string
-            format: date-time
-            description: A timestamp in ISO 8601 format of the date the upload was last modified
-    lob_base:
-      type: object
-      required:
-      - date_created
-      - date_modified
-      - object
-      properties:
-        date_created:
-          $ref: '#/components/schemas/date_created'
-        date_modified:
-          $ref: '#/components/schemas/date_modified'
-        deleted:
-          $ref: '#/components/schemas/deleted'
-        object:
-          $ref: '#/components/schemas/object'
-    address_editable_us:
-      allOf:
-      - $ref: '#/components/schemas/address_fields_us'
-      - type: object
-        anyOf:
-        - title: address obj with `name` defined
-          required:
-          - name
-        - title: address obj with `company` defined
-          required:
-          - company
-        properties:
-          description:
-            $ref: '#/components/schemas/resource_description'
-          name:
-            type: string
-            description: 'Either `name` or `company` is required, you may also add both. Must be no longer than 40 characters. If both `name` and `company` are provided, they will be printed on two separate lines above the rest of the address.
-
-              '
-            maxLength: 40
-            nullable: true
-          company:
-            $ref: '#/components/schemas/company'
-          phone:
-            type: string
-            description: Must be no longer than 40 characters.
-            maxLength: 40
-            nullable: true
-          email:
-            type: string
-            description: Must be no longer than 100 characters.
-            maxLength: 100
-            nullable: true
-          address_country:
-            type: string
-            enum:
-            - US
-            default: US
-          metadata:
-            $ref: '#/components/schemas/metadata'
-    metadata:
-      type: object
-      additionalProperties:
-        type: string
-      description: 'Use metadata to store custom information for tagging and labeling back to your internal systems. Must be an object with up to 20 key-value pairs. Keys must be at most 40 characters and values must be at most 500 characters. Neither can contain the characters `"` and `\`. i.e. ''{"customer_id" : "NEWYORK2015"}'' Nested objects are not supported.  See [Metadata](#section/Metadata) for more information.'
-      maxLength: 500
-      pattern: '[^"\\]{0,500}'
-    cmp_id:
-      type: string
-      title: Campaign id
-      description: Unique identifier prefixed with `cmp_`.
-      pattern: ^cmp_[a-zA-Z0-9]+$
-    failure_status_code:
-      type: integer
-      enum:
-      - 401
-      - 403
-      - 404
-      - 413
-      - 422
-      - 429
-      - 500
-      description: "A conventional HTTP status code:\n  * `401` - Authorization error with your API key or account\n  * `403` - Forbidden error with your API key or account\n  * `404` - The requested item does not exist\n  * `413` - Payload too large\n  * `422` - The query or body parameters did not pass validation\n  * `429` - Too many requests have been sent with an API key in a given amount of time\n  * `500` - An internal server error occurred, please contact support@lob.com\n"
-    object:
-      type: string
-      description: Value is resource type.
-    address_fields_us:
-      type: object
-      required:
-      - address_line1
-      - address_city
-      - address_state
-      - address_zip
-      properties:
-        address_line1:
-          type: string
-          description: The primary number, street name, and directional information.
-          maxLength: 64
-        address_line2:
-          type: string
-          description: An optional field containing any information which can't fit into line 1.
-          maxLength: 64
-          nullable: true
-        address_city:
-          type: string
-          maxLength: 200
-        address_state:
-          type: string
-          description: 2 letter state short-name code
-          pattern: ^[a-zA-Z]{2}$
-        address_zip:
-          type: string
-          description: 'Must follow the ZIP format of `12345` or ZIP+4 format of `12345-1234`.
-
-            '
-          pattern: ^\d{5}(-\d{4})?$
-    campaign_list:
-      type: array
-      description: Array of campaigns associated with the creative ID
-      items:
-        $ref: '#/components/schemas/campaign_item'
-      example:
-      - id: cmp_ed76e33e7ac4d0bd
-        name: My postman Campaign 2
-        description: Created via postman again
-        schedule_type: immediate
-        send_date: null
-        target_delivery_date: null
-        cancel_window_campaign_minutes: null
-        metadata: {}
-        use_type: null
-        is_draft: true
-        deleted: false
-        creatives: []
-        uploads: []
-        auto_cancel_if_ncoa: false
-        date_created: '2022-07-26T20:20:25.016Z'
-        date_modified: '2022-07-26T20:20:25.016Z'
-        object: campaign
-    buckslip_id:
-      type: string
-      description: Unique identifier prefixed with `bck_`.
-      pattern: ^bck_[a-zA-Z0-9]+$
-    cmp_use_type:
-      description: The use type for each mailpiece. Can be one of marketing, operational, or null. Null use_type is only allowed if an account default use_type is selected in Account Settings. For more information on use_type, see our  [Help Center article](https://help.lob.com/print-and-mail/building-a-mail-strategy/managing-mail-settings/declaring-mail-use-type).
-      type: string
-      enum:
-      - marketing
-      - operational
-      - null
-      nullable: true
-    returned:
-      description: Properties that the postcards in your Creative should have. See the `qr_code` attribute below to add a QR code to your creative.
-      properties:
-        mail_type:
-          $ref: '#/components/schemas/mail_type'
-        size:
-          $ref: '#/components/schemas/postcard_size'
-        front_original_url:
-          description: The original URL of the `front` template.
-          maxLength: 2083
-          minLength: 1
-          type: string
-          format: uri
-        back_original_url:
-          description: The original URL of the `back` template.
-          maxLength: 2083
-          minLength: 1
-          type: string
-          format: uri
-    campaign_writable:
-      type: object
-      required:
-      - name
-      - schedule_type
-      - use_type
-      properties:
-        billing_group_id:
-          type: string
-          description: Unique identifier prefixed with `bg_`.
-          pattern: ^bg_[a-zA-Z0-9]+$
-          nullable: true
-        name:
-          description: Name of the campaign.
-          type: string
-        description:
-          $ref: '#/components/schemas/resource_description'
-        schedule_type:
-          $ref: '#/components/schemas/cmp_schedule_type'
-        target_delivery_date:
-          description: If `schedule_type` is `target_delivery_date`, provide a targeted delivery date for mail pieces in this campaign.
-          type: string
-          format: date-time
-          nullable: true
-        send_date:
-          description: If `schedule_type` is `scheduled_send_date`, provide a date to send this campaign.
-          type: string
-          format: date-time
-          nullable: true
-        cancel_window_campaign_minutes:
-          description: A window, in minutes, within which the campaign can be canceled.
-          type: integer
-          nullable: true
-        metadata:
-          $ref: '#/components/schemas/metadata'
-        use_type:
-          $ref: '#/components/schemas/cmp_use_type'
-        auto_cancel_if_ncoa:
-          description: Whether or not a mail piece should be automatically canceled and not sent if the address is updated via NCOA.
-          type: boolean
-    self_mailer_details_returned:
-      description: Properties that the self mailers in your Creative should have. See the `qr_code` attribute below to add a QR code to your creative.
-      properties:
-        mail_type:
-          $ref: '#/components/schemas/mail_type'
-        size:
-          $ref: '#/components/schemas/self_mailer_size'
-        inside_original_url:
-          description: The original URL of the `inside` template.
-          maxLength: 2083
-          minLength: 1
-          type: string
-          format: uri
-        outside_original_url:
-          description: The original URL of the `outside` template.
-          maxLength: 2083
-          minLength: 1
-          type: string
-          format: uri
-    date_modified:
-      type: string
-      format: date-time
-      description: A timestamp in ISO 8601 format of the date the resource was last modified.
+        - address_line1
+        - address_city
+        - address_state
+        - address_zip
   responses:
     campaigns_error:
       description: Error
@@ -1055,27 +1079,6 @@ components:
     basicAuth:
       type: http
       scheme: basic
-x-webhooks:
-  events:
-    post:
-      summary: Events
-      description: Information about an event
-      operationId: event
-      tags:
-      - Events
-      responses:
-        '200':
-          $ref: '#/components/responses/events'
-  tracking_events:
-    post:
-      summary: Tracking Events
-      description: Information about tracking events
-      operationId: tracking_event
-      tags:
-      - Tracking Events
-      responses:
-        '200':
-          $ref: '#/components/responses/tracking_events'
 x-tagGroups:
 - name: Overview
   tags:

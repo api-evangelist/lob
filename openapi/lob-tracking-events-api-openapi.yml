@@ -10,7 +10,7 @@ info:
     name: MIT
     url: https://mit-license.org/
   termsOfService: https://www.lob.com/legal
-  description: 'Operations tagged Tracking Events across 46 of this provider''s published API definitions: lob-accounts-api-openapi.yml, lob-addresses-api-openapi.yml, lob-bank-accounts-api-openapi.yml, lob-bank-id-api-openapi.yml, lob-bg-id-api-openapi.yml, lob-billing-groups-api-openapi.yml, lob-booklet-id-api-openapi.yml, lob-booklets-api-openapi.yml, lob-buckslip-id-api-openapi.yml, lob-buckslips-api-openapi.yml, lob-bulk-api-openapi.yml, lob-campaigns-api-openapi.yml, lob-cards-api-openapi.yml, lob-checks-api-openapi.yml, lob-creatives-api-openapi.yml, lob-crv-id-api-openapi.yml, lob-domains-api-openapi.yml, lob-exports-api-openapi.yml, lob-files-api-openapi.yml, lob-identity-validation-api-openapi.yml, lob-informed-delivery-campaign-api-openapi.yml, lob-intl-verifications-api-openapi.yml, lob-letters-api-openapi.yml, lob-links-api-openapi.yml, lob-ltr-id-api-openapi.yml, lob-orders-api-openapi.yml, lob-postcards-api-openapi.yml, lob-psc-id-api-openapi.yml, lob-q-r-codes-api-openapi.yml, lob-reports-api-openapi.yml, lob-reverse-geocode-lookups-api-openapi.yml, lob-self-mailers-api-openapi.yml, lob-send-api-openapi.yml, lob-sfm-id-api-openapi.yml, lob-snap-pack-id-api-openapi.yml, lob-snap-packs-api-openapi.yml, lob-template-versions-api-openapi.yml, lob-templates-api-openapi.yml, lob-u-r-l-shortener-api-openapi.yml, lob-u-s-autocompletions-api-openapi.yml, lob-u-s-verifications-api-openapi.yml, lob-uploads-api-openapi.yml, lob-usps-campaign-id-api-openapi.yml, lob-verify-api-openapi.yml, lob-versions-api-openapi.yml, lob-zip-lookups-api-openapi.yml. Each path carries the servers of the definition it was published in.'
+  description: 'Operations tagged Tracking Events across 2 of this provider''s published API definitions: lob-api-openapi.yml, lob-tracking-events-api-openapi.yml. Each path carries the servers of the definition it was published in.'
 servers:
 - url: https://api.lob.com/v1
   description: production
@@ -18,6 +18,7 @@ security:
 - basicAuth: []
 tags:
 - name: Tracking Events
+  description: As mailpieces travel through the mail stream, USPS scans their unique barcodes, and Lob processes these mail scans to generate tracking events.
 paths: {}
 webhooks:
   tracking_events:
@@ -34,57 +35,270 @@ webhooks:
     - url: https://api.lob.com/v1
       description: production
 components:
+  schemas:
+    tracking_event_normal:
+      allOf:
+      - $ref: '#/components/schemas/tracking_event_base'
+      - type: object
+        required:
+        - type
+        - name
+        properties:
+          type:
+            description: non-Certified postcards, self mailers, letters, checks and snap packs
+            type: string
+            enum:
+            - normal
+          name:
+            type: string
+            enum:
+            - Mailed
+            - In Transit
+            - In Local Area
+            - Processed for Delivery
+            - Delivered
+            - Re-Routed
+            - Returned to Sender
+            - International Exit
+            description: "Name of tracking event (for normal postcards, self mailers, letters, checks and snap packs):\n\n  * `Mailed` - The mailpiece has been handed off to and accepted by USPS\n    and is en route. <a href=\"https://help.lob.com/print-and-mail/getting-data-and-results/tracking-your-mail#mailed-tracking-events-4\" target=\"_blank\">More about\n    Mailed.</a>\n    Note this data is only available in Enterprise editions of\n    Lob. <a href=\"https://lob.com/support/contact#contact\" target=\"_blank\">Contact Sales</a> if\n    you want access to this feature.\n\n  * `In Transit` - The mailpiece is being processed at the entry/origin facility.\n\n  * `In Local Area` - The mailpiece is being processed at the destination facility.\n\n  * `Processed for Delivery` - The mailpiece has been greenlit for\n    delivery at the recipient's nearest postal facility. The mailpiece\n    should reach the mailbox within 1 business day of this tracking\n    event.\n\n  * `Delivered` - The mail piece has been delivered to \n    the recipients address. The final scan is generated when the mail \n    carrier's GPS unit leaves the delivery area.\n\n  * `Re-Routed` - The mailpiece is re-routed due to recipient change of\n    address, address errors, or USPS relabeling of barcode/ID tag\n    area.\n\n  * `Returned to Sender` - The mailpiece is being returned to sender due\n    to barcode, ID tag area, or address errors.\n  \n  * `International Exit` - The mail piece has been processed to \n    ship to a destination abroad. This is typically the last \n    scan a US-originated international mail piece will receive \n    from the USPS.\n\n<a href=\"https://help.lob.com/print-and-mail/getting-data-and-results/tracking-your-mail#mailed-tracking-events-4\" target=\"_blank\">More about tracking</a>\n"
+          details:
+            description: Will be `null` for `type=normal` events
+            type:
+            - object
+            - 'null'
+            enum:
+            - null
+          location:
+            type:
+            - string
+            - 'null'
+            description: 'The zip code in which the scan event occurred. Null for `Mailed` events.
+
+              '
+    tracking_event_details:
+      type: object
+      required:
+      - event
+      - description
+      - action_required
+      properties:
+        event:
+          type: string
+          enum:
+          - package_accepted
+          - package_arrived
+          - package_departed
+          - package_processing
+          - package_processed
+          - package_in_local_area
+          - delivery_scheduled
+          - out_for_delivery
+          - pickup_available
+          - delivered
+          - package_forwarded
+          - returned_to_sender
+          - address_issue
+          - contact_carrier
+          - delayed
+          - delivery_attempted
+          - delivery_rescheduled
+          - location_inaccessible
+          - notice_left
+          - package_damaged
+          - package_disposed
+          - package_held
+          - package_lost
+          - package_unclaimed
+          - package_undeliverable
+          - reschedule_delivery
+          - other
+          description: 'Find the full table [here](#tag/Tracking-Events). A detailed substatus about the event:
+
+            * `package_accepted` - Package has been accepted into the carrier network for delivery.
+
+            * `package_arrived` - Package has arrived at an intermediate location in the carrier network.
+
+            * `package_departed` - Package has departed from an intermediate location in the carrier network.
+
+            * `package_processing` - Package is processing at an intermediate location in the carrier network.
+
+            * `package_processed` - Package has been processed at an intermediate location.
+
+            * `package_in_local_area` - Package is at a location near the end destination.
+
+            * `delivery_scheduled` - Package is scheduled for delivery.
+
+            * `out_for_delivery` - Package is out for delivery.
+
+            * `pickup_available` - Package is available for pickup at carrier location.
+
+            * `delivered` - Package has been delivered.
+
+            * `package_forwarded` - Package has been forwarded.
+
+            * `returned_to_sender` - Package is to be returned to sender.
+
+            * `address_issue` - Address information is incorrect. Contact carrier to ensure delivery.
+
+            * `contact_carrier` - Contact the carrier for more information.
+
+            * `delayed` - Delivery of package is delayed.
+
+            * `delivery_attempted` - Delivery of package has been attempted. Contact carrier to ensure delivery.
+
+            * `delivery_rescheduled` - Delivery of package has been rescheduled.
+
+            * `location_inaccessible` - Delivery location inaccessible to carrier. Contact carrier to ensure delivery.
+
+            * `notice_left` - Carrier left notice during attempted delivery. Follow carrier instructions on notice.
+
+            * `package_damaged` - Package has been damaged. Contact carrier for more details.
+
+            * `package_disposed` - Package has been disposed.
+
+            * `package_held` - Package held at carrier location. Contact carrier for more details.
+
+            * `package_lost` - Package has been lost. Contact carrier for more details.
+
+            * `package_unclaimed` - Package is unclaimed.
+
+            * `package_undeliverable` - Package is not able to be delivered.
+
+            * `reschedule_delivery` - Contact carrier to reschedule delivery.
+
+            * `other` - Unrecognized carrier status.
+
+            '
+        description:
+          type: string
+          description: The description as listed in the description for event.
+        notes:
+          type: string
+          description: Event-specific notes from USPS about the tracking event.
+        action_required:
+          type: boolean
+          description: '`true` if action is required by the end recipient, `false` otherwise.
+
+            '
+    evnt_id:
+      type: string
+      description: Unique identifier prefixed with `evnt_`.
+      pattern: ^evnt_[a-zA-Z0-9]+$
+    tracking_event_base:
+      type: object
+      description: As mail pieces travel through the mail stream, USPS scans their unique barcodes, and Lob processes these mail scans to generate tracking events.
+      required:
+      - id
+      - date_created
+      - date_modified
+      - object
+      properties:
+        id:
+          $ref: '#/components/schemas/evnt_id'
+        time:
+          type: string
+          format: date-time
+          description: A timestamp in ISO 8601 format of the date USPS registered the event.
+        date_created:
+          $ref: '#/components/schemas/date_created'
+        date_modified:
+          $ref: '#/components/schemas/date_modified'
+        object:
+          allOf:
+          - $ref: '#/components/schemas/object'
+          - type: string
+            enum:
+            - tracking_event
+            default: tracking_event
+    object:
+      type: string
+      description: Value is resource type.
+    date_created:
+      type: string
+      format: date-time
+      description: A timestamp in ISO 8601 format of the date the resource was created.
+    tracking_event_certified:
+      allOf:
+      - $ref: '#/components/schemas/tracking_event_base'
+      - type: object
+        required:
+        - type
+        - name
+        properties:
+          type:
+            description: a Certified letter tracking event
+            type: string
+            enum:
+            - certified
+          name:
+            type: string
+            enum:
+            - Mailed
+            - In Transit
+            - In Local Area
+            - Processed for Delivery
+            - Pickup Available
+            - Delivered
+            - Re-Routed
+            - Returned to Sender
+            - Issue
+            description: "Name of tracking event for Certified letters. Letters sent with USPS Certified Mail are fully tracked by USPS, therefore their tracking events have an additional details object with more detailed information about the tracking event. Some certified tracking event names have multiple meanings, noted in the list here. See the description of the details object for the full set of combined certified tracking event name meanings.\n\n  * `Mailed` - Package has been accepted into the carrier network for delivery.\n\n  * `In Transit` - Maps to four distinct stages of transit.\n\n  * `In Local Area` - Package is at a location near the end destination.\n\n  * `Processed for Delivery` - Maps to two distinct stages of delivery.\n\n  * `Pickup Available` - Package is available for pickup at carrier location.\n\n  * `Delivered` - Package has been delivered.\n\n  * `Re-Routed` - Package has been forwarded.\n\n  * `Returned to Sender` - Package is to be returned to sender.\n\n  * `Issue` - Maps to (at least) 15 possible issues, some of which are actionable.\n"
+          details:
+            $ref: '#/components/schemas/tracking_event_details'
+          location:
+            type:
+            - string
+            - 'null'
+            description: 'The zip code in which the event occurred if it exists, otherwise will be the name of a Regional Distribution Center if it exists, otherwise will be null.
+
+              '
+    date_modified:
+      type: string
+      format: date-time
+      description: A timestamp in ISO 8601 format of the date the resource was last modified.
+  responses:
+    tracking_events:
+      description: Returns a `tracking_event` object to the specified server.
+      content:
+        application/json:
+          schema:
+            oneOf:
+            - $ref: '#/components/schemas/tracking_event_normal'
+            - $ref: '#/components/schemas/tracking_event_certified'
+          examples:
+            normal:
+              value:
+                id: evnt_9e84094c9368cfb
+                type: normal
+                name: In Local Area
+                details: null
+                location: '72231'
+                time: '2016-06-30T15:51:41.000Z'
+                date_created: '2016-06-30T17:41:59.771Z'
+                date_modified: '2016-06-30T17:41:59.771Z'
+                object: tracking_event
+            certified:
+              value:
+                id: evnt_9e84094c9368cfb
+                type: certified
+                name: Delivered
+                details:
+                  event: delivered
+                  description: Package has been delivered.
+                  notes: Delivered, Front Desk/Reception/Mail Room
+                  action_required: false
+                location: '33408'
+                time: '2019-10-08T19:41:00Z'
+                date_created: '2019-10-08T19:41:00Z'
+                date_modified: '2019-10-08T19:41:00Z'
+                object: tracking_event
   securitySchemes:
     basicAuth:
       type: http
       scheme: basic
 x-refined-from:
-- lob-accounts-api-openapi.yml
-- lob-addresses-api-openapi.yml
-- lob-bank-accounts-api-openapi.yml
-- lob-bank-id-api-openapi.yml
-- lob-bg-id-api-openapi.yml
-- lob-billing-groups-api-openapi.yml
-- lob-booklet-id-api-openapi.yml
-- lob-booklets-api-openapi.yml
-- lob-buckslip-id-api-openapi.yml
-- lob-buckslips-api-openapi.yml
-- lob-bulk-api-openapi.yml
-- lob-campaigns-api-openapi.yml
-- lob-cards-api-openapi.yml
-- lob-checks-api-openapi.yml
-- lob-creatives-api-openapi.yml
-- lob-crv-id-api-openapi.yml
-- lob-domains-api-openapi.yml
-- lob-exports-api-openapi.yml
-- lob-files-api-openapi.yml
-- lob-identity-validation-api-openapi.yml
-- lob-informed-delivery-campaign-api-openapi.yml
-- lob-intl-verifications-api-openapi.yml
-- lob-letters-api-openapi.yml
-- lob-links-api-openapi.yml
-- lob-ltr-id-api-openapi.yml
-- lob-orders-api-openapi.yml
-- lob-postcards-api-openapi.yml
-- lob-psc-id-api-openapi.yml
-- lob-q-r-codes-api-openapi.yml
-- lob-reports-api-openapi.yml
-- lob-reverse-geocode-lookups-api-openapi.yml
-- lob-self-mailers-api-openapi.yml
-- lob-send-api-openapi.yml
-- lob-sfm-id-api-openapi.yml
-- lob-snap-pack-id-api-openapi.yml
-- lob-snap-packs-api-openapi.yml
-- lob-template-versions-api-openapi.yml
-- lob-templates-api-openapi.yml
-- lob-u-r-l-shortener-api-openapi.yml
-- lob-u-s-autocompletions-api-openapi.yml
-- lob-u-s-verifications-api-openapi.yml
-- lob-uploads-api-openapi.yml
-- lob-usps-campaign-id-api-openapi.yml
-- lob-verify-api-openapi.yml
-- lob-versions-api-openapi.yml
-- lob-zip-lookups-api-openapi.yml
+- lob-api-openapi.yml
+- lob-tracking-events-api-openapi.yml
 x-tagGroups:
 - name: Overview
   tags:

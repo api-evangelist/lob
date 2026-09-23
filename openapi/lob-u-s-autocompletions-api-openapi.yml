@@ -1,8 +1,8 @@
-openapi: 3.0.3
+openapi: 3.2.0
 info:
-  title: Lob U S  Autocompletions API
+  title: Lob U S Autocompletions API
   version: 1.20.2
-  description: "Experience direct mail like never before, with unmatched personalization and scalability \x14 all in one intuitive platform."
+  description: Experience direct mail like never before, with unmatched personalization and scalability all in one intuitive platform.
   license:
     name: MIT
     url: https://mit-license.org/
@@ -23,7 +23,7 @@ paths:
     post:
       operationId: autocompletion
       summary: Autocomplete
-      description: Given an address prefix consisting of a partial primary line, as well as optional input of city, state, and zip code, this functionality returns up to 10 full US address suggestions. Not all of them will turn out to be valid addresses; they'll need to be [verified](#operation/verification_us).
+      description: Given an address prefix consisting of a partial primary line, as well as optional input of city, state, and zip code, this functionality returns up to 10 full US address suggestions. Not all of them will turn out to be valid addresses; they'll need to be verified.
       tags:
       - U S  Autocompletions
       parameters:
@@ -129,95 +129,6 @@ paths:
         label: GO
 components:
   schemas:
-    zip_code:
-      type: string
-      pattern: ^\d{5}((-)?\d{4})?$
-    us_autocompletions_writable:
-      type: object
-      required:
-      - address_prefix
-      properties:
-        address_prefix:
-          type: string
-          description: 'Only accepts numbers and street names in an alphanumeric format.
-
-            '
-        city:
-          type: string
-          description: 'An optional city input used to filter suggestions. Case insensitive and does not match partial abbreviations.
-
-            '
-        state:
-          type: string
-          description: 'An optional state input used to filter suggestions. Case insensitive and does not match partial abbreviations.
-
-            '
-        zip_code:
-          type: string
-          description: 'An optional ZIP Code input used to filter suggestions. Matches partial entries.
-
-            '
-        geo_ip_sort:
-          type: boolean
-          description: 'If `true`, sort suggestions by proximity to the IP set in the `X-Forwarded-For` header.
-
-            '
-    suggestions:
-      type: object
-      required:
-      - primary_line
-      - city
-      - state
-      - zip_code
-      properties:
-        primary_line:
-          type: string
-          description: 'The primary delivery line (usually the street address) of the address.
-
-            Combination of the following applicable `components` (primary number &
-
-            secondary information may be missing or inaccurate):
-
-            * `primary_number`
-
-            * `street_predirection`
-
-            * `street_name`
-
-            * `street_suffix`
-
-            * `street_postdirection`
-
-            * `secondary_designator`
-
-            * `secondary_number`
-
-            * `pmb_designator`
-
-            * `pmb_number`
-
-            '
-        city:
-          $ref: '#/components/schemas/city'
-        state:
-          $ref: '#/components/schemas/state'
-        zip_code:
-          allOf:
-          - description: 'Must be formatted as a US ZIP or ZIP+4 (e.g. `94107`, `941072282`, `94107-2282`).
-
-              '
-          - $ref: '#/components/schemas/zip_code'
-        object:
-          type: string
-          description: Value is resource type.
-          enum:
-          - us_autocompletion
-          default: us_autocompletion
-    city:
-      allOf:
-      - $ref: '#/components/schemas/city_no_description'
-      - type: string
-        description: The name of the city.
     error:
       type: object
       description: Lob uses RESTful HTTP response codes to indicate success or failure of an API request. In general, 2xx indicates success, 4xx indicate an input error, and 5xx indicates an error on Lob's end.
@@ -396,6 +307,81 @@ components:
                 * `unauthorized_token` - 401: token isn''t authorized.
 
                 '
+    zip_code:
+      type: string
+      pattern: ^\d{5}((-)?\d{4})?$
+    state:
+      type: string
+      description: 'The <a href="https://en.wikipedia.org/wiki/ISO_3166-2" target="_blank">ISO 3166-2</a> two letter code for the state.
+
+        '
+      maxLength: 2
+    suggestions:
+      type: object
+      required:
+      - primary_line
+      - city
+      - state
+      - zip_code
+      properties:
+        primary_line:
+          type: string
+          description: 'The primary delivery line (usually the street address) of the address.
+
+            Combination of the following applicable `components` (primary number &
+
+            secondary information may be missing or inaccurate):
+
+            * `primary_number`
+
+            * `street_predirection`
+
+            * `street_name`
+
+            * `street_suffix`
+
+            * `street_postdirection`
+
+            * `secondary_designator`
+
+            * `secondary_number`
+
+            * `pmb_designator`
+
+            * `pmb_number`
+
+            '
+        city:
+          $ref: '#/components/schemas/city'
+        state:
+          $ref: '#/components/schemas/state'
+        zip_code:
+          allOf:
+          - description: 'Must be formatted as a US ZIP or ZIP+4 (e.g. `94107`, `941072282`, `94107-2282`).
+
+              '
+          - $ref: '#/components/schemas/zip_code'
+        object:
+          type: string
+          description: Value is resource type.
+          enum:
+          - us_autocompletion
+          default: us_autocompletion
+    us_auto_id:
+      type: string
+      description: Unique identifier prefixed with `us_auto_`.
+      pattern: ^us_auto_[a-zA-Z0-9]+$
+    failure_status_code:
+      type: integer
+      enum:
+      - 401
+      - 403
+      - 404
+      - 413
+      - 422
+      - 429
+      - 500
+      description: "A conventional HTTP status code:\n  * `401` - Authorization error with your API key or account\n  * `403` - Forbidden error with your API key or account\n  * `404` - The requested item does not exist\n  * `413` - Payload too large\n  * `422` - The query or body parameters did not pass validation\n  * `429` - Too many requests have been sent with an API key in a given amount of time\n  * `500` - An internal server error occurred, please contact support@lob.com\n"
     us_autocompletions:
       type: object
       properties:
@@ -419,45 +405,41 @@ components:
     city_no_description:
       type: string
       maxLength: 200
-    state:
-      type: string
-      description: 'The <a href="https://en.wikipedia.org/wiki/ISO_3166-2" target="_blank">ISO 3166-2</a> two letter code for the state.
+    city:
+      allOf:
+      - $ref: '#/components/schemas/city_no_description'
+      - type: string
+        description: The name of the city.
+    us_autocompletions_writable:
+      type: object
+      required:
+      - address_prefix
+      properties:
+        address_prefix:
+          type: string
+          description: 'Only accepts numbers and street names in an alphanumeric format.
 
-        '
-      maxLength: 2
-    us_auto_id:
-      type: string
-      description: Unique identifier prefixed with `us_auto_`.
-      pattern: ^us_auto_[a-zA-Z0-9]+$
-    failure_status_code:
-      type: integer
-      enum:
-      - 401
-      - 403
-      - 404
-      - 413
-      - 422
-      - 429
-      - 500
-      description: "A conventional HTTP status code:\n  * `401` - Authorization error with your API key or account\n  * `403` - Forbidden error with your API key or account\n  * `404` - The requested item does not exist\n  * `413` - Payload too large\n  * `422` - The query or body parameters did not pass validation\n  * `429` - Too many requests have been sent with an API key in a given amount of time\n  * `500` - An internal server error occurred, please contact support@lob.com\n"
-  headers:
-    ratelimit-limit:
-      description: The rate limit for a given endpoint.
-      schema:
-        type: integer
-        example: 150
-    ratelimit-reset:
-      description: 'The time at which the rate limit window resets in  <a href="https://en.wikipedia.org/wiki/Unix_time" target="_blank">UTC epoch seconds</a>
+            '
+        city:
+          type: string
+          description: 'An optional city input used to filter suggestions. Case insensitive and does not match partial abbreviations.
 
-        '
-      schema:
-        type: integer
-        example: 1528749846
-    ratelimit-remaining:
-      description: The number of requests remaining in the current window.
-      schema:
-        type: integer
-        example: 100
+            '
+        state:
+          type: string
+          description: 'An optional state input used to filter suggestions. Case insensitive and does not match partial abbreviations.
+
+            '
+        zip_code:
+          type: string
+          description: 'An optional ZIP Code input used to filter suggestions. Matches partial entries.
+
+            '
+        geo_ip_sort:
+          type: boolean
+          description: 'If `true`, sort suggestions by proximity to the IP set in the `X-Forwarded-For` header.
+
+            '
   responses:
     us_autocompletions_error:
       description: Error
@@ -550,31 +532,28 @@ components:
                   state: CA
                   zip_code: '94133'
                 object: us_autocompletion
+  headers:
+    ratelimit-remaining:
+      description: The number of requests remaining in the current window.
+      schema:
+        type: integer
+        example: 100
+    ratelimit-limit:
+      description: The rate limit for a given endpoint.
+      schema:
+        type: integer
+        example: 150
+    ratelimit-reset:
+      description: 'The time at which the rate limit window resets in  <a href="https://en.wikipedia.org/wiki/Unix_time" target="_blank">UTC epoch seconds</a>
+
+        '
+      schema:
+        type: integer
+        example: 1528749846
   securitySchemes:
     basicAuth:
       type: http
       scheme: basic
-x-webhooks:
-  events:
-    post:
-      summary: Events
-      description: Information about an event
-      operationId: event
-      tags:
-      - Events
-      responses:
-        '200':
-          $ref: '#/components/responses/events'
-  tracking_events:
-    post:
-      summary: Tracking Events
-      description: Information about tracking events
-      operationId: tracking_event
-      tags:
-      - Tracking Events
-      responses:
-        '200':
-          $ref: '#/components/responses/tracking_events'
 x-tagGroups:
 - name: Overview
   tags:

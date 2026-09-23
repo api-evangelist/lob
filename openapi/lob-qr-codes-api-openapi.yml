@@ -1,8 +1,8 @@
-openapi: 3.0.3
+openapi: 3.2.0
 info:
-  title: Lob Q R  Codes API
+  title: Lob Q R Codes API
   version: 1.20.2
-  description: "Experience direct mail like never before, with unmatched personalization and scalability \x14 all in one intuitive platform."
+  description: Experience direct mail like never before, with unmatched personalization and scalability all in one intuitive platform.
   license:
     name: MIT
     url: https://mit-license.org/
@@ -17,7 +17,7 @@ servers:
 security:
 - basicAuth: []
 tags:
-- name: Q R  Codes
+- name: QR Codes
 paths:
   /qr_code_analytics:
     get:
@@ -25,7 +25,7 @@ paths:
       summary: List
       description: Returns a list of your QR codes. The QR codes are returned sorted by scan date, with the most recently scanned QR codes appearing first.
       tags:
-      - Q R  Codes
+      - QR Codes
       parameters:
       - $ref: '#/components/parameters/limit'
       - $ref: '#/components/parameters/offset'
@@ -96,13 +96,13 @@ paths:
           '
 components:
   schemas:
-    date_created:
-      type: string
-      format: date-time
-      description: A timestamp in ISO 8601 format of the date the resource was created.
-    object:
-      type: string
-      description: Value is resource type.
+    scans:
+      type: object
+      properties:
+        ip_location:
+          type: string
+        scan_date:
+          type: string
     qr_code_scans:
       allOf:
       - type: object
@@ -120,6 +120,13 @@ components:
             description: Detailed scan information associated with each mail piece.
             items:
               $ref: '#/components/schemas/scans'
+    object:
+      type: string
+      description: Value is resource type.
+    date_created:
+      type: string
+      format: date-time
+      description: A timestamp in ISO 8601 format of the date the resource was created.
     count:
       type: integer
       description: number of resources in a set
@@ -128,13 +135,6 @@ components:
       additionalProperties:
         type: string
       description: 'Filter by ISO-8601 date or datetime, e.g. `{ "gt": "2012-01-01", "lt": "2012-01-31T12:34:56Z" }` where `gt` is >, `lt` is <, `gte` is e, and `lte` is d.'
-    scans:
-      type: object
-      properties:
-        ip_location:
-          type: string
-        scan_date:
-          type: string
   parameters:
     offset:
       in: query
@@ -144,25 +144,6 @@ components:
       schema:
         type: integer
         default: 0
-    include:
-      in: query
-      name: include
-      description: 'Request that the response include the total count by specifying `include=["total_count"]`.
-
-        '
-      schema:
-        type: array
-        items:
-          type: string
-      explode: true
-    date_created:
-      in: query
-      name: date_created
-      description: 'Filter by date created. Accepted formats are ISO-8601 date or datetime, e.g. `{ "gt": "2012-01-01", "lt": "2012-01-31T12:34:56Z" }` where `gt` is >, `lt` is <, `gte` is e, and `lte` is d.'
-      schema:
-        $ref: '#/components/schemas/date_filter'
-      style: deepObject
-      explode: true
     limit:
       in: query
       name: limit
@@ -174,31 +155,29 @@ components:
         default: 10
         maximum: 100
         example: 10
+    date_created:
+      in: query
+      name: date_created
+      description: 'Filter by date created. Accepted formats are ISO-8601 date or datetime, e.g. `{ "gt": "2012-01-01", "lt": "2012-01-31T12:34:56Z" }` where `gt` is >, `lt` is <, `gte` is e, and `lte` is d.'
+      schema:
+        $ref: '#/components/schemas/date_filter'
+      style: deepObject
+      explode: true
+    include:
+      in: query
+      name: include
+      description: 'Request that the response include the total count by specifying `include=["total_count"]`.
+
+        '
+      schema:
+        type: array
+        items:
+          type: string
+      explode: true
   securitySchemes:
     basicAuth:
       type: http
       scheme: basic
-x-webhooks:
-  events:
-    post:
-      summary: Events
-      description: Information about an event
-      operationId: event
-      tags:
-      - Events
-      responses:
-        '200':
-          $ref: '#/components/responses/events'
-  tracking_events:
-    post:
-      summary: Tracking Events
-      description: Information about tracking events
-      operationId: tracking_event
-      tags:
-      - Tracking Events
-      responses:
-        '200':
-          $ref: '#/components/responses/tracking_events'
 x-tagGroups:
 - name: Overview
   tags:

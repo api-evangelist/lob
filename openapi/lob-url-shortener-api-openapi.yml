@@ -1,8 +1,8 @@
-openapi: 3.0.3
+openapi: 3.2.0
 info:
-  title: Lob U R L  Shortener API
+  title: Lob U R L Shortener API
   version: 1.20.2
-  description: "Experience direct mail like never before, with unmatched personalization and scalability \x14 all in one intuitive platform."
+  description: Experience direct mail like never before, with unmatched personalization and scalability all in one intuitive platform.
   license:
     name: MIT
     url: https://mit-license.org/
@@ -17,7 +17,7 @@ servers:
 security:
 - basicAuth: []
 tags:
-- name: U R L  Shortener
+- name: URL Shortener
 paths:
   /domains/{domain_id}:
     parameters:
@@ -32,7 +32,7 @@ paths:
       summary: Retrieve a domain
       description: Retrieve details for a single domain.
       tags:
-      - U R L  Shortener
+      - URL Shortener
       responses:
         '200':
           description: Returns domain related details.
@@ -83,7 +83,7 @@ paths:
       summary: Delete a Domain
       description: Delete a registered domain. This operation can only be performed if all associated links with the domain are deleted.
       tags:
-      - U R L  Shortener
+      - URL Shortener
       responses:
         '200':
           description: Returns the deleted link object.
@@ -110,7 +110,7 @@ paths:
       summary: Retrieve a link
       description: Retrieves a single shortened link.
       tags:
-      - U R L  Shortener
+      - URL Shortener
       responses:
         '200':
           description: Returns a single link.
@@ -133,7 +133,7 @@ paths:
       summary: Update a Link
       description: Update any of the properties of a shortened link.
       tags:
-      - U R L  Shortener
+      - URL Shortener
       requestBody:
         required: true
         content:
@@ -194,7 +194,7 @@ paths:
       summary: Delete Link
       description: Delete the shortened link.
       tags:
-      - U R L  Shortener
+      - URL Shortener
       responses:
         '200':
           description: Returns the deleted short link object
@@ -210,40 +210,6 @@ paths:
                 $ref: '#/components/schemas/error'
 components:
   schemas:
-    domain_delete:
-      type: object
-      properties:
-        id:
-          description: Unique identifier for a domain.
-          type: string
-        deleted:
-          description: Only returned if the domain was successfully deleted.
-          type: boolean
-    link_response:
-      type: object
-      properties:
-        id:
-          description: Unique identifier prefixed with `lnk_`.
-          type: string
-        title:
-          description: The title of the URL.
-          type: string
-        domain_id:
-          description: A unique identifier for the registered domain.
-          type: string
-        redirect_link:
-          $ref: '#/components/schemas/redirect_link'
-        short_link:
-          description: The shortened URL for the associated original URL.
-          type: string
-        metadata:
-          $ref: '#/components/schemas/metadata'
-        created_at:
-          description: The date and time the link was created.
-          type: string
-        updated_at:
-          description: The date and time the link was last updated.
-          type: string
     error:
       type: object
       description: Lob uses RESTful HTTP response codes to indicate success or failure of an API request. In general, 2xx indicates success, 4xx indicate an input error, and 5xx indicates an error on Lob's end.
@@ -422,15 +388,13 @@ components:
                 * `unauthorized_token` - 401: token isn''t authorized.
 
                 '
-    link_delete_response:
+    metadata:
       type: object
-      properties:
-        id:
-          description: Unique identifier for a link.
-          type: string
-        deleted:
-          description: Only returned if the link was successfully deleted.
-          type: boolean
+      additionalProperties:
+        type: string
+      description: 'Use metadata to store custom information for tagging and labeling back to your internal systems. Must be an object with up to 20 key-value pairs. Keys must be at most 40 characters and values must be at most 500 characters. Neither can contain the characters `"` and `\`. i.e. ''{"customer_id" : "NEWYORK2015"}'' Nested objects are not supported.  See [Metadata](#section/Metadata) for more information.'
+      maxLength: 500
+      pattern: '[^"\\]{0,500}'
     link_update:
       type: object
       required:
@@ -443,6 +407,63 @@ components:
           $ref: '#/components/schemas/redirect_link'
         metadata:
           $ref: '#/components/schemas/metadata'
+    domain_delete:
+      type: object
+      properties:
+        id:
+          description: Unique identifier for a domain.
+          type: string
+        deleted:
+          description: Only returned if the domain was successfully deleted.
+          type: boolean
+    link_delete_response:
+      type: object
+      properties:
+        id:
+          description: Unique identifier for a link.
+          type: string
+        deleted:
+          description: Only returned if the link was successfully deleted.
+          type: boolean
+    failure_status_code:
+      type: integer
+      enum:
+      - 401
+      - 403
+      - 404
+      - 413
+      - 422
+      - 429
+      - 500
+      description: "A conventional HTTP status code:\n  * `401` - Authorization error with your API key or account\n  * `403` - Forbidden error with your API key or account\n  * `404` - The requested item does not exist\n  * `413` - Payload too large\n  * `422` - The query or body parameters did not pass validation\n  * `429` - Too many requests have been sent with an API key in a given amount of time\n  * `500` - An internal server error occurred, please contact support@lob.com\n"
+    link_response:
+      type: object
+      properties:
+        id:
+          description: Unique identifier prefixed with `lnk_`.
+          type: string
+        title:
+          description: The title of the URL.
+          type: string
+        domain_id:
+          description: A unique identifier for the registered domain.
+          type: string
+        redirect_link:
+          $ref: '#/components/schemas/redirect_link'
+        short_link:
+          description: The shortened URL for the associated original URL.
+          type: string
+        metadata:
+          $ref: '#/components/schemas/metadata'
+        created_at:
+          description: The date and time the link was created.
+          type: string
+        updated_at:
+          description: The date and time the link was last updated.
+          type: string
+    redirect_link:
+      type: string
+      description: The original target URL.
     domain_response:
       type: object
       properties:
@@ -467,52 +488,10 @@ components:
         updated_at:
           description: The date and time the domain was last updated.
           type: string
-    metadata:
-      type: object
-      additionalProperties:
-        type: string
-      description: 'Use metadata to store custom information for tagging and labeling back to your internal systems. Must be an object with up to 20 key-value pairs. Keys must be at most 40 characters and values must be at most 500 characters. Neither can contain the characters `"` and `\`. i.e. ''{"customer_id" : "NEWYORK2015"}'' Nested objects are not supported.  See [Metadata](#section/Metadata) for more information.'
-      maxLength: 500
-      pattern: '[^"\\]{0,500}'
-    failure_status_code:
-      type: integer
-      enum:
-      - 401
-      - 403
-      - 404
-      - 413
-      - 422
-      - 429
-      - 500
-      description: "A conventional HTTP status code:\n  * `401` - Authorization error with your API key or account\n  * `403` - Forbidden error with your API key or account\n  * `404` - The requested item does not exist\n  * `413` - Payload too large\n  * `422` - The query or body parameters did not pass validation\n  * `429` - Too many requests have been sent with an API key in a given amount of time\n  * `500` - An internal server error occurred, please contact support@lob.com\n"
-    redirect_link:
-      type: string
-      description: The original target URL.
   securitySchemes:
     basicAuth:
       type: http
       scheme: basic
-x-webhooks:
-  events:
-    post:
-      summary: Events
-      description: Information about an event
-      operationId: event
-      tags:
-      - Events
-      responses:
-        '200':
-          $ref: '#/components/responses/events'
-  tracking_events:
-    post:
-      summary: Tracking Events
-      description: Information about tracking events
-      operationId: tracking_event
-      tags:
-      - Tracking Events
-      responses:
-        '200':
-          $ref: '#/components/responses/tracking_events'
 x-tagGroups:
 - name: Overview
   tags:

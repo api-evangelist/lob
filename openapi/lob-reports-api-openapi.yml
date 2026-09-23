@@ -1,8 +1,8 @@
-openapi: 3.0.3
+openapi: 3.2.0
 info:
   title: Lob Reports API
   version: 1.20.2
-  description: "Experience direct mail like never before, with unmatched personalization and scalability \x14 all in one intuitive platform."
+  description: Experience direct mail like never before, with unmatched personalization and scalability all in one intuitive platform.
   license:
     name: MIT
     url: https://mit-license.org/
@@ -51,7 +51,7 @@ paths:
     get:
       operationId: report_retrieve
       summary: Retrieve Line Item Report
-      description: 'Retrieves the line item data for each row from the csv file associated with the upload id record. NOTE: This endpoint is currently feature flagged. Please reach out to Lob''s support team if you  would like access to this API endpoint.'
+      description: 'Retrieves the line item data for each row from the csv file associated with the upload id record. NOTE: This endpoint is currently feature flagged. Please reach out to Lob''s support team if you would like access to this API endpoint.'
       tags:
       - Reports
       responses:
@@ -83,24 +83,28 @@ paths:
                           - Failed
                           - Processing
                         errorMessage:
-                          type: string
-                          nullable: true
+                          type:
+                          - string
+                          - 'null'
                           description: The error message detailing the reason why processing the line item failed.
                         mailpieceId:
-                          type: string
-                          nullable: true
+                          type:
+                          - string
+                          - 'null'
                           description: The mailpiece id created from the line item when it was validated.
                         originalData:
                           type: object
                           description: Key-value pairs where each key is the column header and each value is the value of the column for the row.
                   next_url:
-                    type: string
+                    type:
+                    - string
+                    - 'null'
                     description: Url of next page of items in list.
-                    nullable: true
                   prev_url:
-                    type: string
+                    type:
+                    - string
+                    - 'null'
                     description: Url of previous page of items in list.
-                    nullable: true
                   count:
                     $ref: '#/components/schemas/count'
                   total_count:
@@ -129,10 +133,6 @@ paths:
         label: RUBY
 components:
   schemas:
-    upl_id:
-      type: string
-      description: Unique identifier prefixed with `upl_`.
-      pattern: ^upl_[a-zA-Z0-9]+$
     error:
       type: object
       description: Lob uses RESTful HTTP response codes to indicate success or failure of an API request. In general, 2xx indicates success, 4xx indicate an input error, and 5xx indicates an error on Lob's end.
@@ -311,9 +311,6 @@ components:
                 * `unauthorized_token` - 401: token isn''t authorized.
 
                 '
-    count:
-      type: integer
-      description: number of resources in a set
     failure_status_code:
       type: integer
       enum:
@@ -325,6 +322,22 @@ components:
       - 429
       - 500
       description: "A conventional HTTP status code:\n  * `401` - Authorization error with your API key or account\n  * `403` - Forbidden error with your API key or account\n  * `404` - The requested item does not exist\n  * `413` - Payload too large\n  * `422` - The query or body parameters did not pass validation\n  * `429` - Too many requests have been sent with an API key in a given amount of time\n  * `500` - An internal server error occurred, please contact support@lob.com\n"
+    count:
+      type: integer
+      description: number of resources in a set
+    upl_id:
+      type: string
+      description: Unique identifier prefixed with `upl_`.
+      pattern: ^upl_[a-zA-Z0-9]+$
+  parameters:
+    offset:
+      in: query
+      name: offset
+      required: false
+      description: An integer that designates the offset at which to begin returning results. Defaults to 0.
+      schema:
+        type: integer
+        default: 0
   responses:
     upload_not_found:
       description: Not Found Error
@@ -337,40 +350,10 @@ components:
               code: not_found
               message: upload not found
               status_code: 404
-  parameters:
-    offset:
-      in: query
-      name: offset
-      required: false
-      description: An integer that designates the offset at which to begin returning results. Defaults to 0.
-      schema:
-        type: integer
-        default: 0
   securitySchemes:
     basicAuth:
       type: http
       scheme: basic
-x-webhooks:
-  events:
-    post:
-      summary: Events
-      description: Information about an event
-      operationId: event
-      tags:
-      - Events
-      responses:
-        '200':
-          $ref: '#/components/responses/events'
-  tracking_events:
-    post:
-      summary: Tracking Events
-      description: Information about tracking events
-      operationId: tracking_event
-      tags:
-      - Tracking Events
-      responses:
-        '200':
-          $ref: '#/components/responses/tracking_events'
 x-tagGroups:
 - name: Overview
   tags:

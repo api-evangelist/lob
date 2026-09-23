@@ -1,8 +1,8 @@
-openapi: 3.0.3
+openapi: 3.2.0
 info:
-  title: Lob Bank  Accounts API
+  title: Lob Bank Accounts API
   version: 1.20.2
-  description: "Experience direct mail like never before, with unmatched personalization and scalability \x14 all in one intuitive platform."
+  description: Experience direct mail like never before, with unmatched personalization and scalability all in one intuitive platform.
   license:
     name: MIT
     url: https://mit-license.org/
@@ -17,7 +17,7 @@ servers:
 security:
 - basicAuth: []
 tags:
-- name: Bank  Accounts
+- name: Bank Accounts
 paths:
   /bank_accounts:
     get:
@@ -25,7 +25,7 @@ paths:
       summary: List
       description: Returns a list of your bank accounts. The bank accounts are returned sorted by creation date, with the most recently created bank accounts appearing first.
       tags:
-      - Bank  Accounts
+      - Bank Accounts
       parameters:
       - $ref: '#/components/parameters/limit'
       - $ref: '#/components/parameters/before_after'
@@ -74,7 +74,7 @@ paths:
       summary: Create
       description: Creates a new bank account with the provided properties. Bank accounts created in live mode will need to be verified via micro deposits before being able to send live checks. The deposits will appear in the bank account in 2-3 business days and have the description "VERIFICATION".
       tags:
-      - Bank  Accounts
+      - Bank Accounts
       requestBody:
         required: true
         content:
@@ -152,10 +152,70 @@ paths:
         label: GO
 components:
   schemas:
+    list:
+      type: object
+      description: Multiple items returned in order
+      properties:
+        object:
+          $ref: '#/components/schemas/object'
+        next_url:
+          type:
+          - string
+          - 'null'
+          description: Url of next page of items in list.
+        previous_url:
+          type:
+          - string
+          - 'null'
+          description: Url of previous page of items in list.
+        count:
+          $ref: '#/components/schemas/count'
+        total_count:
+          type: integer
+          description: Indicates the total number of records. Provided when the request specifies an "include" query parameter
+    bank_id:
+      allOf:
+      - $ref: '#/components/schemas/bank_id_no_description'
+      - type: string
+        description: Unique identifier prefixed with `bank_`.
+    resource_description:
+      type:
+      - string
+      - 'null'
+      description: 'An internal description that identifies this resource. Must be no longer than 255 characters.
+
+        '
+      maxLength: 255
+    date_filter:
+      type: object
+      additionalProperties:
+        type: string
+      description: 'Filter by ISO-8601 date or datetime, e.g. `{ "gt": "2012-01-01", "lt": "2012-01-31T12:34:56Z" }` where `gt` is >, `lt` is <, `gte` is e, and `lte` is d.'
+    metadata:
+      type: object
+      additionalProperties:
+        type: string
+      description: 'Use metadata to store custom information for tagging and labeling back to your internal systems. Must be an object with up to 20 key-value pairs. Keys must be at most 40 characters and values must be at most 500 characters. Neither can contain the characters `"` and `\`. i.e. ''{"customer_id" : "NEWYORK2015"}'' Nested objects are not supported.  See [Metadata](#section/Metadata) for more information.'
+      maxLength: 500
+      pattern: '[^"\\]{0,500}'
+    failure_status_code:
+      type: integer
+      enum:
+      - 401
+      - 403
+      - 404
+      - 413
+      - 422
+      - 429
+      - 500
+      description: "A conventional HTTP status code:\n  * `401` - Authorization error with your API key or account\n  * `403` - Forbidden error with your API key or account\n  * `404` - The requested item does not exist\n  * `413` - Payload too large\n  * `422` - The query or body parameters did not pass validation\n  * `429` - Too many requests have been sent with an API key in a given amount of time\n  * `500` - An internal server error occurred, please contact support@lob.com\n"
     date_created:
       type: string
       format: date-time
       description: A timestamp in ISO 8601 format of the date the resource was created.
+    count:
+      type: integer
+      description: number of resources in a set
     error:
       type: object
       description: Lob uses RESTful HTTP response codes to indicate success or failure of an API request. In general, 2xx indicates success, 4xx indicate an input error, and 5xx indicates an error on Lob's end.
@@ -334,18 +394,9 @@ components:
                 * `unauthorized_token` - 401: token isn''t authorized.
 
                 '
-    signed_link:
+    bank_id_no_description:
       type: string
-      description: A [signed link](#section/Asset-URLs) served over HTTPS. The link returned will expire in 30 days to prevent mis-sharing. Each time a GET request is initiated, a new signed URL will be generated.
-      pattern: ^https://lob-assets.com/(letters|postcards|bank-accounts|checks|self-mailers|cards|order-creatives)/([a-z]{3,4}_[a-z0-9]{15,16}|[a-z]{3}_[a-z0-9]{26}_[a-z]{4}_[a-z0-9]{26})('|_signature)(.pdf|_thumb_[a-z]+_[0-9]+.png|.png)?(version=[a-z0-9]*&)expires=[0-9]{10}&signature=[a-zA-Z0-9-_]+
-    count:
-      type: integer
-      description: number of resources in a set
-    date_filter:
-      type: object
-      additionalProperties:
-        type: string
-      description: 'Filter by ISO-8601 date or datetime, e.g. `{ "gt": "2012-01-01", "lt": "2012-01-31T12:34:56Z" }` where `gt` is >, `lt` is <, `gte` is e, and `lte` is d.'
+      pattern: ^bank_[a-zA-Z0-9]+$
     bank_account:
       allOf:
       - $ref: '#/components/schemas/bank_account_base'
@@ -358,8 +409,9 @@ components:
             $ref: '#/components/schemas/bank_id'
           signature_url:
             allOf:
-            - type: string
-              nullable: true
+            - type:
+              - string
+              - 'null'
               description: A [signed link](#section/Asset-URLs) to the signature image.
             - $ref: '#/components/schemas/signed_link'
           bank_name:
@@ -390,21 +442,28 @@ components:
           spiffy: 'true'
         date_created: '2019-08-08T19:34:47.571Z'
         date_modified: '2019-08-08T19:34:47.571Z'
-    bank_id:
-      allOf:
-      - $ref: '#/components/schemas/bank_id_no_description'
-      - type: string
-        description: Unique identifier prefixed with `bank_`.
-    resource_description:
+    date_modified:
       type: string
-      description: 'An internal description that identifies this resource. Must be no longer than 255 characters.
-
-        '
-      maxLength: 255
-      nullable: true
+      format: date-time
+      description: A timestamp in ISO 8601 format of the date the resource was last modified.
     deleted:
       type: boolean
       description: Only returned if the resource has been successfully deleted.
+    lob_base:
+      type: object
+      required:
+      - date_created
+      - date_modified
+      - object
+      properties:
+        date_created:
+          $ref: '#/components/schemas/date_created'
+        date_modified:
+          $ref: '#/components/schemas/date_modified'
+        deleted:
+          $ref: '#/components/schemas/deleted'
+        object:
+          $ref: '#/components/schemas/object'
     bank_account_base:
       type: object
       required:
@@ -453,69 +512,19 @@ components:
           description: The zipcode associated with your home bank account. Required for the `jpm` check template only. Please contact a bank representative if you do not know the zipcode associated with your home bank institution.
         metadata:
           $ref: '#/components/schemas/metadata'
-    lob_base:
-      type: object
-      required:
-      - date_created
-      - date_modified
-      - object
-      properties:
-        date_created:
-          $ref: '#/components/schemas/date_created'
-        date_modified:
-          $ref: '#/components/schemas/date_modified'
-        deleted:
-          $ref: '#/components/schemas/deleted'
-        object:
-          $ref: '#/components/schemas/object'
-    metadata:
-      type: object
-      additionalProperties:
-        type: string
-      description: 'Use metadata to store custom information for tagging and labeling back to your internal systems. Must be an object with up to 20 key-value pairs. Keys must be at most 40 characters and values must be at most 500 characters. Neither can contain the characters `"` and `\`. i.e. ''{"customer_id" : "NEWYORK2015"}'' Nested objects are not supported.  See [Metadata](#section/Metadata) for more information.'
-      maxLength: 500
-      pattern: '[^"\\]{0,500}'
-    failure_status_code:
-      type: integer
-      enum:
-      - 401
-      - 403
-      - 404
-      - 413
-      - 422
-      - 429
-      - 500
-      description: "A conventional HTTP status code:\n  * `401` - Authorization error with your API key or account\n  * `403` - Forbidden error with your API key or account\n  * `404` - The requested item does not exist\n  * `413` - Payload too large\n  * `422` - The query or body parameters did not pass validation\n  * `429` - Too many requests have been sent with an API key in a given amount of time\n  * `500` - An internal server error occurred, please contact support@lob.com\n"
     object:
       type: string
       description: Value is resource type.
-    bank_id_no_description:
+    signed_link:
       type: string
-      pattern: ^bank_[a-zA-Z0-9]+$
-    date_modified:
-      type: string
-      format: date-time
-      description: A timestamp in ISO 8601 format of the date the resource was last modified.
-    list:
-      type: object
-      description: Multiple items returned in order
-      properties:
-        object:
-          $ref: '#/components/schemas/object'
-        next_url:
-          type: string
-          description: Url of next page of items in list.
-          nullable: true
-        previous_url:
-          type: string
-          description: Url of previous page of items in list.
-          nullable: true
-        count:
-          $ref: '#/components/schemas/count'
-        total_count:
-          type: integer
-          description: Indicates the total number of records. Provided when the request specifies an "include" query parameter
+      description: A [signed link](#section/Asset-URLs) served over HTTPS. The link returned will expire in 30 days to prevent mis-sharing. Each time a GET request is initiated, a new signed URL will be generated.
+      pattern: ^https://lob-assets.com/(letters|postcards|bank-accounts|checks|self-mailers|cards|order-creatives)/([a-z]{3,4}_[a-z0-9]{15,16}|[a-z]{3}_[a-z0-9]{26}_[a-z]{4}_[a-z0-9]{26})('|_signature)(.pdf|_thumb_[a-z]+_[0-9]+.png|.png)?(version=[a-z0-9]*&)expires=[0-9]{10}&signature=[a-zA-Z0-9-_]+
   headers:
+    ratelimit-limit:
+      description: The rate limit for a given endpoint.
+      schema:
+        type: integer
+        example: 150
     ratelimit-reset:
       description: 'The time at which the rate limit window resets in  <a href="https://en.wikipedia.org/wiki/Unix_time" target="_blank">UTC epoch seconds</a>
 
@@ -528,120 +537,7 @@ components:
       schema:
         type: integer
         example: 100
-    ratelimit-limit:
-      description: The rate limit for a given endpoint.
-      schema:
-        type: integer
-        example: 150
-  parameters:
-    metadata:
-      in: query
-      name: metadata
-      description: Filter by metadata key-value pair`.
-      schema:
-        $ref: '#/components/schemas/metadata'
-      style: deepObject
-      explode: true
-    date_created:
-      in: query
-      name: date_created
-      description: 'Filter by date created. Accepted formats are ISO-8601 date or datetime, e.g. `{ "gt": "2012-01-01", "lt": "2012-01-31T12:34:56Z" }` where `gt` is >, `lt` is <, `gte` is e, and `lte` is d.'
-      schema:
-        $ref: '#/components/schemas/date_filter'
-      style: deepObject
-      explode: true
-    before_after:
-      in: query
-      name: before/after
-      required: false
-      description: '`before` and `after` are both optional but only one of them can be in the query at a time.
-
-        '
-      schema:
-        allOf:
-        - type: object
-          properties:
-            before:
-              type: string
-              description: 'A reference to a list entry used for paginating to the previous set of entries. This field is pre-populated in the `previous_url` field in the return response.
-
-                '
-            after:
-              type: string
-              description: 'A reference to a list entry used for paginating to the next set of entries. This field is pre-populated in the `next_url` field in the return response.
-
-                '
-        - oneOf:
-          - required:
-            - before
-          - required:
-            - after
-    include:
-      in: query
-      name: include
-      description: 'Request that the response include the total count by specifying `include=["total_count"]`.
-
-        '
-      schema:
-        type: array
-        items:
-          type: string
-      explode: true
-    limit:
-      in: query
-      name: limit
-      required: false
-      description: How many results to return.
-      schema:
-        type: integer
-        minimum: 1
-        default: 10
-        maximum: 100
-        example: 10
   responses:
-    post_bank_account:
-      description: Returns a bank_account object
-      headers:
-        ratelimit-limit:
-          $ref: '#/components/headers/ratelimit-limit'
-        ratelimit-remaining:
-          $ref: '#/components/headers/ratelimit-remaining'
-        ratelimit-reset:
-          $ref: '#/components/headers/ratelimit-reset'
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/bank_account'
-          example:
-            id: bank_8cad8df5354d33f
-            signature_url: https://lob-assets.com/letters/asd_asdfghjklqwertyu.pdf?version=45&expires=1234567890&signature=a
-            description: Test Bank Account
-            metadata: {}
-            routing_number: '322271627'
-            fractional_routing_number: 25-3/440
-            check_template: jpm
-            account_number: '123456789'
-            account_type: company
-            signatory: John Doe
-            bank_name: J.P. MORGAN CHASE BANK, N.A.,
-            bank_city: Columbus
-            bank_state: OH
-            bank_zip: '43240'
-            verified: false
-            date_created: '2015-11-06T19:24:24.440Z'
-            date_modified: '2015-11-06T19:24:24.440Z'
-            object: bank_account
-    bank_account_error:
-      description: Error
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/error'
-          example:
-            error:
-              code: invalid
-              message: routing_number is required
-              status_code: 422
     all_bank_accounts:
       description: A dictionary with a data property that contains an array of up to `limit` bank_accounts. Each entry in the array is a separate bank_account. The previous and next page of bank_accounts can be retrieved by calling the endpoint contained in the `previous_url` and `next_url` fields in the API response respectively.<br>If no more bank_accounts are available beyond the current set of returned results, the `next_url` field will be empty.
       content:
@@ -687,31 +583,118 @@ components:
             next_url: https://api.lob.com/v1/bank_accounts?limit=2&after=eyJkYXRlT2Zmc2V0IjoiMjAxOS0wMy0zMFQxMzoxMTowNi44MDlaIiwiaWRPZmZzZXQiOiJiYW5rX2ViYTkzZjdkZTNjMDJkOSJ9
             previous_url: null
             count: 2
+    post_bank_account:
+      description: Returns a bank_account object
+      headers:
+        ratelimit-limit:
+          $ref: '#/components/headers/ratelimit-limit'
+        ratelimit-remaining:
+          $ref: '#/components/headers/ratelimit-remaining'
+        ratelimit-reset:
+          $ref: '#/components/headers/ratelimit-reset'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/bank_account'
+          example:
+            id: bank_8cad8df5354d33f
+            signature_url: https://lob-assets.com/letters/asd_asdfghjklqwertyu.pdf?version=45&expires=1234567890&signature=a
+            description: Test Bank Account
+            metadata: {}
+            routing_number: '322271627'
+            fractional_routing_number: 25-3/440
+            check_template: jpm
+            account_number: '123456789'
+            account_type: company
+            signatory: John Doe
+            bank_name: J.P. MORGAN CHASE BANK, N.A.,
+            bank_city: Columbus
+            bank_state: OH
+            bank_zip: '43240'
+            verified: false
+            date_created: '2015-11-06T19:24:24.440Z'
+            date_modified: '2015-11-06T19:24:24.440Z'
+            object: bank_account
+    bank_account_error:
+      description: Error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/error'
+          example:
+            error:
+              code: invalid
+              message: routing_number is required
+              status_code: 422
+  parameters:
+    metadata:
+      in: query
+      name: metadata
+      description: Filter by metadata key-value pair`.
+      schema:
+        $ref: '#/components/schemas/metadata'
+      style: deepObject
+      explode: true
+    before_after:
+      in: query
+      name: before/after
+      required: false
+      description: '`before` and `after` are both optional but only one of them can be in the query at a time.
+
+        '
+      schema:
+        allOf:
+        - type: object
+          properties:
+            before:
+              type: string
+              description: 'A reference to a list entry used for paginating to the previous set of entries. This field is pre-populated in the `previous_url` field in the return response.
+
+                '
+            after:
+              type: string
+              description: 'A reference to a list entry used for paginating to the next set of entries. This field is pre-populated in the `next_url` field in the return response.
+
+                '
+        - oneOf:
+          - required:
+            - before
+          - required:
+            - after
+    date_created:
+      in: query
+      name: date_created
+      description: 'Filter by date created. Accepted formats are ISO-8601 date or datetime, e.g. `{ "gt": "2012-01-01", "lt": "2012-01-31T12:34:56Z" }` where `gt` is >, `lt` is <, `gte` is e, and `lte` is d.'
+      schema:
+        $ref: '#/components/schemas/date_filter'
+      style: deepObject
+      explode: true
+    include:
+      in: query
+      name: include
+      description: 'Request that the response include the total count by specifying `include=["total_count"]`.
+
+        '
+      schema:
+        type: array
+        items:
+          type: string
+      explode: true
+    limit:
+      in: query
+      name: limit
+      required: false
+      description: How many results to return.
+      schema:
+        type: integer
+        minimum: 1
+        default: 10
+        maximum: 100
+        example: 10
   securitySchemes:
     basicAuth:
       type: http
       scheme: basic
-x-webhooks:
-  events:
-    post:
-      summary: Events
-      description: Information about an event
-      operationId: event
-      tags:
-      - Events
-      responses:
-        '200':
-          $ref: '#/components/responses/events'
-  tracking_events:
-    post:
-      summary: Tracking Events
-      description: Information about tracking events
-      operationId: tracking_event
-      tags:
-      - Tracking Events
-      responses:
-        '200':
-          $ref: '#/components/responses/tracking_events'
 x-tagGroups:
 - name: Overview
   tags:

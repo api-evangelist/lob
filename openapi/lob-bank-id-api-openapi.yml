@@ -1,8 +1,8 @@
-openapi: 3.0.3
+openapi: 3.2.0
 info:
-  title: Lob Bank_id API
+  title: Lob Bank ID API
   version: 1.20.2
-  description: "Experience direct mail like never before, with unmatched personalization and scalability \x14 all in one intuitive platform."
+  description: Experience direct mail like never before, with unmatched personalization and scalability all in one intuitive platform.
   license:
     name: MIT
     url: https://mit-license.org/
@@ -213,6 +213,49 @@ paths:
         label: GO
 components:
   schemas:
+    bank_id:
+      allOf:
+      - $ref: '#/components/schemas/bank_id_no_description'
+      - type: string
+        description: Unique identifier prefixed with `bank_`.
+    resource_description:
+      type:
+      - string
+      - 'null'
+      description: 'An internal description that identifies this resource. Must be no longer than 255 characters.
+
+        '
+      maxLength: 255
+    bank_account_verify:
+      type: object
+      required:
+      - amounts
+      properties:
+        amounts:
+          description: In live mode, an array containing the two micro deposits (in cents) placed in the bank account. In test mode, no micro deposits will be placed, so any two integers between `1` and `100` will work.
+          type: array
+          minItems: 2
+          maxItems: 2
+          items:
+            $ref: '#/components/schemas/cents'
+    metadata:
+      type: object
+      additionalProperties:
+        type: string
+      description: 'Use metadata to store custom information for tagging and labeling back to your internal systems. Must be an object with up to 20 key-value pairs. Keys must be at most 40 characters and values must be at most 500 characters. Neither can contain the characters `"` and `\`. i.e. ''{"customer_id" : "NEWYORK2015"}'' Nested objects are not supported.  See [Metadata](#section/Metadata) for more information.'
+      maxLength: 500
+      pattern: '[^"\\]{0,500}'
+    failure_status_code:
+      type: integer
+      enum:
+      - 401
+      - 403
+      - 404
+      - 413
+      - 422
+      - 429
+      - 500
+      description: "A conventional HTTP status code:\n  * `401` - Authorization error with your API key or account\n  * `403` - Forbidden error with your API key or account\n  * `404` - The requested item does not exist\n  * `413` - Payload too large\n  * `422` - The query or body parameters did not pass validation\n  * `429` - Too many requests have been sent with an API key in a given amount of time\n  * `500` - An internal server error occurred, please contact support@lob.com\n"
     date_created:
       type: string
       format: date-time
@@ -395,10 +438,20 @@ components:
                 * `unauthorized_token` - 401: token isn''t authorized.
 
                 '
-    signed_link:
+    bank_deletion:
+      description: Lob uses RESTful HTTP response codes to indicate success or failure of an API request. In general, 2xx indicates success, 4xx indicate an input error, and 5xx indicates an error on Lob's end.
+      properties:
+        id:
+          $ref: '#/components/schemas/bank_id'
+        deleted:
+          $ref: '#/components/schemas/deleted'
+    bank_id_no_description:
       type: string
-      description: A [signed link](#section/Asset-URLs) served over HTTPS. The link returned will expire in 30 days to prevent mis-sharing. Each time a GET request is initiated, a new signed URL will be generated.
-      pattern: ^https://lob-assets.com/(letters|postcards|bank-accounts|checks|self-mailers|cards|order-creatives)/([a-z]{3,4}_[a-z0-9]{15,16}|[a-z]{3}_[a-z0-9]{26}_[a-z]{4}_[a-z0-9]{26})('|_signature)(.pdf|_thumb_[a-z]+_[0-9]+.png|.png)?(version=[a-z0-9]*&)expires=[0-9]{10}&signature=[a-zA-Z0-9-_]+
+      pattern: ^bank_[a-zA-Z0-9]+$
+    cents:
+      type: integer
+      minimum: 1
+      maximum: 100
     bank_account:
       allOf:
       - $ref: '#/components/schemas/bank_account_base'
@@ -411,8 +464,9 @@ components:
             $ref: '#/components/schemas/bank_id'
           signature_url:
             allOf:
-            - type: string
-              nullable: true
+            - type:
+              - string
+              - 'null'
               description: A [signed link](#section/Asset-URLs) to the signature image.
             - $ref: '#/components/schemas/signed_link'
           bank_name:
@@ -443,33 +497,28 @@ components:
           spiffy: 'true'
         date_created: '2019-08-08T19:34:47.571Z'
         date_modified: '2019-08-08T19:34:47.571Z'
-    bank_account_verify:
-      type: object
-      required:
-      - amounts
-      properties:
-        amounts:
-          description: In live mode, an array containing the two micro deposits (in cents) placed in the bank account. In test mode, no micro deposits will be placed, so any two integers between `1` and `100` will work.
-          type: array
-          minItems: 2
-          maxItems: 2
-          items:
-            $ref: '#/components/schemas/cents'
-    bank_id:
-      allOf:
-      - $ref: '#/components/schemas/bank_id_no_description'
-      - type: string
-        description: Unique identifier prefixed with `bank_`.
-    resource_description:
+    date_modified:
       type: string
-      description: 'An internal description that identifies this resource. Must be no longer than 255 characters.
-
-        '
-      maxLength: 255
-      nullable: true
+      format: date-time
+      description: A timestamp in ISO 8601 format of the date the resource was last modified.
     deleted:
       type: boolean
       description: Only returned if the resource has been successfully deleted.
+    lob_base:
+      type: object
+      required:
+      - date_created
+      - date_modified
+      - object
+      properties:
+        date_created:
+          $ref: '#/components/schemas/date_created'
+        date_modified:
+          $ref: '#/components/schemas/date_modified'
+        deleted:
+          $ref: '#/components/schemas/deleted'
+        object:
+          $ref: '#/components/schemas/object'
     bank_account_base:
       type: object
       required:
@@ -518,61 +567,19 @@ components:
           description: The zipcode associated with your home bank account. Required for the `jpm` check template only. Please contact a bank representative if you do not know the zipcode associated with your home bank institution.
         metadata:
           $ref: '#/components/schemas/metadata'
-    cents:
-      type: integer
-      minimum: 1
-      maximum: 100
-    lob_base:
-      type: object
-      required:
-      - date_created
-      - date_modified
-      - object
-      properties:
-        date_created:
-          $ref: '#/components/schemas/date_created'
-        date_modified:
-          $ref: '#/components/schemas/date_modified'
-        deleted:
-          $ref: '#/components/schemas/deleted'
-        object:
-          $ref: '#/components/schemas/object'
-    metadata:
-      type: object
-      additionalProperties:
-        type: string
-      description: 'Use metadata to store custom information for tagging and labeling back to your internal systems. Must be an object with up to 20 key-value pairs. Keys must be at most 40 characters and values must be at most 500 characters. Neither can contain the characters `"` and `\`. i.e. ''{"customer_id" : "NEWYORK2015"}'' Nested objects are not supported.  See [Metadata](#section/Metadata) for more information.'
-      maxLength: 500
-      pattern: '[^"\\]{0,500}'
-    failure_status_code:
-      type: integer
-      enum:
-      - 401
-      - 403
-      - 404
-      - 413
-      - 422
-      - 429
-      - 500
-      description: "A conventional HTTP status code:\n  * `401` - Authorization error with your API key or account\n  * `403` - Forbidden error with your API key or account\n  * `404` - The requested item does not exist\n  * `413` - Payload too large\n  * `422` - The query or body parameters did not pass validation\n  * `429` - Too many requests have been sent with an API key in a given amount of time\n  * `500` - An internal server error occurred, please contact support@lob.com\n"
     object:
       type: string
       description: Value is resource type.
-    bank_id_no_description:
+    signed_link:
       type: string
-      pattern: ^bank_[a-zA-Z0-9]+$
-    bank_deletion:
-      description: Lob uses RESTful HTTP response codes to indicate success or failure of an API request. In general, 2xx indicates success, 4xx indicate an input error, and 5xx indicates an error on Lob's end.
-      properties:
-        id:
-          $ref: '#/components/schemas/bank_id'
-        deleted:
-          $ref: '#/components/schemas/deleted'
-    date_modified:
-      type: string
-      format: date-time
-      description: A timestamp in ISO 8601 format of the date the resource was last modified.
+      description: A [signed link](#section/Asset-URLs) served over HTTPS. The link returned will expire in 30 days to prevent mis-sharing. Each time a GET request is initiated, a new signed URL will be generated.
+      pattern: ^https://lob-assets.com/(letters|postcards|bank-accounts|checks|self-mailers|cards|order-creatives)/([a-z]{3,4}_[a-z0-9]{15,16}|[a-z]{3}_[a-z0-9]{26}_[a-z]{4}_[a-z0-9]{26})('|_signature)(.pdf|_thumb_[a-z]+_[0-9]+.png|.png)?(version=[a-z0-9]*&)expires=[0-9]{10}&signature=[a-zA-Z0-9-_]+
   headers:
+    ratelimit-limit:
+      description: The rate limit for a given endpoint.
+      schema:
+        type: integer
+        example: 150
     ratelimit-reset:
       description: 'The time at which the rate limit window resets in  <a href="https://en.wikipedia.org/wiki/Unix_time" target="_blank">UTC epoch seconds</a>
 
@@ -585,11 +592,6 @@ components:
       schema:
         type: integer
         example: 100
-    ratelimit-limit:
-      description: The rate limit for a given endpoint.
-      schema:
-        type: integer
-        example: 150
   responses:
     bank_account_deleted:
       description: Deleted
@@ -647,27 +649,6 @@ components:
     basicAuth:
       type: http
       scheme: basic
-x-webhooks:
-  events:
-    post:
-      summary: Events
-      description: Information about an event
-      operationId: event
-      tags:
-      - Events
-      responses:
-        '200':
-          $ref: '#/components/responses/events'
-  tracking_events:
-    post:
-      summary: Tracking Events
-      description: Information about tracking events
-      operationId: tracking_event
-      tags:
-      - Tracking Events
-      responses:
-        '200':
-          $ref: '#/components/responses/tracking_events'
 x-tagGroups:
 - name: Overview
   tags:

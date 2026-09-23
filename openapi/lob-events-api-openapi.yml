@@ -10,7 +10,7 @@ info:
     name: MIT
     url: https://mit-license.org/
   termsOfService: https://www.lob.com/legal
-  description: 'Operations tagged Events across 46 of this provider''s published API definitions: lob-accounts-api-openapi.yml, lob-addresses-api-openapi.yml, lob-bank-accounts-api-openapi.yml, lob-bank-id-api-openapi.yml, lob-bg-id-api-openapi.yml, lob-billing-groups-api-openapi.yml, lob-booklet-id-api-openapi.yml, lob-booklets-api-openapi.yml, lob-buckslip-id-api-openapi.yml, lob-buckslips-api-openapi.yml, lob-bulk-api-openapi.yml, lob-campaigns-api-openapi.yml, lob-cards-api-openapi.yml, lob-checks-api-openapi.yml, lob-creatives-api-openapi.yml, lob-crv-id-api-openapi.yml, lob-domains-api-openapi.yml, lob-exports-api-openapi.yml, lob-files-api-openapi.yml, lob-identity-validation-api-openapi.yml, lob-informed-delivery-campaign-api-openapi.yml, lob-intl-verifications-api-openapi.yml, lob-letters-api-openapi.yml, lob-links-api-openapi.yml, lob-ltr-id-api-openapi.yml, lob-orders-api-openapi.yml, lob-postcards-api-openapi.yml, lob-psc-id-api-openapi.yml, lob-q-r-codes-api-openapi.yml, lob-reports-api-openapi.yml, lob-reverse-geocode-lookups-api-openapi.yml, lob-self-mailers-api-openapi.yml, lob-send-api-openapi.yml, lob-sfm-id-api-openapi.yml, lob-snap-pack-id-api-openapi.yml, lob-snap-packs-api-openapi.yml, lob-template-versions-api-openapi.yml, lob-templates-api-openapi.yml, lob-u-r-l-shortener-api-openapi.yml, lob-u-s-autocompletions-api-openapi.yml, lob-u-s-verifications-api-openapi.yml, lob-uploads-api-openapi.yml, lob-usps-campaign-id-api-openapi.yml, lob-verify-api-openapi.yml, lob-versions-api-openapi.yml, lob-zip-lookups-api-openapi.yml. Each path carries the servers of the definition it was published in.'
+  description: 'Operations tagged Events across 2 of this provider''s published API definitions: lob-api-openapi.yml, lob-events-api-openapi.yml. Each path carries the servers of the definition it was published in.'
 servers:
 - url: https://api.lob.com/v1
   description: production
@@ -18,6 +18,7 @@ security:
 - basicAuth: []
 tags:
 - name: Events
+  description: When various notable things happen within the Lob architecture, Events will be created.
 paths: {}
 webhooks:
   events:
@@ -34,57 +35,262 @@ webhooks:
     - url: https://api.lob.com/v1
       description: production
 components:
+  schemas:
+    postcard_types:
+      type: string
+      description: Unique identifier referring to status of postcard
+      enum:
+      - postcard.created
+      - postcard.rejected
+      - postcard.rendered_pdf
+      - postcard.rendered_thumbnails
+      - postcard.deleted
+      - postcard.delivered
+      - postcard.failed
+      - postcard.mailed
+      - postcard.in_transit
+      - postcard.in_local_area
+      - postcard.international_exit
+      - postcard.processed_for_delivery
+      - postcard.re-routed
+      - postcard.returned_to_sender
+      - postcard.viewed
+    address_types:
+      type: string
+      description: Unique identifier referring to status of address
+      enum:
+      - address.created
+      - address.deleted
+    events:
+      type: object
+      required:
+      - id
+      - body
+      - reference_id
+      - event_type
+      - date_created
+      - object
+      properties:
+        id:
+          type: string
+          description: Unique identifier prefixed with `evt_`.
+          pattern: ^evt_[a-zA-Z0-9_]+$
+        body:
+          type: object
+          description: The body of the associated resource as they were at the time of the event, i.e. the [postcard object](#operation/postcard_retrieve), [the letter object](#operation/letter_retrieve), [the check object](#operation/check_retrieve), [the address object](#operation/address_retrieve), or [the bank account object](#operation/bank_account_retrieve). For `.deleted` events, the body matches the response for the corresponding delete endpoint for that resource (e.g. the [postcard delete response](#operation/postcard_delete)).
+        reference_id:
+          description: Unique identifier of the related resource for the event.
+          type: string
+        event_type:
+          $ref: '#/components/schemas/event_type'
+        date_created:
+          $ref: '#/components/schemas/date_created'
+        object:
+          type: string
+          description: Value is resource type.
+          enum:
+          - event
+          default: event
+    letter_types:
+      type: string
+      description: Unique identifier referring to status of letter
+      enum:
+      - letter.created
+      - letter.rejected
+      - letter.rendered_pdf
+      - letter.rendered_thumbnails
+      - letter.deleted
+      - letter.delivered
+      - letter.failed
+      - letter.mailed
+      - letter.in_transit
+      - letter.in_local_area
+      - letter.international_exit
+      - letter.processed_for_delivery
+      - letter.re-routed
+      - letter.returned_to_sender
+      - letter.certified.mailed
+      - letter.certified.in_transit
+      - letter.certified.in_local_area
+      - letter.certified.processed_for_delivery
+      - letter.certified.re-routed
+      - letter.certified.returned_to_sender
+      - letter.certified.delivered
+      - letter.certified.pickup_available
+      - letter.certified.issue
+      - letter.return_envelope.created
+      - letter.return_envelope.delivered
+      - letter.return_envelope.in_transit
+      - letter.return_envelope.in_local_area
+      - letter.return_envelope.international_exit
+      - letter.return_envelope.processed_for_delivery
+      - letter.return_envelope.re_routed
+      - letter.return_envelope.returned_to_sender
+      - letter.viewed
+    date_created:
+      type: string
+      format: date-time
+      description: A timestamp in ISO 8601 format of the date the resource was created.
+    bank_account_types:
+      type: string
+      description: Unique identifier referring to status of bank account
+      enum:
+      - bank_account.created
+      - bank_account.deleted
+      - bank_account.verified
+    check_types:
+      type: string
+      description: Unique identifier referring to status of check
+      enum:
+      - check.created
+      - check.rejected
+      - check.rendered_pdf
+      - check.rendered_thumbnails
+      - check.deleted
+      - check.delivered
+      - check.failed
+      - check.mailed
+      - check.in_transit
+      - check.in_local_area
+      - check.international_exit
+      - check.processed_for_delivery
+      - check.re-routed
+      - check.returned_to_sender
+    event_type:
+      type: object
+      required:
+      - id
+      - enabled_for_test
+      - resource
+      - object
+      properties:
+        id:
+          oneOf:
+          - $ref: '#/components/schemas/postcard_types'
+          - $ref: '#/components/schemas/self_mailer_types'
+          - $ref: '#/components/schemas/letter_types'
+          - $ref: '#/components/schemas/check_types'
+          - $ref: '#/components/schemas/address_types'
+          - $ref: '#/components/schemas/bank_account_types'
+        enabled_for_test:
+          type: boolean
+          description: Value is `true` if the event type is enabled in both the test and live environments and `false` if it is only enabled in the live environment.
+        resource:
+          type: string
+          enum:
+          - postcards
+          - self mailers
+          - letters
+          - checks
+          - addresses
+          - bank accounts
+        object:
+          type: string
+          description: Value is resource type.
+          enum:
+          - event_type
+          default: event_type
+    self_mailer_types:
+      type: string
+      description: Unique identifier referring to status of self mailer
+      enum:
+      - self_mailer.created
+      - self_mailer.rejected
+      - self_mailer.rendered_pdf
+      - self_mailer.rendered_thumbnails
+      - self_mailer.deleted
+      - self_mailer.delivered
+      - self_mailer.failed
+      - self_mailer.mailed
+      - self_mailer.in_transit
+      - self_mailer.in_local_area
+      - self_mailer.international_exit
+      - self_mailer.processed_for_delivery
+      - self_mailer.re-routed
+      - self_mailer.returned_to_sender
+      - self_mailer.viewed
+  responses:
+    events:
+      description: Returns an `event` object to the specified server.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/events'
+          example:
+            event_type:
+              resource: postcards
+              enabled_for_test: true
+              id: postcard.created
+              object: event_type
+            reference_id: psc_d2d10a2e9cba991c
+            id: evt_d95ff8ffd2b5cfb4
+            date_created: '2016-12-04T22:50:08.180Z'
+            body:
+              id: psc_d2d10a2e9cba991c
+              description: Test Postcard
+              metadata: {}
+              to:
+                id: adr_8e783523dd7f0e70
+                description: Test Recipient Address
+                name: Harry Zhang
+                company: LOB
+                phone: null
+                email: null
+                address_line1: 123 TEST ST
+                address_line2: UNIT 1
+                address_city: SAN FRANCISCO
+                address_state: CA
+                address_zip: '94107'
+                address_country: UNITED STATES
+                metadata: {}
+                date_created: '2016-12-04T10:51:51.844Z'
+                date_modified: '2016-12-04T10:51:51.844Z'
+                object: address
+              from:
+                id: adr_d2e26faf793ed422
+                description: Test Sender Address
+                name: Harry Zhang
+                company: LOB
+                phone: null
+                email: null
+                address_line1: 123 TEST ST
+                address_line2: UNIT 1
+                address_city: SAN FRANCISCO
+                address_state: CA
+                address_zip: '94107'
+                address_country: UNITED STATES
+                metadata: {}
+                date_created: '2016-12-04T10:51:51.845Z'
+                date_modified: '2016-12-04T10:51:51.845Z'
+                object: address
+              url: https://lob-assets.com/postcards/psc_d2d10a2e9cba991c.pdf?expires=1540372221&signature=dNE8OtbDymujUxBIMYle4H1cv1aZNFk
+              front_template_id: null
+              back_template_id: null
+              carrier: USPS
+              tracking_events: []
+              thumbnails:
+              - small: https://lob-assets.com/postcards/psc_d2d10a2e9cba991c_thumb_small_1.png?expires=1540372221&signature=McmqScxPgbe7yQY5X31U3vhU8VUlfA1
+                medium: https://lob-assets.com/postcards/psc_d2d10a2e9cba991c_thumb_medium_1.png?expires=1540372221&signature=VBClptOuCcj9Ybay6gE5aetT5j3C7KS
+                large: https://lob-assets.com/postcards/psc_d2d10a2e9cba991c_thumb_large_1.png?expires=1540372221&signature=RAHpIwoYKYM17f0bbaoOiamCkjpzYfH
+              - small: https://lob-assets.com/postcards/psc_d2d10a2e9cba991c_thumb_small_1.png?expires=1540372221&signature=5biHoaCmkphQaGJymOZxmTF0hHdiH4N
+                medium: https://lob-assets.com/postcards/psc_d2d10a2e9cba991c_thumb_medium_1.png?expires=1540372221&signature=1ApGx0kn5EO4qQKGJzCe6zEPnQpzpRY
+                large: https://lob-assets.com/postcards/psc_d2d10a2e9cba991c_thumb_large_1.png?expires=1540372221&signature=z80p90RBak6T26IAfg5yg7a6qKF53a8
+              merge_variables: null
+              mail_type: usps_first_class
+              size: 4x6
+              expected_delivery_date: '2016-12-09'
+              date_created: '2016-12-04T10:51:51.843Z'
+              date_modified: '2016-12-04T10:51:51.843Z'
+              send_date: '2016-12-04T10:56:51.843Z'
+              object: postcard
+            object: event
   securitySchemes:
     basicAuth:
       type: http
       scheme: basic
 x-refined-from:
-- lob-accounts-api-openapi.yml
-- lob-addresses-api-openapi.yml
-- lob-bank-accounts-api-openapi.yml
-- lob-bank-id-api-openapi.yml
-- lob-bg-id-api-openapi.yml
-- lob-billing-groups-api-openapi.yml
-- lob-booklet-id-api-openapi.yml
-- lob-booklets-api-openapi.yml
-- lob-buckslip-id-api-openapi.yml
-- lob-buckslips-api-openapi.yml
-- lob-bulk-api-openapi.yml
-- lob-campaigns-api-openapi.yml
-- lob-cards-api-openapi.yml
-- lob-checks-api-openapi.yml
-- lob-creatives-api-openapi.yml
-- lob-crv-id-api-openapi.yml
-- lob-domains-api-openapi.yml
-- lob-exports-api-openapi.yml
-- lob-files-api-openapi.yml
-- lob-identity-validation-api-openapi.yml
-- lob-informed-delivery-campaign-api-openapi.yml
-- lob-intl-verifications-api-openapi.yml
-- lob-letters-api-openapi.yml
-- lob-links-api-openapi.yml
-- lob-ltr-id-api-openapi.yml
-- lob-orders-api-openapi.yml
-- lob-postcards-api-openapi.yml
-- lob-psc-id-api-openapi.yml
-- lob-q-r-codes-api-openapi.yml
-- lob-reports-api-openapi.yml
-- lob-reverse-geocode-lookups-api-openapi.yml
-- lob-self-mailers-api-openapi.yml
-- lob-send-api-openapi.yml
-- lob-sfm-id-api-openapi.yml
-- lob-snap-pack-id-api-openapi.yml
-- lob-snap-packs-api-openapi.yml
-- lob-template-versions-api-openapi.yml
-- lob-templates-api-openapi.yml
-- lob-u-r-l-shortener-api-openapi.yml
-- lob-u-s-autocompletions-api-openapi.yml
-- lob-u-s-verifications-api-openapi.yml
-- lob-uploads-api-openapi.yml
-- lob-usps-campaign-id-api-openapi.yml
-- lob-verify-api-openapi.yml
-- lob-versions-api-openapi.yml
-- lob-zip-lookups-api-openapi.yml
+- lob-api-openapi.yml
+- lob-events-api-openapi.yml
 x-tagGroups:
 - name: Overview
   tags:

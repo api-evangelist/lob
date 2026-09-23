@@ -1,8 +1,8 @@
-openapi: 3.0.3
+openapi: 3.2.0
 info:
   title: Lob Files API
   version: 1.20.2
-  description: "Experience direct mail like never before, with unmatched personalization and scalability \x14 all in one intuitive platform."
+  description: Experience direct mail like never before, with unmatched personalization and scalability all in one intuitive platform.
   license:
     name: MIT
     url: https://mit-license.org/
@@ -30,7 +30,7 @@ paths:
     post:
       operationId: upload_file
       summary: Upload file
-      description: Upload an [audience file](https://help.lob.com/print-and-mail/building-a-mail-strategy/campaign-or-triggered-sends/campaign-audience-guide) and associate it with an upload.
+      description: Upload an audience file and associate it with an upload.
       tags:
       - Files
       requestBody:
@@ -61,10 +61,6 @@ paths:
         label: PYTHON
 components:
   schemas:
-    upl_id:
-      type: string
-      description: Unique identifier prefixed with `upl_`.
-      pattern: ^upl_[a-zA-Z0-9]+$
     upload_file:
       type: object
       required:
@@ -80,6 +76,10 @@ components:
         filename:
           title: Filename
           type: string
+    upl_id:
+      type: string
+      description: Unique identifier prefixed with `upl_`.
+      pattern: ^upl_[a-zA-Z0-9]+$
   responses:
     upload_validation_error:
       description: Validation Error
@@ -117,27 +117,6 @@ components:
     basicAuth:
       type: http
       scheme: basic
-x-webhooks:
-  events:
-    post:
-      summary: Events
-      description: Information about an event
-      operationId: event
-      tags:
-      - Events
-      responses:
-        '200':
-          $ref: '#/components/responses/events'
-  tracking_events:
-    post:
-      summary: Tracking Events
-      description: Information about tracking events
-      operationId: tracking_event
-      tags:
-      - Tracking Events
-      responses:
-        '200':
-          $ref: '#/components/responses/tracking_events'
 x-tagGroups:
 - name: Overview
   tags:
