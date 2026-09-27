@@ -210,6 +210,15 @@ paths:
                 $ref: '#/components/schemas/error'
 components:
   schemas:
+    link_delete_response:
+      type: object
+      properties:
+        id:
+          description: Unique identifier for a link.
+          type: string
+        deleted:
+          description: Only returned if the link was successfully deleted.
+          type: boolean
     error:
       type: object
       description: Lob uses RESTful HTTP response codes to indicate success or failure of an API request. In general, 2xx indicates success, 4xx indicate an input error, and 5xx indicates an error on Lob's end.
@@ -395,6 +404,9 @@ components:
       description: 'Use metadata to store custom information for tagging and labeling back to your internal systems. Must be an object with up to 20 key-value pairs. Keys must be at most 40 characters and values must be at most 500 characters. Neither can contain the characters `"` and `\`. i.e. ''{"customer_id" : "NEWYORK2015"}'' Nested objects are not supported.  See [Metadata](#section/Metadata) for more information.'
       maxLength: 500
       pattern: '[^"\\]{0,500}'
+    redirect_link:
+      type: string
+      description: The original target URL.
     link_update:
       type: object
       required:
@@ -407,24 +419,30 @@ components:
           $ref: '#/components/schemas/redirect_link'
         metadata:
           $ref: '#/components/schemas/metadata'
-    domain_delete:
+    domain_response:
       type: object
       properties:
         id:
           description: Unique identifier for a domain.
           type: string
-        deleted:
-          description: Only returned if the domain was successfully deleted.
-          type: boolean
-    link_delete_response:
-      type: object
-      properties:
-        id:
-          description: Unique identifier for a link.
+        domain:
+          description: The registered domain/hostname.
           type: string
-        deleted:
-          description: Only returned if the link was successfully deleted.
-          type: boolean
+        error_redirect_link:
+          description: URL to redirect customers if a short link is broken or inactive.
+          type: string
+        status:
+          description: The configuration status of the domain.
+          type: string
+          enum:
+          - configured
+          - not_configured
+        created_at:
+          description: The date and time the domain was created.
+          type: string
+        updated_at:
+          description: The date and time the domain was last updated.
+          type: string
     failure_status_code:
       type: integer
       enum:
@@ -461,33 +479,15 @@ components:
         updated_at:
           description: The date and time the link was last updated.
           type: string
-    redirect_link:
-      type: string
-      description: The original target URL.
-    domain_response:
+    domain_delete:
       type: object
       properties:
         id:
           description: Unique identifier for a domain.
           type: string
-        domain:
-          description: The registered domain/hostname.
-          type: string
-        error_redirect_link:
-          description: URL to redirect customers if a short link is broken or inactive.
-          type: string
-        status:
-          description: The configuration status of the domain.
-          type: string
-          enum:
-          - configured
-          - not_configured
-        created_at:
-          description: The date and time the domain was created.
-          type: string
-        updated_at:
-          description: The date and time the domain was last updated.
-          type: string
+        deleted:
+          description: Only returned if the domain was successfully deleted.
+          type: boolean
   securitySchemes:
     basicAuth:
       type: http

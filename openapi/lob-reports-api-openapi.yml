@@ -311,6 +311,13 @@ components:
                 * `unauthorized_token` - 401: token isn''t authorized.
 
                 '
+    upl_id:
+      type: string
+      description: Unique identifier prefixed with `upl_`.
+      pattern: ^upl_[a-zA-Z0-9]+$
+    count:
+      type: integer
+      description: number of resources in a set
     failure_status_code:
       type: integer
       enum:
@@ -322,13 +329,6 @@ components:
       - 429
       - 500
       description: "A conventional HTTP status code:\n  * `401` - Authorization error with your API key or account\n  * `403` - Forbidden error with your API key or account\n  * `404` - The requested item does not exist\n  * `413` - Payload too large\n  * `422` - The query or body parameters did not pass validation\n  * `429` - Too many requests have been sent with an API key in a given amount of time\n  * `500` - An internal server error occurred, please contact support@lob.com\n"
-    count:
-      type: integer
-      description: number of resources in a set
-    upl_id:
-      type: string
-      description: Unique identifier prefixed with `upl_`.
-      pattern: ^upl_[a-zA-Z0-9]+$
   parameters:
     offset:
       in: query

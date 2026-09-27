@@ -643,8 +643,6 @@ apis:
   description: The URL Shortener API from Lob — 2 operation(s) for url shortener.
   humanURL: https://docs.lob.com/
   tags:
-  - URL Shorteners
-  tags_raw:
   - URL Shortener
   properties:
   - type: OpenAPI

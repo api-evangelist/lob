@@ -96,13 +96,6 @@ paths:
           '
 components:
   schemas:
-    scans:
-      type: object
-      properties:
-        ip_location:
-          type: string
-        scan_date:
-          type: string
     qr_code_scans:
       allOf:
       - type: object
@@ -120,16 +113,23 @@ components:
             description: Detailed scan information associated with each mail piece.
             items:
               $ref: '#/components/schemas/scans'
-    object:
-      type: string
-      description: Value is resource type.
     date_created:
       type: string
       format: date-time
       description: A timestamp in ISO 8601 format of the date the resource was created.
+    scans:
+      type: object
+      properties:
+        ip_location:
+          type: string
+        scan_date:
+          type: string
     count:
       type: integer
       description: number of resources in a set
+    object:
+      type: string
+      description: Value is resource type.
     date_filter:
       type: object
       additionalProperties:
@@ -144,6 +144,17 @@ components:
       schema:
         type: integer
         default: 0
+    include:
+      in: query
+      name: include
+      description: 'Request that the response include the total count by specifying `include=["total_count"]`.
+
+        '
+      schema:
+        type: array
+        items:
+          type: string
+      explode: true
     limit:
       in: query
       name: limit
@@ -162,17 +173,6 @@ components:
       schema:
         $ref: '#/components/schemas/date_filter'
       style: deepObject
-      explode: true
-    include:
-      in: query
-      name: include
-      description: 'Request that the response include the total count by specifying `include=["total_count"]`.
-
-        '
-      schema:
-        type: array
-        items:
-          type: string
       explode: true
   securitySchemes:
     basicAuth:

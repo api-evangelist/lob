@@ -157,6 +157,31 @@ paths:
         source: "uploadsApi = UploadsApi.new(config)\n\nbegin\n  retrievedExport = uploadsApi.get_export(\"upl_71be866e430b11e9\", \"ex_6a94fe68fd151e0f8\")\nrescue => err\n  p err.message\nend\n"
         label: RUBY
 components:
+  schemas:
+    ex_id:
+      type: string
+      description: Unique identifier prefixed with `ex_`.
+      pattern: ^ex_[a-zA-Z0-9]+$
+    upload_create_export:
+      type: object
+      required:
+      - message
+      - exportId
+      properties:
+        message:
+          title: Message
+          enum:
+          - Export is processing
+          type: string
+          default: Export is processing
+        exportId:
+          title: Export ID
+          type: string
+          example: ex_2dafd758ed3da9c43
+    upl_id:
+      type: string
+      description: Unique identifier prefixed with `upl_`.
+      pattern: ^upl_[a-zA-Z0-9]+$
   responses:
     upload_export_error:
       description: Create Export Error
@@ -188,31 +213,6 @@ components:
               message: Invalid body, check 'errors' property for more info.
               errors:
               - type must be a string
-  schemas:
-    ex_id:
-      type: string
-      description: Unique identifier prefixed with `ex_`.
-      pattern: ^ex_[a-zA-Z0-9]+$
-    upload_create_export:
-      type: object
-      required:
-      - message
-      - exportId
-      properties:
-        message:
-          title: Message
-          enum:
-          - Export is processing
-          type: string
-          default: Export is processing
-        exportId:
-          title: Export ID
-          type: string
-          example: ex_2dafd758ed3da9c43
-    upl_id:
-      type: string
-      description: Unique identifier prefixed with `upl_`.
-      pattern: ^upl_[a-zA-Z0-9]+$
   securitySchemes:
     basicAuth:
       type: http

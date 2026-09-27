@@ -276,7 +276,141 @@ paths:
         source: "var context = context.Background()\ncontext = context.WithValue(suite.ctx, lob.ContextBasicAuth, lob.BasicAuth{UserName: os.Getenv(\"<YOUR_API_KEY>\")})\n\nvar apiClient = *lob.NewAPIClient(configuration)\n\n\nvar cardOrderCreate = *lob.NewCardOrderEditable()\ncardOrderCreate.SetQuantity(\"10000\")\n\n\n\ncreatedcardOrder, _, err := apiClient.CardOrdersApi.Create(context, \"card_6afffd19045076c\").CardOrderEditable(cardOrderCreate).Execute()\n\nif err != nil {\n    return err\n}\n"
         label: GO
 components:
+  responses:
+    buckslip_error:
+      description: Error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/error'
+          example:
+            error:
+              code: invalid
+              message: message about incorrect parameter
+              status_code: 422
+    mailpiece_error:
+      description: Error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/error'
+          example:
+            error:
+              code: not_found
+              message: to address not found
+              status_code: 404
+    buckslip_order_error:
+      description: Error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/error'
+          example:
+            error:
+              code: not_found
+              message: buckslip not found
+              status_code: 404
+    card_order_error:
+      description: Error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/error'
+          example:
+            error:
+              code: not_found
+              message: card not found
+              status_code: 404
   schemas:
+    card_order:
+      allOf:
+      - $ref: '#/components/schemas/lob_base'
+      - type: object
+        properties:
+          id:
+            $ref: '#/components/schemas/co_id'
+          card_id:
+            $ref: '#/components/schemas/card_id'
+          status:
+            description: The status of the card order.
+            enum:
+            - pending
+            - printing
+            - available
+            - cancelled
+            - depleted
+            type: string
+          inventory:
+            description: The inventory of the card order.
+            type: number
+            default: 0
+          quantity_ordered:
+            description: The quantity of cards ordered
+            type: number
+            default: 0
+          unit_price:
+            description: The unit price for the card order.
+            type: number
+            default: 0
+          cancelled_reason:
+            description: The reason for cancellation.
+            type: string
+          availability_date:
+            type: string
+            format: date-time
+            description: A timestamp in ISO 8601 format of the date the resource was created.
+          expected_availability_date:
+            type: string
+            format: date-time
+            description: The fixed deadline for the cards to be printed.
+    buckslip_order:
+      allOf:
+      - $ref: '#/components/schemas/lob_base'
+      - type: object
+        properties:
+          id:
+            $ref: '#/components/schemas/bo_id'
+          buckslip_id:
+            $ref: '#/components/schemas/buckslip_id'
+          status:
+            description: The status of the buckslip order.
+            enum:
+            - pending
+            - printing
+            - available
+            - cancelled
+            - depleted
+            type: string
+          quantity_ordered:
+            description: The quantity of buckslips ordered.
+            type: number
+            default: 0
+          unit_price:
+            description: The unit price for the buckslip order.
+            type: number
+            default: 0
+          inventory:
+            description: The inventory of the buckslip order.
+            type: number
+            default: 0
+          cancelled_reason:
+            description: The reason for cancellation.
+            type: string
+          availability_date:
+            type: string
+            format: date-time
+            description: A timestamp in ISO 8601 format of the date the resource was created.
+          expected_availability_date:
+            type: string
+            format: date-time
+            description: The fixed deadline for the buckslips to be printed.
+    count:
+      type: integer
+      description: number of resources in a set
+    bo_id:
+      type: string
+      description: Unique identifier prefixed with `bo_`.
+      pattern: ^bo_[a-zA-Z0-9]+$
     list:
       type: object
       description: Multiple items returned in order
@@ -298,46 +432,35 @@ components:
         total_count:
           type: integer
           description: Indicates the total number of records. Provided when the request specifies an "include" query parameter
-    card_order_editable:
+    buckslip_order_editable:
       type: object
       required:
       - quantity
       properties:
         quantity:
           type: integer
-          description: The quantity of cards in the order (minimum 10,000).
-          minimum: 10000
+          description: The quantity of buckslips in the order (minimum 5,000).
+          minimum: 5000
           maximum: 10000000
-    co_id:
-      type: string
-      description: Unique identifier prefixed with `co_`.
-      pattern: ^co_[a-zA-Z0-9]+$
-    failure_status_code:
-      type: integer
-      enum:
-      - 401
-      - 403
-      - 404
-      - 413
-      - 422
-      - 429
-      - 500
-      description: "A conventional HTTP status code:\n  * `401` - Authorization error with your API key or account\n  * `403` - Forbidden error with your API key or account\n  * `404` - The requested item does not exist\n  * `413` - Payload too large\n  * `422` - The query or body parameters did not pass validation\n  * `429` - Too many requests have been sent with an API key in a given amount of time\n  * `500` - An internal server error occurred, please contact support@lob.com\n"
     date_created:
       type: string
       format: date-time
       description: A timestamp in ISO 8601 format of the date the resource was created.
-    count:
-      type: integer
-      description: number of resources in a set
-    buckslip_id:
+    date_modified:
       type: string
-      description: Unique identifier prefixed with `bck_`.
-      pattern: ^bck_[a-zA-Z0-9]+$
+      format: date-time
+      description: A timestamp in ISO 8601 format of the date the resource was last modified.
+    co_id:
+      type: string
+      description: Unique identifier prefixed with `co_`.
+      pattern: ^co_[a-zA-Z0-9]+$
     card_id:
       type: string
       description: Unique identifier prefixed with `card_`.
       pattern: ^card_[a-zA-Z0-9]+$
+    deleted:
+      type: boolean
+      description: Only returned if the resource has been successfully deleted.
     error:
       type: object
       description: Lob uses RESTful HTTP response codes to indicate success or failure of an API request. In general, 2xx indicates success, 4xx indicate an input error, and 5xx indicates an error on Lob's end.
@@ -516,105 +639,17 @@ components:
                 * `unauthorized_token` - 401: token isn''t authorized.
 
                 '
-    buckslip_order_editable:
-      type: object
-      required:
-      - quantity
-      properties:
-        quantity:
-          type: integer
-          description: The quantity of buckslips in the order (minimum 5,000).
-          minimum: 5000
-          maximum: 10000000
-    card_order:
-      allOf:
-      - $ref: '#/components/schemas/lob_base'
-      - type: object
-        properties:
-          id:
-            $ref: '#/components/schemas/co_id'
-          card_id:
-            $ref: '#/components/schemas/card_id'
-          status:
-            description: The status of the card order.
-            enum:
-            - pending
-            - printing
-            - available
-            - cancelled
-            - depleted
-            type: string
-          inventory:
-            description: The inventory of the card order.
-            type: number
-            default: 0
-          quantity_ordered:
-            description: The quantity of cards ordered
-            type: number
-            default: 0
-          unit_price:
-            description: The unit price for the card order.
-            type: number
-            default: 0
-          cancelled_reason:
-            description: The reason for cancellation.
-            type: string
-          availability_date:
-            type: string
-            format: date-time
-            description: A timestamp in ISO 8601 format of the date the resource was created.
-          expected_availability_date:
-            type: string
-            format: date-time
-            description: The fixed deadline for the cards to be printed.
-    date_modified:
-      type: string
-      format: date-time
-      description: A timestamp in ISO 8601 format of the date the resource was last modified.
-    deleted:
-      type: boolean
-      description: Only returned if the resource has been successfully deleted.
-    buckslip_order:
-      allOf:
-      - $ref: '#/components/schemas/lob_base'
-      - type: object
-        properties:
-          id:
-            $ref: '#/components/schemas/bo_id'
-          buckslip_id:
-            $ref: '#/components/schemas/buckslip_id'
-          status:
-            description: The status of the buckslip order.
-            enum:
-            - pending
-            - printing
-            - available
-            - cancelled
-            - depleted
-            type: string
-          quantity_ordered:
-            description: The quantity of buckslips ordered.
-            type: number
-            default: 0
-          unit_price:
-            description: The unit price for the buckslip order.
-            type: number
-            default: 0
-          inventory:
-            description: The inventory of the buckslip order.
-            type: number
-            default: 0
-          cancelled_reason:
-            description: The reason for cancellation.
-            type: string
-          availability_date:
-            type: string
-            format: date-time
-            description: A timestamp in ISO 8601 format of the date the resource was created.
-          expected_availability_date:
-            type: string
-            format: date-time
-            description: The fixed deadline for the buckslips to be printed.
+    failure_status_code:
+      type: integer
+      enum:
+      - 401
+      - 403
+      - 404
+      - 413
+      - 422
+      - 429
+      - 500
+      description: "A conventional HTTP status code:\n  * `401` - Authorization error with your API key or account\n  * `403` - Forbidden error with your API key or account\n  * `404` - The requested item does not exist\n  * `413` - Payload too large\n  * `422` - The query or body parameters did not pass validation\n  * `429` - Too many requests have been sent with an API key in a given amount of time\n  * `500` - An internal server error occurred, please contact support@lob.com\n"
     lob_base:
       type: object
       required:
@@ -630,13 +665,23 @@ components:
           $ref: '#/components/schemas/deleted'
         object:
           $ref: '#/components/schemas/object'
-    bo_id:
-      type: string
-      description: Unique identifier prefixed with `bo_`.
-      pattern: ^bo_[a-zA-Z0-9]+$
+    card_order_editable:
+      type: object
+      required:
+      - quantity
+      properties:
+        quantity:
+          type: integer
+          description: The quantity of cards in the order (minimum 10,000).
+          minimum: 10000
+          maximum: 10000000
     object:
       type: string
       description: Value is resource type.
+    buckslip_id:
+      type: string
+      description: Unique identifier prefixed with `bck_`.
+      pattern: ^bck_[a-zA-Z0-9]+$
   parameters:
     offset:
       in: query
@@ -657,51 +702,6 @@ components:
         default: 10
         maximum: 100
         example: 10
-  responses:
-    mailpiece_error:
-      description: Error
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/error'
-          example:
-            error:
-              code: not_found
-              message: to address not found
-              status_code: 404
-    buckslip_error:
-      description: Error
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/error'
-          example:
-            error:
-              code: invalid
-              message: message about incorrect parameter
-              status_code: 422
-    card_order_error:
-      description: Error
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/error'
-          example:
-            error:
-              code: not_found
-              message: card not found
-              status_code: 404
-    buckslip_order_error:
-      description: Error
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/error'
-          example:
-            error:
-              code: not_found
-              message: buckslip not found
-              status_code: 404
   securitySchemes:
     basicAuth:
       type: http

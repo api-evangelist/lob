@@ -246,6 +246,27 @@ paths:
         label: GO
 components:
   schemas:
+    list:
+      type: object
+      description: Multiple items returned in order
+      properties:
+        object:
+          $ref: '#/components/schemas/object'
+        next_url:
+          type:
+          - string
+          - 'null'
+          description: Url of next page of items in list.
+        previous_url:
+          type:
+          - string
+          - 'null'
+          description: Url of previous page of items in list.
+        count:
+          $ref: '#/components/schemas/count'
+        total_count:
+          type: integer
+          description: Indicates the total number of records. Provided when the request specifies an "include" query parameter
     error:
       type: object
       description: Lob uses RESTful HTTP response codes to indicate success or failure of an API request. In general, 2xx indicates success, 4xx indicate an input error, and 5xx indicates an error on Lob's end.
@@ -424,45 +445,6 @@ components:
                 * `unauthorized_token` - 401: token isn''t authorized.
 
                 '
-    list:
-      type: object
-      description: Multiple items returned in order
-      properties:
-        object:
-          $ref: '#/components/schemas/object'
-        next_url:
-          type:
-          - string
-          - 'null'
-          description: Url of next page of items in list.
-        previous_url:
-          type:
-          - string
-          - 'null'
-          description: Url of previous page of items in list.
-        count:
-          $ref: '#/components/schemas/count'
-        total_count:
-          type: integer
-          description: Indicates the total number of records. Provided when the request specifies an "include" query parameter
-    domain_delete:
-      type: object
-      properties:
-        id:
-          description: Unique identifier for a domain.
-          type: string
-        deleted:
-          description: Only returned if the domain was successfully deleted.
-          type: boolean
-    domains:
-      type: object
-      required:
-      - domain
-      properties:
-        domain:
-          $ref: '#/components/schemas/domain'
-        error_redirect_link:
-          $ref: '#/components/schemas/error_redirect_link'
     failure_status_code:
       type: integer
       enum:
@@ -474,15 +456,24 @@ components:
       - 429
       - 500
       description: "A conventional HTTP status code:\n  * `401` - Authorization error with your API key or account\n  * `403` - Forbidden error with your API key or account\n  * `404` - The requested item does not exist\n  * `413` - Payload too large\n  * `422` - The query or body parameters did not pass validation\n  * `429` - Too many requests have been sent with an API key in a given amount of time\n  * `500` - An internal server error occurred, please contact support@lob.com\n"
-    object:
-      type: string
-      description: Value is resource type.
     domain:
       type: string
       description: The registered domain/hostname.
     count:
       type: integer
       description: number of resources in a set
+    domains:
+      type: object
+      required:
+      - domain
+      properties:
+        domain:
+          $ref: '#/components/schemas/domain'
+        error_redirect_link:
+          $ref: '#/components/schemas/error_redirect_link'
+    object:
+      type: string
+      description: Value is resource type.
     domains_response:
       allOf:
       - $ref: '#/components/schemas/list'
@@ -493,9 +484,6 @@ components:
             description: List of domains.
             items:
               $ref: '#/components/schemas/domain_response'
-    error_redirect_link:
-      type: string
-      description: URL to redirect customers if a short link is broken or inactive.
     domain_response:
       type: object
       properties:
@@ -520,6 +508,18 @@ components:
         updated_at:
           description: The date and time the domain was last updated.
           type: string
+    error_redirect_link:
+      type: string
+      description: URL to redirect customers if a short link is broken or inactive.
+    domain_delete:
+      type: object
+      properties:
+        id:
+          description: Unique identifier for a domain.
+          type: string
+        deleted:
+          description: Only returned if the domain was successfully deleted.
+          type: boolean
   parameters:
     before_after:
       in: query

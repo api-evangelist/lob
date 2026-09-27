@@ -224,82 +224,17 @@ components:
 
         '
       maxLength: 100000
-    resource_description:
-      type:
-      - string
-      - 'null'
-      description: 'An internal description that identifies this resource. Must be no longer than 255 characters.
-
-        '
-      maxLength: 255
-    template_version_writable:
-      type: object
-      required:
-      - html
-      properties:
-        description:
-          $ref: '#/components/schemas/resource_description'
-        html:
-          $ref: '#/components/schemas/template_html'
-        engine:
-          $ref: '#/components/schemas/engine'
-        required_vars:
-          $ref: '#/components/schemas/template_required_vars'
-    template_version:
-      allOf:
-      - $ref: '#/components/schemas/template_version_writable'
-      - $ref: '#/components/schemas/lob_base'
-      - type: object
-        required:
-        - id
-        properties:
-          id:
-            $ref: '#/components/schemas/vrsn_id'
-          suggest_json_editor:
-            type: boolean
-            description: 'Used by frontend, true if the template uses advanced features.
-
-              '
-          merge_variables:
-            type: object
-            description: 'Object representing the keys of every merge variable present in the template. It has one key named ''keys'', and its value is an array of strings.
-
-              '
-          object:
-            type: string
-            description: Value is resource type.
-            enum:
-            - version
-            default: version
-    template_version_deletion:
-      description: Lob uses RESTful HTTP response codes to indicate success or failure of an API request. In general, 2xx indicates success, 4xx indicate an input error, and 5xx indicates an error on Lob's end.
-      properties:
-        id:
-          $ref: '#/components/schemas/vrsn_id'
-        deleted:
-          $ref: '#/components/schemas/deleted'
-    failure_status_code:
-      type: integer
-      enum:
-      - 401
-      - 403
-      - 404
-      - 413
-      - 422
-      - 429
-      - 500
-      description: "A conventional HTTP status code:\n  * `401` - Authorization error with your API key or account\n  * `403` - Forbidden error with your API key or account\n  * `404` - The requested item does not exist\n  * `413` - Payload too large\n  * `422` - The query or body parameters did not pass validation\n  * `429` - Too many requests have been sent with an API key in a given amount of time\n  * `500` - An internal server error occurred, please contact support@lob.com\n"
     date_created:
       type: string
       format: date-time
       description: A timestamp in ISO 8601 format of the date the resource was created.
-    template_required_vars:
-      type: array
-      items:
-        type: string
-      description: 'An array of required variables to be used in a template. Only available for `handlebars` templates.
-
-        '
+    date_modified:
+      type: string
+      format: date-time
+      description: A timestamp in ISO 8601 format of the date the resource was last modified.
+    deleted:
+      type: boolean
+      description: Only returned if the resource has been successfully deleted.
     error:
       type: object
       description: Lob uses RESTful HTTP response codes to indicate success or failure of an API request. In general, 2xx indicates success, 4xx indicate an input error, and 5xx indicates an error on Lob's end.
@@ -478,22 +413,84 @@ components:
                 * `unauthorized_token` - 401: token isn''t authorized.
 
                 '
-    template_version_updatable:
+    template_required_vars:
+      type: array
+      items:
+        type: string
+      description: 'An array of required variables to be used in a template. Only available for `handlebars` templates.
+
+        '
+    tmpl_id:
+      type: string
+      description: Unique identifier prefixed with `tmpl_`. ID of a saved [HTML template](#section/HTML-Templates).
+      pattern: ^tmpl_[a-zA-Z0-9]+$
+    template_version_writable:
       type: object
+      required:
+      - html
       properties:
         description:
           $ref: '#/components/schemas/resource_description'
+        html:
+          $ref: '#/components/schemas/template_html'
         engine:
           $ref: '#/components/schemas/engine'
         required_vars:
           $ref: '#/components/schemas/template_required_vars'
-    date_modified:
-      type: string
-      format: date-time
-      description: A timestamp in ISO 8601 format of the date the resource was last modified.
-    deleted:
-      type: boolean
-      description: Only returned if the resource has been successfully deleted.
+    failure_status_code:
+      type: integer
+      enum:
+      - 401
+      - 403
+      - 404
+      - 413
+      - 422
+      - 429
+      - 500
+      description: "A conventional HTTP status code:\n  * `401` - Authorization error with your API key or account\n  * `403` - Forbidden error with your API key or account\n  * `404` - The requested item does not exist\n  * `413` - Payload too large\n  * `422` - The query or body parameters did not pass validation\n  * `429` - Too many requests have been sent with an API key in a given amount of time\n  * `500` - An internal server error occurred, please contact support@lob.com\n"
+    template_version:
+      allOf:
+      - $ref: '#/components/schemas/template_version_writable'
+      - $ref: '#/components/schemas/lob_base'
+      - type: object
+        required:
+        - id
+        properties:
+          id:
+            $ref: '#/components/schemas/vrsn_id'
+          suggest_json_editor:
+            type: boolean
+            description: 'Used by frontend, true if the template uses advanced features.
+
+              '
+          merge_variables:
+            type: object
+            description: 'Object representing the keys of every merge variable present in the template. It has one key named ''keys'', and its value is an array of strings.
+
+              '
+          object:
+            type: string
+            description: Value is resource type.
+            enum:
+            - version
+            default: version
+    engine:
+      type:
+      - string
+      - 'null'
+      description: "The engine used to combine HTML template with merge variables.\n  * `legacy` - Lob's original engine\n  * `handlebars`\n"
+      enum:
+      - legacy
+      - handlebars
+      default: legacy
+    resource_description:
+      type:
+      - string
+      - 'null'
+      description: 'An internal description that identifies this resource. Must be no longer than 255 characters.
+
+        '
+      maxLength: 255
     lob_base:
       type: object
       required:
@@ -509,45 +506,41 @@ components:
           $ref: '#/components/schemas/deleted'
         object:
           $ref: '#/components/schemas/object'
+    object:
+      type: string
+      description: Value is resource type.
+    template_version_updatable:
+      type: object
+      properties:
+        description:
+          $ref: '#/components/schemas/resource_description'
+        engine:
+          $ref: '#/components/schemas/engine'
+        required_vars:
+          $ref: '#/components/schemas/template_required_vars'
+    template_version_deletion:
+      description: Lob uses RESTful HTTP response codes to indicate success or failure of an API request. In general, 2xx indicates success, 4xx indicate an input error, and 5xx indicates an error on Lob's end.
+      properties:
+        id:
+          $ref: '#/components/schemas/vrsn_id'
+        deleted:
+          $ref: '#/components/schemas/deleted'
     vrsn_id:
       type: string
       description: Unique identifier prefixed with `vrsn_`.
       pattern: ^vrsn_[a-zA-Z0-9]+$
-    object:
-      type: string
-      description: Value is resource type.
-    engine:
-      type:
-      - string
-      - 'null'
-      description: "The engine used to combine HTML template with merge variables.\n  * `legacy` - Lob's original engine\n  * `handlebars`\n"
-      enum:
-      - legacy
-      - handlebars
-      default: legacy
-    tmpl_id:
-      type: string
-      description: Unique identifier prefixed with `tmpl_`. ID of a saved [HTML template](#section/HTML-Templates).
-      pattern: ^tmpl_[a-zA-Z0-9]+$
-  headers:
-    ratelimit-limit:
-      description: The rate limit for a given endpoint.
-      schema:
-        type: integer
-        example: 150
-    ratelimit-reset:
-      description: 'The time at which the rate limit window resets in  <a href="https://en.wikipedia.org/wiki/Unix_time" target="_blank">UTC epoch seconds</a>
-
-        '
-      schema:
-        type: integer
-        example: 1528749846
-    ratelimit-remaining:
-      description: The number of requests remaining in the current window.
-      schema:
-        type: integer
-        example: 100
   responses:
+    template_error:
+      description: Error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/error'
+          example:
+            error:
+              code: invalid
+              message: html is required
+              status_code: 422
     post_template_version:
       description: Returns the template version with the given template and version ids.
       headers:
@@ -578,17 +571,24 @@ components:
             value:
               id: vrsn_123456789
               deleted: true
-    template_error:
-      description: Error
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/error'
-          example:
-            error:
-              code: invalid
-              message: html is required
-              status_code: 422
+  headers:
+    ratelimit-reset:
+      description: 'The time at which the rate limit window resets in  <a href="https://en.wikipedia.org/wiki/Unix_time" target="_blank">UTC epoch seconds</a>
+
+        '
+      schema:
+        type: integer
+        example: 1528749846
+    ratelimit-remaining:
+      description: The number of requests remaining in the current window.
+      schema:
+        type: integer
+        example: 100
+    ratelimit-limit:
+      description: The rate limit for a given endpoint.
+      schema:
+        type: integer
+        example: 150
   securitySchemes:
     basicAuth:
       type: http

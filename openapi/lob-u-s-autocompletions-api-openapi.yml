@@ -307,15 +307,12 @@ components:
                 * `unauthorized_token` - 401: token isn''t authorized.
 
                 '
+    city_no_description:
+      type: string
+      maxLength: 200
     zip_code:
       type: string
       pattern: ^\d{5}((-)?\d{4})?$
-    state:
-      type: string
-      description: 'The <a href="https://en.wikipedia.org/wiki/ISO_3166-2" target="_blank">ISO 3166-2</a> two letter code for the state.
-
-        '
-      maxLength: 2
     suggestions:
       type: object
       required:
@@ -367,49 +364,15 @@ components:
           enum:
           - us_autocompletion
           default: us_autocompletion
-    us_auto_id:
-      type: string
-      description: Unique identifier prefixed with `us_auto_`.
-      pattern: ^us_auto_[a-zA-Z0-9]+$
-    failure_status_code:
-      type: integer
-      enum:
-      - 401
-      - 403
-      - 404
-      - 413
-      - 422
-      - 429
-      - 500
-      description: "A conventional HTTP status code:\n  * `401` - Authorization error with your API key or account\n  * `403` - Forbidden error with your API key or account\n  * `404` - The requested item does not exist\n  * `413` - Payload too large\n  * `422` - The query or body parameters did not pass validation\n  * `429` - Too many requests have been sent with an API key in a given amount of time\n  * `500` - An internal server error occurred, please contact support@lob.com\n"
-    us_autocompletions:
-      type: object
-      properties:
-        id:
-          $ref: '#/components/schemas/us_auto_id'
-        suggestions:
-          type: array
-          description: 'An array of objects representing suggested addresses.
-
-            '
-          minItems: 0
-          maxItems: 10
-          items:
-            $ref: '#/components/schemas/suggestions'
-        object:
-          type: string
-          description: Value is resource type.
-          enum:
-          - us_autocompletion
-          default: us_autocompletion
-    city_no_description:
-      type: string
-      maxLength: 200
     city:
       allOf:
       - $ref: '#/components/schemas/city_no_description'
       - type: string
         description: The name of the city.
+    us_auto_id:
+      type: string
+      description: Unique identifier prefixed with `us_auto_`.
+      pattern: ^us_auto_[a-zA-Z0-9]+$
     us_autocompletions_writable:
       type: object
       required:
@@ -440,6 +403,43 @@ components:
           description: 'If `true`, sort suggestions by proximity to the IP set in the `X-Forwarded-For` header.
 
             '
+    us_autocompletions:
+      type: object
+      properties:
+        id:
+          $ref: '#/components/schemas/us_auto_id'
+        suggestions:
+          type: array
+          description: 'An array of objects representing suggested addresses.
+
+            '
+          minItems: 0
+          maxItems: 10
+          items:
+            $ref: '#/components/schemas/suggestions'
+        object:
+          type: string
+          description: Value is resource type.
+          enum:
+          - us_autocompletion
+          default: us_autocompletion
+    failure_status_code:
+      type: integer
+      enum:
+      - 401
+      - 403
+      - 404
+      - 413
+      - 422
+      - 429
+      - 500
+      description: "A conventional HTTP status code:\n  * `401` - Authorization error with your API key or account\n  * `403` - Forbidden error with your API key or account\n  * `404` - The requested item does not exist\n  * `413` - Payload too large\n  * `422` - The query or body parameters did not pass validation\n  * `429` - Too many requests have been sent with an API key in a given amount of time\n  * `500` - An internal server error occurred, please contact support@lob.com\n"
+    state:
+      type: string
+      description: 'The <a href="https://en.wikipedia.org/wiki/ISO_3166-2" target="_blank">ISO 3166-2</a> two letter code for the state.
+
+        '
+      maxLength: 2
   responses:
     us_autocompletions_error:
       description: Error
@@ -533,11 +533,6 @@ components:
                   zip_code: '94133'
                 object: us_autocompletion
   headers:
-    ratelimit-remaining:
-      description: The number of requests remaining in the current window.
-      schema:
-        type: integer
-        example: 100
     ratelimit-limit:
       description: The rate limit for a given endpoint.
       schema:
@@ -550,6 +545,11 @@ components:
       schema:
         type: integer
         example: 1528749846
+    ratelimit-remaining:
+      description: The number of requests remaining in the current window.
+      schema:
+        type: integer
+        example: 100
   securitySchemes:
     basicAuth:
       type: http

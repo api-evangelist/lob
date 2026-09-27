@@ -36,6 +36,45 @@ webhooks:
       description: production
 components:
   schemas:
+    date_created:
+      type: string
+      format: date-time
+      description: A timestamp in ISO 8601 format of the date the resource was created.
+    tracking_event_certified:
+      allOf:
+      - $ref: '#/components/schemas/tracking_event_base'
+      - type: object
+        required:
+        - type
+        - name
+        properties:
+          type:
+            description: a Certified letter tracking event
+            type: string
+            enum:
+            - certified
+          name:
+            type: string
+            enum:
+            - Mailed
+            - In Transit
+            - In Local Area
+            - Processed for Delivery
+            - Pickup Available
+            - Delivered
+            - Re-Routed
+            - Returned to Sender
+            - Issue
+            description: "Name of tracking event for Certified letters. Letters sent with USPS Certified Mail are fully tracked by USPS, therefore their tracking events have an additional details object with more detailed information about the tracking event. Some certified tracking event names have multiple meanings, noted in the list here. See the description of the details object for the full set of combined certified tracking event name meanings.\n\n  * `Mailed` - Package has been accepted into the carrier network for delivery.\n\n  * `In Transit` - Maps to four distinct stages of transit.\n\n  * `In Local Area` - Package is at a location near the end destination.\n\n  * `Processed for Delivery` - Maps to two distinct stages of delivery.\n\n  * `Pickup Available` - Package is available for pickup at carrier location.\n\n  * `Delivered` - Package has been delivered.\n\n  * `Re-Routed` - Package has been forwarded.\n\n  * `Returned to Sender` - Package is to be returned to sender.\n\n  * `Issue` - Maps to (at least) 15 possible issues, some of which are actionable.\n"
+          details:
+            $ref: '#/components/schemas/tracking_event_details'
+          location:
+            type:
+            - string
+            - 'null'
+            description: 'The zip code in which the event occurred if it exists, otherwise will be the name of a Regional Distribution Center if it exists, otherwise will be null.
+
+              '
     tracking_event_normal:
       allOf:
       - $ref: '#/components/schemas/tracking_event_base'
@@ -75,6 +114,10 @@ components:
             description: 'The zip code in which the scan event occurred. Null for `Mailed` events.
 
               '
+    date_modified:
+      type: string
+      format: date-time
+      description: A timestamp in ISO 8601 format of the date the resource was last modified.
     tracking_event_details:
       type: object
       required:
@@ -180,10 +223,6 @@ components:
           description: '`true` if action is required by the end recipient, `false` otherwise.
 
             '
-    evnt_id:
-      type: string
-      description: Unique identifier prefixed with `evnt_`.
-      pattern: ^evnt_[a-zA-Z0-9]+$
     tracking_event_base:
       type: object
       description: As mail pieces travel through the mail stream, USPS scans their unique barcodes, and Lob processes these mail scans to generate tracking events.
@@ -213,49 +252,10 @@ components:
     object:
       type: string
       description: Value is resource type.
-    date_created:
+    evnt_id:
       type: string
-      format: date-time
-      description: A timestamp in ISO 8601 format of the date the resource was created.
-    tracking_event_certified:
-      allOf:
-      - $ref: '#/components/schemas/tracking_event_base'
-      - type: object
-        required:
-        - type
-        - name
-        properties:
-          type:
-            description: a Certified letter tracking event
-            type: string
-            enum:
-            - certified
-          name:
-            type: string
-            enum:
-            - Mailed
-            - In Transit
-            - In Local Area
-            - Processed for Delivery
-            - Pickup Available
-            - Delivered
-            - Re-Routed
-            - Returned to Sender
-            - Issue
-            description: "Name of tracking event for Certified letters. Letters sent with USPS Certified Mail are fully tracked by USPS, therefore their tracking events have an additional details object with more detailed information about the tracking event. Some certified tracking event names have multiple meanings, noted in the list here. See the description of the details object for the full set of combined certified tracking event name meanings.\n\n  * `Mailed` - Package has been accepted into the carrier network for delivery.\n\n  * `In Transit` - Maps to four distinct stages of transit.\n\n  * `In Local Area` - Package is at a location near the end destination.\n\n  * `Processed for Delivery` - Maps to two distinct stages of delivery.\n\n  * `Pickup Available` - Package is available for pickup at carrier location.\n\n  * `Delivered` - Package has been delivered.\n\n  * `Re-Routed` - Package has been forwarded.\n\n  * `Returned to Sender` - Package is to be returned to sender.\n\n  * `Issue` - Maps to (at least) 15 possible issues, some of which are actionable.\n"
-          details:
-            $ref: '#/components/schemas/tracking_event_details'
-          location:
-            type:
-            - string
-            - 'null'
-            description: 'The zip code in which the event occurred if it exists, otherwise will be the name of a Regional Distribution Center if it exists, otherwise will be null.
-
-              '
-    date_modified:
-      type: string
-      format: date-time
-      description: A timestamp in ISO 8601 format of the date the resource was last modified.
+      description: Unique identifier prefixed with `evnt_`.
+      pattern: ^evnt_[a-zA-Z0-9]+$
   responses:
     tracking_events:
       description: Returns a `tracking_event` object to the specified server.

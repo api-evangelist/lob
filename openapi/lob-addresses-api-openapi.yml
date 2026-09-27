@@ -347,638 +347,177 @@ paths:
         source: "var context = context.Background()\ncontext = context.WithValue(suite.ctx, lob.ContextBasicAuth, lob.BasicAuth{UserName: os.Getenv(\"<YOUR_API_KEY>\")})\n\nvar apiClient = *lob.NewAPIClient(configuration)\n\ndeletedAddress, _, err := apiClient.AddressesApi.Delete(context, \"adr_43769b47aed248c2\").Execute()\n\nif err != nil {\n    return err\n}\n"
         label: GO
 components:
+  responses:
+    address_error:
+      description: Error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/error'
+          example:
+            error:
+              code: not_found
+              message: address not found
+              status_code: 404
+    post_address:
+      description: Echos the writable fields of a newly created address object.
+      headers:
+        ratelimit-limit:
+          $ref: '#/components/headers/ratelimit-limit'
+        ratelimit-remaining:
+          $ref: '#/components/headers/ratelimit-remaining'
+        ratelimit-reset:
+          $ref: '#/components/headers/ratelimit-reset'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/address'
+          examples:
+            full_us:
+              value:
+                id: adr_d3489cd64c791ab5
+                description: Harry - Office
+                name: HARRY ZHANG
+                company: LOB
+                phone: '5555555555'
+                email: harry@lob.com
+                address_line1: 210 KING ST STE 6100
+                address_city: SAN FRANCISCO
+                address_state: CA
+                address_zip: '94107'
+                address_country: UNITED STATES
+                metadata: {}
+                date_created: '2017-09-05T17:47:53.767Z'
+                date_modified: '2017-09-05T17:47:53.767Z'
+                object: address
+            full_intl:
+              value:
+                id: adr_b9f49f464c836203
+                description: Harry - Office
+                name: HARRY ZHANG
+                company: LOB
+                phone: '5555555555'
+                email: harry@lob.com
+                address_line1: 370 WATER ST
+                address_city: SUMMERSIDE
+                address_state: PRINCE EDWARD ISLAND
+                address_zip: C1N 1C4
+                address_country: CANADA
+                metadata: {}
+                date_created: '2021-11-29T20:55:46.843Z'
+                date_modified: '2021-11-29T20:56:46.843Z'
+                object: address
+            ncoa_us_live:
+              value:
+                id: adr_d3489cd64c791ab5
+                description: Harry - Office
+                name: HARRY ZHANG
+                company: LOB
+                phone: '5555555555'
+                email: harry@lob.com
+                address_line1: ����
+                address_line2: ����
+                address_city: SAN FRANCISCO
+                address_state: CA
+                address_zip: '94107'
+                address_country: UNITED STATES
+                metadata: {}
+                date_created: '2017-09-05T17:47:53.767Z'
+                date_modified: '2017-09-05T17:47:53.767Z'
+                recipient_moved: true
+                inline: false
+                object: address
+            ncoa_us_test:
+              value:
+                id: adr_e463565030210e12
+                description: null
+                name: TEST KEYS DO NOT VERIFY ADDRESSES
+                company: null
+                phone: null
+                email: null
+                address_line1: ����
+                address_line2: ����
+                address_city: SAN FRANCISCO
+                address_state: CA
+                address_zip: '94107'
+                address_country: UNITED STATES
+                metadata: {}
+                date_created: '2019-12-05T19:39:19.932Z'
+                date_modified: '2019-12-05T19:39:19.932Z'
+                recipient_moved: true
+                inline: false
+                object: address
+    address:
+      description: Returns an address object if a valid identifier was provided.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/address'
+    address_deleted:
+      description: Deleted
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/address_deletion'
+          example:
+            id: adr_123456789
+            deleted: true
+    all_addresses:
+      description: A dictionary with a data property that contains an array of up to `limit` addresses. Each entry in the array is a separate address object. The previous and next page of address entries can be retrieved by calling the endpoint contained in the `previous_url` and `next_url` fields in the API response respectively.<br>If no more addresses are available beyond the current set of returned results, the `next_url` field will be empty.
+      content:
+        application/json:
+          schema:
+            allOf:
+            - $ref: '#/components/schemas/list'
+            - type: object
+              properties:
+                data:
+                  type: array
+                  description: list of addresses
+                  items:
+                    $ref: '#/components/schemas/address'
+          example:
+            data:
+            - id: adr_e68217bd744d65c8
+              description: Harry - Office
+              name: HARRY ZHANG
+              company: LOB
+              phone: '5555555555'
+              email: harry@lob.com
+              address_line1: 210 KING ST STE 6100
+              address_line2: null
+              address_city: SAN FRANCISCO
+              address_state: CA
+              address_zip: 94107-1741
+              address_country: UNITED STATES
+              metadata: {}
+              date_created: '2019-08-12T00:16:00.361Z'
+              date_modified: '2019-08-12T00:16:00.361Z'
+              object: address
+            - id: adr_asdi2y3riuasasoi
+              description: Harry - Office
+              name: Harry Zhang
+              company: Lob
+              phone: '5555555555'
+              email: harry@lob.com
+              metadata: {}
+              address_line1: 370 WATER ST
+              address_line2: ''
+              address_city: SUMMERSIDE
+              address_state: PRINCE EDWARD ISLAND
+              address_zip: C1N 1C4
+              address_country: CANADA
+              date_created: '2019-09-20T00:14:00.361Z'
+              date_modified: '2019-09-20T00:14:00.361Z'
+              object: address
+            object: list
+            next_url: https://api.lob.com/v1/addresses?limit=2&after=eyJkYXRlT2Zmc2V0IjoiMjAxOS0wOC0wN1QyMTo1OTo0Ni43NjRaIiwiaWRPZmZzZXQiOiJhZHJfODMwYmYwZWFiZGFhYTQwOSJ9
+            previous_url: null
+            count: 2
   schemas:
-    list:
-      type: object
-      description: Multiple items returned in order
-      properties:
-        object:
-          $ref: '#/components/schemas/object'
-        next_url:
-          type:
-          - string
-          - 'null'
-          description: Url of next page of items in list.
-        previous_url:
-          type:
-          - string
-          - 'null'
-          description: Url of previous page of items in list.
-        count:
-          $ref: '#/components/schemas/count'
-        total_count:
-          type: integer
-          description: Indicates the total number of records. Provided when the request specifies an "include" query parameter
-    adr_id:
-      type: string
-      description: Unique identifier prefixed with `adr_`.
-      pattern: ^adr_[a-zA-Z0-9]+$
-    resource_description:
-      type:
-      - string
-      - 'null'
-      description: 'An internal description that identifies this resource. Must be no longer than 255 characters.
-
-        '
-      maxLength: 255
-    address_editable:
-      oneOf:
-      - $ref: '#/components/schemas/address_editable_us'
-      - $ref: '#/components/schemas/address_editable_intl'
-    date_filter:
-      type: object
-      additionalProperties:
-        type: string
-      description: 'Filter by ISO-8601 date or datetime, e.g. `{ "gt": "2012-01-01", "lt": "2012-01-31T12:34:56Z" }` where `gt` is >, `lt` is <, `gte` is e, and `lte` is d.'
-    country_extended:
-      type: string
-      description: Must be a 2 letter country short-name code (ISO 3166). Does not accept `US`, `AS`, `PR`, `FM`, `GU`, `MH`, `MP`, `PW`, or `VI`. For these addresses, please use the US verification API. Also does not accept `PS`, which is not currently supported.
-      enum:
-      - AD
-      - AE
-      - AF
-      - AG
-      - AI
-      - AL
-      - AN
-      - AO
-      - AQ
-      - AR
-      - AT
-      - AU
-      - AW
-      - AZ
-      - BA
-      - BB
-      - BD
-      - BE
-      - BF
-      - BG
-      - BH
-      - BI
-      - BJ
-      - BM
-      - BN
-      - BO
-      - BQ
-      - BR
-      - BS
-      - BT
-      - BW
-      - BY
-      - BZ
-      - CA
-      - CD
-      - CG
-      - CH
-      - CI
-      - CK
-      - CL
-      - CM
-      - CN
-      - CO
-      - CR
-      - CS
-      - CU
-      - CV
-      - CW
-      - CY
-      - CZ
-      - DE
-      - DJ
-      - DK
-      - DM
-      - DO
-      - DZ
-      - EC
-      - EE
-      - EG
-      - EH
-      - ER
-      - ES
-      - ET
-      - FI
-      - FJ
-      - FK
-      - FO
-      - FR
-      - GA
-      - GB
-      - GD
-      - GE
-      - GH
-      - GI
-      - GL
-      - GM
-      - GN
-      - GQ
-      - GR
-      - GS
-      - GT
-      - GW
-      - GY
-      - HK
-      - HN
-      - HR
-      - HT
-      - HU
-      - ID
-      - IE
-      - IL
-      - IN
-      - IO
-      - IQ
-      - IR
-      - IS
-      - IT
-      - JM
-      - JO
-      - JP
-      - KE
-      - KG
-      - KH
-      - KI
-      - KM
-      - KN
-      - KP
-      - KR
-      - KW
-      - KY
-      - KZ
-      - LA
-      - LB
-      - LC
-      - LI
-      - LK
-      - LR
-      - LS
-      - LT
-      - LU
-      - LV
-      - LY
-      - MA
-      - MC
-      - MD
-      - ME
-      - MG
-      - MK
-      - ML
-      - MM
-      - MN
-      - MO
-      - MR
-      - MS
-      - MT
-      - MU
-      - MV
-      - MW
-      - MX
-      - MY
-      - MZ
-      - NA
-      - NE
-      - NF
-      - NG
-      - NI
-      - NL
-      - 'NO'
-      - NP
-      - NR
-      - NU
-      - NZ
-      - OM
-      - PA
-      - PE
-      - PG
-      - PH
-      - PK
-      - PL
-      - PN
-      - PT
-      - PY
-      - QA
-      - RO
-      - RS
-      - RU
-      - RW
-      - SA
-      - SB
-      - SC
-      - SD
-      - SE
-      - SG
-      - SH
-      - SI
-      - SK
-      - SL
-      - SM
-      - SN
-      - SO
-      - SR
-      - SS
-      - ST
-      - SV
-      - SX
-      - SY
-      - SZ
-      - TC
-      - TD
-      - TG
-      - TH
-      - TJ
-      - TK
-      - TL
-      - TM
-      - TN
-      - TO
-      - TR
-      - TT
-      - TV
-      - TW
-      - TZ
-      - UA
-      - UG
-      - UY
-      - UZ
-      - VA
-      - VC
-      - VE
-      - VG
-      - VN
-      - VU
-      - WS
-      - YE
-      - ZA
-      - ZM
-      - ZW
-    metadata:
-      type: object
-      additionalProperties:
-        type: string
-      description: 'Use metadata to store custom information for tagging and labeling back to your internal systems. Must be an object with up to 20 key-value pairs. Keys must be at most 40 characters and values must be at most 500 characters. Neither can contain the characters `"` and `\`. i.e. ''{"customer_id" : "NEWYORK2015"}'' Nested objects are not supported.  See [Metadata](#section/Metadata) for more information.'
-      maxLength: 500
-      pattern: '[^"\\]{0,500}'
-    failure_status_code:
-      type: integer
-      enum:
-      - 401
-      - 403
-      - 404
-      - 413
-      - 422
-      - 429
-      - 500
-      description: "A conventional HTTP status code:\n  * `401` - Authorization error with your API key or account\n  * `403` - Forbidden error with your API key or account\n  * `404` - The requested item does not exist\n  * `413` - Payload too large\n  * `422` - The query or body parameters did not pass validation\n  * `429` - Too many requests have been sent with an API key in a given amount of time\n  * `500` - An internal server error occurred, please contact support@lob.com\n"
-    date_created:
-      type: string
-      format: date-time
-      description: A timestamp in ISO 8601 format of the date the resource was created.
     count:
       type: integer
       description: number of resources in a set
-    address_fields_us:
-      type: object
-      required:
-      - address_line1
-      - address_city
-      - address_state
-      - address_zip
-      properties:
-        address_line1:
-          type: string
-          description: The primary number, street name, and directional information.
-          maxLength: 64
-        address_line2:
-          type:
-          - string
-          - 'null'
-          description: An optional field containing any information which can't fit into line 1.
-          maxLength: 64
-        address_city:
-          type: string
-          maxLength: 200
-        address_state:
-          type: string
-          description: 2 letter state short-name code
-          pattern: ^[a-zA-Z]{2}$
-        address_zip:
-          type: string
-          description: 'Must follow the ZIP format of `12345` or ZIP+4 format of `12345-1234`.
-
-            '
-          pattern: ^\d{5}(-\d{4})?$
-    error:
-      type: object
-      description: Lob uses RESTful HTTP response codes to indicate success or failure of an API request. In general, 2xx indicates success, 4xx indicate an input error, and 5xx indicates an error on Lob's end.
-      required:
-      - error
-      properties:
-        error:
-          type: object
-          required:
-          - message
-          - status_code
-          - code
-          properties:
-            message:
-              type: string
-              description: A human-readable message with more details about the error
-              example: Rate limit exceeded. Please wait 5 seconds and try your request again.
-            status_code:
-              $ref: '#/components/schemas/failure_status_code'
-            code:
-              type: string
-              enum:
-              - bad_request
-              - conflict
-              - feature_limit_reached
-              - internal_server_error
-              - invalid
-              - not_deletable
-              - not_found
-              - request_timeout
-              - service_unavailable
-              - unrecognized_endpoint
-              - unsupported_lob_version
-              - address_length_exceeds_limit
-              - bank_account_already_verified
-              - bank_error
-              - billing_address_required
-              - custom_envelope_inventory_depleted
-              - deleted_bank_account
-              - failed_deliverability_strictness
-              - file_pages_below_min
-              - file_pages_exceed_max
-              - file_size_exceeds_limit
-              - foreign_return_address
-              - inconsistent_page_dimensions
-              - invalid_bank_account
-              - invalid_bank_account_verification
-              - invalid_check_international
-              - invalid_country_covid
-              - invalid_file
-              - invalid_file_dimensions
-              - invalid_file_download_time
-              - invalid_file_url
-              - invalid_image_dpi
-              - invalid_international_feature
-              - invalid_perforation_return_envelope
-              - invalid_template_html
-              - mail_use_type_can_not_be_null
-              - merge_variable_required
-              - merge_variable_whitespace
-              - payment_method_unverified
-              - pdf_encrypted
-              - special_characters_restricted
-              - unembedded_fonts
-              - email_required
-              - invalid_api_key
-              - publishable_key_not_allowed
-              - rate_limit_exceeded
-              - unauthorized
-              - unauthorized_token
-              description: 'A pre-defined string identifying an error. Error codes fall into three categories:
-
-
-                **GENERIC**
-
-                * `bad_request` - 422: an invalid request was made. See error message for details.
-
-                * `conflict` - 409/422: this operation would leave data in a conflicted state.
-
-                * `feature_limit_reached` - 403: the account has reached its resource limit and requires upgrading to add more.
-
-                * `internal_server_error` - 500: an error has occured on Lob''s servers. Please try request again.
-
-                * `invalid` - 422: an invalid request was made. See error message for details.
-
-                * `not_deletable` - 422: an attempt was made to delete a resource, but the resource cannot be deleted.
-
-                * `not_found` - 404: the requested resource was not found.
-
-                * `request_timeout` - 408: the request took too long. Please try again.
-
-                * `service_unavailable` - 503: the Lob servers are temporarily unavailable. Please try agian.
-
-                * `unrecognized_endpoint` - 404: the requested endpoint doesn''t exist.
-
-                * `unsupported_lob_version` - 422: an unsupported Lob API version was requested.
-
-
-                **ADVANCED**
-
-                * `address_length_exceeds_limit` - 422: the sum of to.address_line1 and to.address_line2 cannot surpass 50 characters.
-
-                * `bank_account_already_verified` - 422: the bank account has already been verified.
-
-                * `bank_error` - 422: there''s an issue with the bank account.
-
-                * `billing_address_required` - 403: in order to create a live mail piece, your account needs to set up a billing address.
-
-                * `custom_envelope_inventory_depleted` - 422: custom envelope inventory is depleted, and more will need to be ordered.
-
-                * `deleted_bank_account` - 404: checks cannot be created with a deleted bank account.
-
-                * `failed_deliverability_strictness` - 422: the `to` address doesn''t meet strictness requirements. See <a href="https://dashboard.lob.com/#/settings/account" target="_blank">Account Settings</a> to configure strictness.
-
-                * `file_pages_below_min` - 422: not enough pages.
-
-                * `file_pages_exceed_max` - 422: too many pages.
-
-                * `file_size_exceeds_limit` - 422: the file size is too large. See description for details.
-
-                * `foreign_return_address` - 422: the `from` address must be a US address.
-
-                * `inconsistent_page_dimensions` - 422: all pages of the input file must have the same dimensions.
-
-                * `invalid_bank_account` - 422: the provided bank routing number is invalid.
-
-                * `invalid_bank_account_verification` - 422: verification amounts do not match.
-
-                * `invalid_check_international` - 422: checks cannot be sent internationally.
-
-                * `invalid_country_covid` - 422: the postal service in the specified country is currently unable to process the request due to COVID-19 restrictions.
-
-                * `invalid_file` - 422: the file is invalid.
-
-                * `invalid_file_dimensions` - 422: file dimensions are incorrect for the selected mail type.
-
-                * `invalid_file_download_time` - 422: file download from remote server took too long.
-
-                * `invalid_file_url` - 422: the file URL when creating a resource is invalid.
-
-                * `invalid_image_dpi` - 422: DPI must be at least 300.
-
-                * `invalid_international_feature` - 422: the specified product cannot be sent to the destination.
-
-                * `invalid_perforation_return_envelope` - 422: both `return_envelope` and `perforation` must be used together.
-
-                * `invalid_template_html` - 422: the provided HTML is invalid.
-
-                * `mail_use_type_can_not_be_null` - 422: use_type must be one of "marketing" or "operational". Alternatively, an admin can set the account default use type in Account Settings.
-
-                * `merge_variable_required` - 422: a required merge variable is missing.
-
-                * `merge_variable_whitespace` - 422: merge variable names cannot contain whitespace.
-
-                * `payment_method_unverified` - 401: you must have a verified bank account or credit card to submit live requests.
-
-                * `pdf_encrypted` - 422: an encrypted PDF was provided.
-
-                * `special_characters_restricted` - 422: cannot use special characters for merge variable names.
-
-                * `unembedded_fonts` - 422: the provided PDF contains non-standard unembedded fonts. See description for details.
-
-
-                **AUTHENTICATION**
-
-                * `email_required` - 401: account must have a verified email address before creating live resources.
-
-                * `invalid_api_key` - 401/403: the API key is invalid.
-
-                * `publishable_key_not_allowed` - 403: the requested operation needs a secret key, not a publishable key. See [API Keys](#section/API-Keys) for more information.
-
-                * `rate_limit_exceeded` - 429: requests were sent too quickly and must be slowed down.
-
-                * `unauthorized` - 401: the request isn''t authorized.
-
-                * `unauthorized_token` - 401: token isn''t authorized.
-
-                '
-    address:
-      oneOf:
-      - $ref: '#/components/schemas/address_us'
-      - $ref: '#/components/schemas/address_intl'
-    address_editable_intl:
-      allOf:
-      - $ref: '#/components/schemas/address_fields_intl'
-      - type: object
-        anyOf:
-        - title: address obj with `name` defined
-          required:
-          - name
-        - title: address obj with `company` defined
-          required:
-          - company
-        properties:
-          description:
-            $ref: '#/components/schemas/resource_description'
-          name:
-            type:
-            - string
-            - 'null'
-            description: 'Either `name` or `company` is required, you may also add both. Must be no longer than 40 characters. If both `name` and `company` are provided, they will be printed on two separate lines above the rest of the address.
-
-              '
-            maxLength: 40
-          company:
-            $ref: '#/components/schemas/company'
-          phone:
-            type:
-            - string
-            - 'null'
-            description: Must be no longer than 40 characters.
-            maxLength: 40
-          email:
-            type:
-            - string
-            - 'null'
-            description: Must be no longer than 100 characters.
-            maxLength: 100
-          address_country:
-            $ref: '#/components/schemas/country_extended'
-          metadata:
-            $ref: '#/components/schemas/metadata'
-    address_editable_us:
-      allOf:
-      - $ref: '#/components/schemas/address_fields_us'
-      - type: object
-        anyOf:
-        - title: address obj with `name` defined
-          required:
-          - name
-        - title: address obj with `company` defined
-          required:
-          - company
-        properties:
-          description:
-            $ref: '#/components/schemas/resource_description'
-          name:
-            type:
-            - string
-            - 'null'
-            description: 'Either `name` or `company` is required, you may also add both. Must be no longer than 40 characters. If both `name` and `company` are provided, they will be printed on two separate lines above the rest of the address.
-
-              '
-            maxLength: 40
-          company:
-            $ref: '#/components/schemas/company'
-          phone:
-            type:
-            - string
-            - 'null'
-            description: Must be no longer than 40 characters.
-            maxLength: 40
-          email:
-            type:
-            - string
-            - 'null'
-            description: Must be no longer than 100 characters.
-            maxLength: 100
-          address_country:
-            type: string
-            enum:
-            - US
-            default: US
-          metadata:
-            $ref: '#/components/schemas/metadata'
-    address_deletion:
-      description: Lob uses RESTful HTTP response codes to indicate success or failure of an API request. In general, 2xx indicates success, 4xx indicate an input error, and 5xx indicates an error on Lob's end.
-      properties:
-        id:
-          $ref: '#/components/schemas/adr_id'
-        deleted:
-          $ref: '#/components/schemas/deleted'
-    company:
-      type:
-      - string
-      - 'null'
-      description: 'Either `name` or `company` is required, you may also add both. Must be no longer than 40 characters. If both `name` and `company` are provided, they will be printed on two separate lines above the rest of the address. This field can be used for any secondary recipient information which is not part of the actual mailing address (Company Name, Department, Attention Line, etc).
-
-        '
-      maxLength: 40
-    address_fields_intl:
-      type: object
-      required:
-      - address_line1
-      - address_country
-      properties:
-        address_line1:
-          type: string
-          description: The primary number, street name, and directional information.
-          maxLength: 200
-        address_line2:
-          type:
-          - string
-          - 'null'
-          description: An optional field containing any information which can't fit into line 1.
-          maxLength: 200
-        address_city:
-          type:
-          - string
-          - 'null'
-          maxLength: 200
-        address_state:
-          type:
-          - string
-          - 'null'
-          maxLength: 200
-        address_zip:
-          type:
-          - string
-          - 'null'
-          description: Optional postal code.
-          maxLength: 40
     address_intl:
       allOf:
       - $ref: '#/components/schemas/lob_base'
@@ -1291,31 +830,50 @@ components:
           address_state: PRINCE EDWARD ISLAND
           address_zip: C1N 1C4
           address_country: CANADA
-    date_modified:
-      type: string
-      format: date-time
-      description: A timestamp in ISO 8601 format of the date the resource was last modified.
-    deleted:
-      type: boolean
-      description: Only returned if the resource has been successfully deleted.
-    lob_base:
-      type: object
-      required:
-      - date_created
-      - date_modified
-      - object
-      properties:
-        date_created:
-          $ref: '#/components/schemas/date_created'
-        date_modified:
-          $ref: '#/components/schemas/date_modified'
-        deleted:
-          $ref: '#/components/schemas/deleted'
-        object:
-          $ref: '#/components/schemas/object'
-    object:
-      type: string
-      description: Value is resource type.
+    address_editable:
+      oneOf:
+      - $ref: '#/components/schemas/address_editable_us'
+      - $ref: '#/components/schemas/address_editable_intl'
+    address_editable_intl:
+      allOf:
+      - $ref: '#/components/schemas/address_fields_intl'
+      - type: object
+        anyOf:
+        - title: address obj with `name` defined
+          required:
+          - name
+        - title: address obj with `company` defined
+          required:
+          - company
+        properties:
+          description:
+            $ref: '#/components/schemas/resource_description'
+          name:
+            type:
+            - string
+            - 'null'
+            description: 'Either `name` or `company` is required, you may also add both. Must be no longer than 40 characters. If both `name` and `company` are provided, they will be printed on two separate lines above the rest of the address.
+
+              '
+            maxLength: 40
+          company:
+            $ref: '#/components/schemas/company'
+          phone:
+            type:
+            - string
+            - 'null'
+            description: Must be no longer than 40 characters.
+            maxLength: 40
+          email:
+            type:
+            - string
+            - 'null'
+            description: Must be no longer than 100 characters.
+            maxLength: 100
+          address_country:
+            $ref: '#/components/schemas/country_extended'
+          metadata:
+            $ref: '#/components/schemas/metadata'
     address_us:
       allOf:
       - $ref: '#/components/schemas/lob_base'
@@ -1429,198 +987,622 @@ components:
           date_created: '2019-08-12T00:16:00.361Z'
           date_modified: '2019-08-12T00:16:00.361Z'
           object: address
-  headers:
-    ratelimit-limit:
-      description: The rate limit for a given endpoint.
-      schema:
-        type: integer
-        example: 150
-    ratelimit-reset:
-      description: 'The time at which the rate limit window resets in  <a href="https://en.wikipedia.org/wiki/Unix_time" target="_blank">UTC epoch seconds</a>
+    address_editable_us:
+      allOf:
+      - $ref: '#/components/schemas/address_fields_us'
+      - type: object
+        anyOf:
+        - title: address obj with `name` defined
+          required:
+          - name
+        - title: address obj with `company` defined
+          required:
+          - company
+        properties:
+          description:
+            $ref: '#/components/schemas/resource_description'
+          name:
+            type:
+            - string
+            - 'null'
+            description: 'Either `name` or `company` is required, you may also add both. Must be no longer than 40 characters. If both `name` and `company` are provided, they will be printed on two separate lines above the rest of the address.
+
+              '
+            maxLength: 40
+          company:
+            $ref: '#/components/schemas/company'
+          phone:
+            type:
+            - string
+            - 'null'
+            description: Must be no longer than 40 characters.
+            maxLength: 40
+          email:
+            type:
+            - string
+            - 'null'
+            description: Must be no longer than 100 characters.
+            maxLength: 100
+          address_country:
+            type: string
+            enum:
+            - US
+            default: US
+          metadata:
+            $ref: '#/components/schemas/metadata'
+    list:
+      type: object
+      description: Multiple items returned in order
+      properties:
+        object:
+          $ref: '#/components/schemas/object'
+        next_url:
+          type:
+          - string
+          - 'null'
+          description: Url of next page of items in list.
+        previous_url:
+          type:
+          - string
+          - 'null'
+          description: Url of previous page of items in list.
+        count:
+          $ref: '#/components/schemas/count'
+        total_count:
+          type: integer
+          description: Indicates the total number of records. Provided when the request specifies an "include" query parameter
+    date_created:
+      type: string
+      format: date-time
+      description: A timestamp in ISO 8601 format of the date the resource was created.
+    address_fields_us:
+      type: object
+      required:
+      - address_line1
+      - address_city
+      - address_state
+      - address_zip
+      properties:
+        address_line1:
+          type: string
+          description: The primary number, street name, and directional information.
+          maxLength: 64
+        address_line2:
+          type:
+          - string
+          - 'null'
+          description: An optional field containing any information which can't fit into line 1.
+          maxLength: 64
+        address_city:
+          type: string
+          maxLength: 200
+        address_state:
+          type: string
+          description: 2 letter state short-name code
+          pattern: ^[a-zA-Z]{2}$
+        address_zip:
+          type: string
+          description: 'Must follow the ZIP format of `12345` or ZIP+4 format of `12345-1234`.
+
+            '
+          pattern: ^\d{5}(-\d{4})?$
+    date_modified:
+      type: string
+      format: date-time
+      description: A timestamp in ISO 8601 format of the date the resource was last modified.
+    metadata:
+      type: object
+      additionalProperties:
+        type: string
+      description: 'Use metadata to store custom information for tagging and labeling back to your internal systems. Must be an object with up to 20 key-value pairs. Keys must be at most 40 characters and values must be at most 500 characters. Neither can contain the characters `"` and `\`. i.e. ''{"customer_id" : "NEWYORK2015"}'' Nested objects are not supported.  See [Metadata](#section/Metadata) for more information.'
+      maxLength: 500
+      pattern: '[^"\\]{0,500}'
+    deleted:
+      type: boolean
+      description: Only returned if the resource has been successfully deleted.
+    country_extended:
+      type: string
+      description: Must be a 2 letter country short-name code (ISO 3166). Does not accept `US`, `AS`, `PR`, `FM`, `GU`, `MH`, `MP`, `PW`, or `VI`. For these addresses, please use the US verification API. Also does not accept `PS`, which is not currently supported.
+      enum:
+      - AD
+      - AE
+      - AF
+      - AG
+      - AI
+      - AL
+      - AN
+      - AO
+      - AQ
+      - AR
+      - AT
+      - AU
+      - AW
+      - AZ
+      - BA
+      - BB
+      - BD
+      - BE
+      - BF
+      - BG
+      - BH
+      - BI
+      - BJ
+      - BM
+      - BN
+      - BO
+      - BQ
+      - BR
+      - BS
+      - BT
+      - BW
+      - BY
+      - BZ
+      - CA
+      - CD
+      - CG
+      - CH
+      - CI
+      - CK
+      - CL
+      - CM
+      - CN
+      - CO
+      - CR
+      - CS
+      - CU
+      - CV
+      - CW
+      - CY
+      - CZ
+      - DE
+      - DJ
+      - DK
+      - DM
+      - DO
+      - DZ
+      - EC
+      - EE
+      - EG
+      - EH
+      - ER
+      - ES
+      - ET
+      - FI
+      - FJ
+      - FK
+      - FO
+      - FR
+      - GA
+      - GB
+      - GD
+      - GE
+      - GH
+      - GI
+      - GL
+      - GM
+      - GN
+      - GQ
+      - GR
+      - GS
+      - GT
+      - GW
+      - GY
+      - HK
+      - HN
+      - HR
+      - HT
+      - HU
+      - ID
+      - IE
+      - IL
+      - IN
+      - IO
+      - IQ
+      - IR
+      - IS
+      - IT
+      - JM
+      - JO
+      - JP
+      - KE
+      - KG
+      - KH
+      - KI
+      - KM
+      - KN
+      - KP
+      - KR
+      - KW
+      - KY
+      - KZ
+      - LA
+      - LB
+      - LC
+      - LI
+      - LK
+      - LR
+      - LS
+      - LT
+      - LU
+      - LV
+      - LY
+      - MA
+      - MC
+      - MD
+      - ME
+      - MG
+      - MK
+      - ML
+      - MM
+      - MN
+      - MO
+      - MR
+      - MS
+      - MT
+      - MU
+      - MV
+      - MW
+      - MX
+      - MY
+      - MZ
+      - NA
+      - NE
+      - NF
+      - NG
+      - NI
+      - NL
+      - 'NO'
+      - NP
+      - NR
+      - NU
+      - NZ
+      - OM
+      - PA
+      - PE
+      - PG
+      - PH
+      - PK
+      - PL
+      - PN
+      - PT
+      - PY
+      - QA
+      - RO
+      - RS
+      - RU
+      - RW
+      - SA
+      - SB
+      - SC
+      - SD
+      - SE
+      - SG
+      - SH
+      - SI
+      - SK
+      - SL
+      - SM
+      - SN
+      - SO
+      - SR
+      - SS
+      - ST
+      - SV
+      - SX
+      - SY
+      - SZ
+      - TC
+      - TD
+      - TG
+      - TH
+      - TJ
+      - TK
+      - TL
+      - TM
+      - TN
+      - TO
+      - TR
+      - TT
+      - TV
+      - TW
+      - TZ
+      - UA
+      - UG
+      - UY
+      - UZ
+      - VA
+      - VC
+      - VE
+      - VG
+      - VN
+      - VU
+      - WS
+      - YE
+      - ZA
+      - ZM
+      - ZW
+    address_fields_intl:
+      type: object
+      required:
+      - address_line1
+      - address_country
+      properties:
+        address_line1:
+          type: string
+          description: The primary number, street name, and directional information.
+          maxLength: 200
+        address_line2:
+          type:
+          - string
+          - 'null'
+          description: An optional field containing any information which can't fit into line 1.
+          maxLength: 200
+        address_city:
+          type:
+          - string
+          - 'null'
+          maxLength: 200
+        address_state:
+          type:
+          - string
+          - 'null'
+          maxLength: 200
+        address_zip:
+          type:
+          - string
+          - 'null'
+          description: Optional postal code.
+          maxLength: 40
+    date_filter:
+      type: object
+      additionalProperties:
+        type: string
+      description: 'Filter by ISO-8601 date or datetime, e.g. `{ "gt": "2012-01-01", "lt": "2012-01-31T12:34:56Z" }` where `gt` is >, `lt` is <, `gte` is e, and `lte` is d.'
+    address_deletion:
+      description: Lob uses RESTful HTTP response codes to indicate success or failure of an API request. In general, 2xx indicates success, 4xx indicate an input error, and 5xx indicates an error on Lob's end.
+      properties:
+        id:
+          $ref: '#/components/schemas/adr_id'
+        deleted:
+          $ref: '#/components/schemas/deleted'
+    error:
+      type: object
+      description: Lob uses RESTful HTTP response codes to indicate success or failure of an API request. In general, 2xx indicates success, 4xx indicate an input error, and 5xx indicates an error on Lob's end.
+      required:
+      - error
+      properties:
+        error:
+          type: object
+          required:
+          - message
+          - status_code
+          - code
+          properties:
+            message:
+              type: string
+              description: A human-readable message with more details about the error
+              example: Rate limit exceeded. Please wait 5 seconds and try your request again.
+            status_code:
+              $ref: '#/components/schemas/failure_status_code'
+            code:
+              type: string
+              enum:
+              - bad_request
+              - conflict
+              - feature_limit_reached
+              - internal_server_error
+              - invalid
+              - not_deletable
+              - not_found
+              - request_timeout
+              - service_unavailable
+              - unrecognized_endpoint
+              - unsupported_lob_version
+              - address_length_exceeds_limit
+              - bank_account_already_verified
+              - bank_error
+              - billing_address_required
+              - custom_envelope_inventory_depleted
+              - deleted_bank_account
+              - failed_deliverability_strictness
+              - file_pages_below_min
+              - file_pages_exceed_max
+              - file_size_exceeds_limit
+              - foreign_return_address
+              - inconsistent_page_dimensions
+              - invalid_bank_account
+              - invalid_bank_account_verification
+              - invalid_check_international
+              - invalid_country_covid
+              - invalid_file
+              - invalid_file_dimensions
+              - invalid_file_download_time
+              - invalid_file_url
+              - invalid_image_dpi
+              - invalid_international_feature
+              - invalid_perforation_return_envelope
+              - invalid_template_html
+              - mail_use_type_can_not_be_null
+              - merge_variable_required
+              - merge_variable_whitespace
+              - payment_method_unverified
+              - pdf_encrypted
+              - special_characters_restricted
+              - unembedded_fonts
+              - email_required
+              - invalid_api_key
+              - publishable_key_not_allowed
+              - rate_limit_exceeded
+              - unauthorized
+              - unauthorized_token
+              description: 'A pre-defined string identifying an error. Error codes fall into three categories:
+
+
+                **GENERIC**
+
+                * `bad_request` - 422: an invalid request was made. See error message for details.
+
+                * `conflict` - 409/422: this operation would leave data in a conflicted state.
+
+                * `feature_limit_reached` - 403: the account has reached its resource limit and requires upgrading to add more.
+
+                * `internal_server_error` - 500: an error has occured on Lob''s servers. Please try request again.
+
+                * `invalid` - 422: an invalid request was made. See error message for details.
+
+                * `not_deletable` - 422: an attempt was made to delete a resource, but the resource cannot be deleted.
+
+                * `not_found` - 404: the requested resource was not found.
+
+                * `request_timeout` - 408: the request took too long. Please try again.
+
+                * `service_unavailable` - 503: the Lob servers are temporarily unavailable. Please try agian.
+
+                * `unrecognized_endpoint` - 404: the requested endpoint doesn''t exist.
+
+                * `unsupported_lob_version` - 422: an unsupported Lob API version was requested.
+
+
+                **ADVANCED**
+
+                * `address_length_exceeds_limit` - 422: the sum of to.address_line1 and to.address_line2 cannot surpass 50 characters.
+
+                * `bank_account_already_verified` - 422: the bank account has already been verified.
+
+                * `bank_error` - 422: there''s an issue with the bank account.
+
+                * `billing_address_required` - 403: in order to create a live mail piece, your account needs to set up a billing address.
+
+                * `custom_envelope_inventory_depleted` - 422: custom envelope inventory is depleted, and more will need to be ordered.
+
+                * `deleted_bank_account` - 404: checks cannot be created with a deleted bank account.
+
+                * `failed_deliverability_strictness` - 422: the `to` address doesn''t meet strictness requirements. See <a href="https://dashboard.lob.com/#/settings/account" target="_blank">Account Settings</a> to configure strictness.
+
+                * `file_pages_below_min` - 422: not enough pages.
+
+                * `file_pages_exceed_max` - 422: too many pages.
+
+                * `file_size_exceeds_limit` - 422: the file size is too large. See description for details.
+
+                * `foreign_return_address` - 422: the `from` address must be a US address.
+
+                * `inconsistent_page_dimensions` - 422: all pages of the input file must have the same dimensions.
+
+                * `invalid_bank_account` - 422: the provided bank routing number is invalid.
+
+                * `invalid_bank_account_verification` - 422: verification amounts do not match.
+
+                * `invalid_check_international` - 422: checks cannot be sent internationally.
+
+                * `invalid_country_covid` - 422: the postal service in the specified country is currently unable to process the request due to COVID-19 restrictions.
+
+                * `invalid_file` - 422: the file is invalid.
+
+                * `invalid_file_dimensions` - 422: file dimensions are incorrect for the selected mail type.
+
+                * `invalid_file_download_time` - 422: file download from remote server took too long.
+
+                * `invalid_file_url` - 422: the file URL when creating a resource is invalid.
+
+                * `invalid_image_dpi` - 422: DPI must be at least 300.
+
+                * `invalid_international_feature` - 422: the specified product cannot be sent to the destination.
+
+                * `invalid_perforation_return_envelope` - 422: both `return_envelope` and `perforation` must be used together.
+
+                * `invalid_template_html` - 422: the provided HTML is invalid.
+
+                * `mail_use_type_can_not_be_null` - 422: use_type must be one of "marketing" or "operational". Alternatively, an admin can set the account default use type in Account Settings.
+
+                * `merge_variable_required` - 422: a required merge variable is missing.
+
+                * `merge_variable_whitespace` - 422: merge variable names cannot contain whitespace.
+
+                * `payment_method_unverified` - 401: you must have a verified bank account or credit card to submit live requests.
+
+                * `pdf_encrypted` - 422: an encrypted PDF was provided.
+
+                * `special_characters_restricted` - 422: cannot use special characters for merge variable names.
+
+                * `unembedded_fonts` - 422: the provided PDF contains non-standard unembedded fonts. See description for details.
+
+
+                **AUTHENTICATION**
+
+                * `email_required` - 401: account must have a verified email address before creating live resources.
+
+                * `invalid_api_key` - 401/403: the API key is invalid.
+
+                * `publishable_key_not_allowed` - 403: the requested operation needs a secret key, not a publishable key. See [API Keys](#section/API-Keys) for more information.
+
+                * `rate_limit_exceeded` - 429: requests were sent too quickly and must be slowed down.
+
+                * `unauthorized` - 401: the request isn''t authorized.
+
+                * `unauthorized_token` - 401: token isn''t authorized.
+
+                '
+    failure_status_code:
+      type: integer
+      enum:
+      - 401
+      - 403
+      - 404
+      - 413
+      - 422
+      - 429
+      - 500
+      description: "A conventional HTTP status code:\n  * `401` - Authorization error with your API key or account\n  * `403` - Forbidden error with your API key or account\n  * `404` - The requested item does not exist\n  * `413` - Payload too large\n  * `422` - The query or body parameters did not pass validation\n  * `429` - Too many requests have been sent with an API key in a given amount of time\n  * `500` - An internal server error occurred, please contact support@lob.com\n"
+    adr_id:
+      type: string
+      description: Unique identifier prefixed with `adr_`.
+      pattern: ^adr_[a-zA-Z0-9]+$
+    resource_description:
+      type:
+      - string
+      - 'null'
+      description: 'An internal description that identifies this resource. Must be no longer than 255 characters.
 
         '
-      schema:
-        type: integer
-        example: 1528749846
-    ratelimit-remaining:
-      description: The number of requests remaining in the current window.
-      schema:
-        type: integer
-        example: 100
-  responses:
+      maxLength: 255
+    company:
+      type:
+      - string
+      - 'null'
+      description: 'Either `name` or `company` is required, you may also add both. Must be no longer than 40 characters. If both `name` and `company` are provided, they will be printed on two separate lines above the rest of the address. This field can be used for any secondary recipient information which is not part of the actual mailing address (Company Name, Department, Attention Line, etc).
+
+        '
+      maxLength: 40
+    lob_base:
+      type: object
+      required:
+      - date_created
+      - date_modified
+      - object
+      properties:
+        date_created:
+          $ref: '#/components/schemas/date_created'
+        date_modified:
+          $ref: '#/components/schemas/date_modified'
+        deleted:
+          $ref: '#/components/schemas/deleted'
+        object:
+          $ref: '#/components/schemas/object'
     address:
-      description: Returns an address object if a valid identifier was provided.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/address'
-    all_addresses:
-      description: A dictionary with a data property that contains an array of up to `limit` addresses. Each entry in the array is a separate address object. The previous and next page of address entries can be retrieved by calling the endpoint contained in the `previous_url` and `next_url` fields in the API response respectively.<br>If no more addresses are available beyond the current set of returned results, the `next_url` field will be empty.
-      content:
-        application/json:
-          schema:
-            allOf:
-            - $ref: '#/components/schemas/list'
-            - type: object
-              properties:
-                data:
-                  type: array
-                  description: list of addresses
-                  items:
-                    $ref: '#/components/schemas/address'
-          example:
-            data:
-            - id: adr_e68217bd744d65c8
-              description: Harry - Office
-              name: HARRY ZHANG
-              company: LOB
-              phone: '5555555555'
-              email: harry@lob.com
-              address_line1: 210 KING ST STE 6100
-              address_line2: null
-              address_city: SAN FRANCISCO
-              address_state: CA
-              address_zip: 94107-1741
-              address_country: UNITED STATES
-              metadata: {}
-              date_created: '2019-08-12T00:16:00.361Z'
-              date_modified: '2019-08-12T00:16:00.361Z'
-              object: address
-            - id: adr_asdi2y3riuasasoi
-              description: Harry - Office
-              name: Harry Zhang
-              company: Lob
-              phone: '5555555555'
-              email: harry@lob.com
-              metadata: {}
-              address_line1: 370 WATER ST
-              address_line2: ''
-              address_city: SUMMERSIDE
-              address_state: PRINCE EDWARD ISLAND
-              address_zip: C1N 1C4
-              address_country: CANADA
-              date_created: '2019-09-20T00:14:00.361Z'
-              date_modified: '2019-09-20T00:14:00.361Z'
-              object: address
-            object: list
-            next_url: https://api.lob.com/v1/addresses?limit=2&after=eyJkYXRlT2Zmc2V0IjoiMjAxOS0wOC0wN1QyMTo1OTo0Ni43NjRaIiwiaWRPZmZzZXQiOiJhZHJfODMwYmYwZWFiZGFhYTQwOSJ9
-            previous_url: null
-            count: 2
-    address_error:
-      description: Error
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/error'
-          example:
-            error:
-              code: not_found
-              message: address not found
-              status_code: 404
-    address_deleted:
-      description: Deleted
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/address_deletion'
-          example:
-            id: adr_123456789
-            deleted: true
-    post_address:
-      description: Echos the writable fields of a newly created address object.
-      headers:
-        ratelimit-limit:
-          $ref: '#/components/headers/ratelimit-limit'
-        ratelimit-remaining:
-          $ref: '#/components/headers/ratelimit-remaining'
-        ratelimit-reset:
-          $ref: '#/components/headers/ratelimit-reset'
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/address'
-          examples:
-            full_us:
-              value:
-                id: adr_d3489cd64c791ab5
-                description: Harry - Office
-                name: HARRY ZHANG
-                company: LOB
-                phone: '5555555555'
-                email: harry@lob.com
-                address_line1: 210 KING ST STE 6100
-                address_city: SAN FRANCISCO
-                address_state: CA
-                address_zip: '94107'
-                address_country: UNITED STATES
-                metadata: {}
-                date_created: '2017-09-05T17:47:53.767Z'
-                date_modified: '2017-09-05T17:47:53.767Z'
-                object: address
-            full_intl:
-              value:
-                id: adr_b9f49f464c836203
-                description: Harry - Office
-                name: HARRY ZHANG
-                company: LOB
-                phone: '5555555555'
-                email: harry@lob.com
-                address_line1: 370 WATER ST
-                address_city: SUMMERSIDE
-                address_state: PRINCE EDWARD ISLAND
-                address_zip: C1N 1C4
-                address_country: CANADA
-                metadata: {}
-                date_created: '2021-11-29T20:55:46.843Z'
-                date_modified: '2021-11-29T20:56:46.843Z'
-                object: address
-            ncoa_us_live:
-              value:
-                id: adr_d3489cd64c791ab5
-                description: Harry - Office
-                name: HARRY ZHANG
-                company: LOB
-                phone: '5555555555'
-                email: harry@lob.com
-                address_line1: ����
-                address_line2: ����
-                address_city: SAN FRANCISCO
-                address_state: CA
-                address_zip: '94107'
-                address_country: UNITED STATES
-                metadata: {}
-                date_created: '2017-09-05T17:47:53.767Z'
-                date_modified: '2017-09-05T17:47:53.767Z'
-                recipient_moved: true
-                inline: false
-                object: address
-            ncoa_us_test:
-              value:
-                id: adr_e463565030210e12
-                description: null
-                name: TEST KEYS DO NOT VERIFY ADDRESSES
-                company: null
-                phone: null
-                email: null
-                address_line1: ����
-                address_line2: ����
-                address_city: SAN FRANCISCO
-                address_state: CA
-                address_zip: '94107'
-                address_country: UNITED STATES
-                metadata: {}
-                date_created: '2019-12-05T19:39:19.932Z'
-                date_modified: '2019-12-05T19:39:19.932Z'
-                recipient_moved: true
-                inline: false
-                object: address
+      oneOf:
+      - $ref: '#/components/schemas/address_us'
+      - $ref: '#/components/schemas/address_intl'
+    object:
+      type: string
+      description: Value is resource type.
   parameters:
-    metadata:
+    date_created:
       in: query
-      name: metadata
-      description: Filter by metadata key-value pair`.
+      name: date_created
+      description: 'Filter by date created. Accepted formats are ISO-8601 date or datetime, e.g. `{ "gt": "2012-01-01", "lt": "2012-01-31T12:34:56Z" }` where `gt` is >, `lt` is <, `gte` is e, and `lte` is d.'
       schema:
-        $ref: '#/components/schemas/metadata'
+        $ref: '#/components/schemas/date_filter'
       style: deepObject
       explode: true
     before_after:
@@ -1649,12 +1631,12 @@ components:
             - before
           - required:
             - after
-    date_created:
+    metadata:
       in: query
-      name: date_created
-      description: 'Filter by date created. Accepted formats are ISO-8601 date or datetime, e.g. `{ "gt": "2012-01-01", "lt": "2012-01-31T12:34:56Z" }` where `gt` is >, `lt` is <, `gte` is e, and `lte` is d.'
+      name: metadata
+      description: Filter by metadata key-value pair`.
       schema:
-        $ref: '#/components/schemas/date_filter'
+        $ref: '#/components/schemas/metadata'
       style: deepObject
       explode: true
     include:
@@ -1679,6 +1661,24 @@ components:
         default: 10
         maximum: 100
         example: 10
+  headers:
+    ratelimit-reset:
+      description: 'The time at which the rate limit window resets in  <a href="https://en.wikipedia.org/wiki/Unix_time" target="_blank">UTC epoch seconds</a>
+
+        '
+      schema:
+        type: integer
+        example: 1528749846
+    ratelimit-remaining:
+      description: The number of requests remaining in the current window.
+      schema:
+        type: integer
+        example: 100
+    ratelimit-limit:
+      description: The rate limit for a given endpoint.
+      schema:
+        type: integer
+        example: 150
   securitySchemes:
     basicAuth:
       type: http

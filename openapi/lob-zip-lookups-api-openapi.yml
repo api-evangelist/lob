@@ -260,45 +260,6 @@ components:
                 * `unauthorized_token` - 401: token isn''t authorized.
 
                 '
-    zip_code_type:
-      type: string
-      enum:
-      - standard
-      - po_box
-      - unique
-      - military
-      - ''
-      description: 'A description of the ZIP code type. For more detailed information about
-
-        each ZIP code type, see [US Verification Details](#tag/US-Verification-Types).
-
-        '
-    zip_id:
-      type: string
-      description: Unique identifier prefixed with `us_zip_`.
-      pattern: ^us_zip_[a-zA-Z0-9]+$
-    state:
-      type: string
-      description: 'The <a href="https://en.wikipedia.org/wiki/ISO_3166-2" target="_blank">ISO 3166-2</a> two letter code for the state.
-
-        '
-      maxLength: 2
-    city:
-      allOf:
-      - $ref: '#/components/schemas/city_no_description'
-      - type: string
-        description: The name of the city.
-    failure_status_code:
-      type: integer
-      enum:
-      - 401
-      - 403
-      - 404
-      - 413
-      - 422
-      - 429
-      - 500
-      description: "A conventional HTTP status code:\n  * `401` - Authorization error with your API key or account\n  * `403` - Forbidden error with your API key or account\n  * `404` - The requested item does not exist\n  * `413` - Payload too large\n  * `422` - The query or body parameters did not pass validation\n  * `429` - Too many requests have been sent with an API key in a given amount of time\n  * `500` - An internal server error occurred, please contact support@lob.com\n"
     zip_lookup_city:
       type: object
       required:
@@ -322,15 +283,50 @@ components:
 
             '
           example: true
+    city_no_description:
+      type: string
+      maxLength: 200
+    county:
+      type: string
+      description: County name of the address city.
+    city:
+      allOf:
+      - $ref: '#/components/schemas/city_no_description'
+      - type: string
+        description: The name of the city.
+    zip_code_type:
+      type: string
+      enum:
+      - standard
+      - po_box
+      - unique
+      - military
+      - ''
+      description: 'A description of the ZIP code type. For more detailed information about
+
+        each ZIP code type, see [US Verification Details](#tag/US-Verification-Types).
+
+        '
+    zip_id:
+      type: string
+      description: Unique identifier prefixed with `us_zip_`.
+      pattern: ^us_zip_[a-zA-Z0-9]+$
+    zip5:
+      type: object
+      required:
+      - zip_code
+      properties:
+        zip_code:
+          type: string
+          description: A 5-digit ZIP code.
+          pattern: ^\d{5}$
+          example: '94107'
     county_fips:
       type: string
       description: 'A 5-digit <a href="https://en.wikipedia.org/wiki/FIPS_county_code" target="_blank">FIPS county code</a> which uniquely identifies `components[county]`. It consists of a 2-digit state code and a 3-digit county code.
 
         '
       pattern: \d{5}
-    city_no_description:
-      type: string
-      maxLength: 200
     zip:
       allOf:
       - $ref: '#/components/schemas/zip5'
@@ -358,31 +354,24 @@ components:
             enum:
             - us_zip_lookup
             default: us_zip_lookup
-    county:
+    failure_status_code:
+      type: integer
+      enum:
+      - 401
+      - 403
+      - 404
+      - 413
+      - 422
+      - 429
+      - 500
+      description: "A conventional HTTP status code:\n  * `401` - Authorization error with your API key or account\n  * `403` - Forbidden error with your API key or account\n  * `404` - The requested item does not exist\n  * `413` - Payload too large\n  * `422` - The query or body parameters did not pass validation\n  * `429` - Too many requests have been sent with an API key in a given amount of time\n  * `500` - An internal server error occurred, please contact support@lob.com\n"
+    state:
       type: string
-      description: County name of the address city.
-    zip5:
-      type: object
-      required:
-      - zip_code
-      properties:
-        zip_code:
-          type: string
-          description: A 5-digit ZIP code.
-          pattern: ^\d{5}$
-          example: '94107'
+      description: 'The <a href="https://en.wikipedia.org/wiki/ISO_3166-2" target="_blank">ISO 3166-2</a> two letter code for the state.
+
+        '
+      maxLength: 2
   responses:
-    zip_lookups_error:
-      description: Error
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/error'
-          example:
-            error:
-              code: invalid
-              message: zip_code is required
-              status_code: 422
     zip_lookups:
       description: Returns a zip lookup object if a valid zip was provided.
       headers:
@@ -407,12 +396,18 @@ components:
             zip_code_type: standard
             object: us_zip_lookup
             zip_code: '94107'
+    zip_lookups_error:
+      description: Error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/error'
+          example:
+            error:
+              code: invalid
+              message: zip_code is required
+              status_code: 422
   headers:
-    ratelimit-remaining:
-      description: The number of requests remaining in the current window.
-      schema:
-        type: integer
-        example: 100
     ratelimit-limit:
       description: The rate limit for a given endpoint.
       schema:
@@ -425,6 +420,11 @@ components:
       schema:
         type: integer
         example: 1528749846
+    ratelimit-remaining:
+      description: The number of requests remaining in the current window.
+      schema:
+        type: integer
+        example: 100
   securitySchemes:
     basicAuth:
       type: http

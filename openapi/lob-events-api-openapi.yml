@@ -36,108 +36,10 @@ webhooks:
       description: production
 components:
   schemas:
-    postcard_types:
-      type: string
-      description: Unique identifier referring to status of postcard
-      enum:
-      - postcard.created
-      - postcard.rejected
-      - postcard.rendered_pdf
-      - postcard.rendered_thumbnails
-      - postcard.deleted
-      - postcard.delivered
-      - postcard.failed
-      - postcard.mailed
-      - postcard.in_transit
-      - postcard.in_local_area
-      - postcard.international_exit
-      - postcard.processed_for_delivery
-      - postcard.re-routed
-      - postcard.returned_to_sender
-      - postcard.viewed
-    address_types:
-      type: string
-      description: Unique identifier referring to status of address
-      enum:
-      - address.created
-      - address.deleted
-    events:
-      type: object
-      required:
-      - id
-      - body
-      - reference_id
-      - event_type
-      - date_created
-      - object
-      properties:
-        id:
-          type: string
-          description: Unique identifier prefixed with `evt_`.
-          pattern: ^evt_[a-zA-Z0-9_]+$
-        body:
-          type: object
-          description: The body of the associated resource as they were at the time of the event, i.e. the [postcard object](#operation/postcard_retrieve), [the letter object](#operation/letter_retrieve), [the check object](#operation/check_retrieve), [the address object](#operation/address_retrieve), or [the bank account object](#operation/bank_account_retrieve). For `.deleted` events, the body matches the response for the corresponding delete endpoint for that resource (e.g. the [postcard delete response](#operation/postcard_delete)).
-        reference_id:
-          description: Unique identifier of the related resource for the event.
-          type: string
-        event_type:
-          $ref: '#/components/schemas/event_type'
-        date_created:
-          $ref: '#/components/schemas/date_created'
-        object:
-          type: string
-          description: Value is resource type.
-          enum:
-          - event
-          default: event
-    letter_types:
-      type: string
-      description: Unique identifier referring to status of letter
-      enum:
-      - letter.created
-      - letter.rejected
-      - letter.rendered_pdf
-      - letter.rendered_thumbnails
-      - letter.deleted
-      - letter.delivered
-      - letter.failed
-      - letter.mailed
-      - letter.in_transit
-      - letter.in_local_area
-      - letter.international_exit
-      - letter.processed_for_delivery
-      - letter.re-routed
-      - letter.returned_to_sender
-      - letter.certified.mailed
-      - letter.certified.in_transit
-      - letter.certified.in_local_area
-      - letter.certified.processed_for_delivery
-      - letter.certified.re-routed
-      - letter.certified.returned_to_sender
-      - letter.certified.delivered
-      - letter.certified.pickup_available
-      - letter.certified.issue
-      - letter.return_envelope.created
-      - letter.return_envelope.delivered
-      - letter.return_envelope.in_transit
-      - letter.return_envelope.in_local_area
-      - letter.return_envelope.international_exit
-      - letter.return_envelope.processed_for_delivery
-      - letter.return_envelope.re_routed
-      - letter.return_envelope.returned_to_sender
-      - letter.viewed
     date_created:
       type: string
       format: date-time
       description: A timestamp in ISO 8601 format of the date the resource was created.
-    bank_account_types:
-      type: string
-      description: Unique identifier referring to status of bank account
-      enum:
-      - bank_account.created
-      - bank_account.deleted
-      - bank_account.verified
     check_types:
       type: string
       description: Unique identifier referring to status of check
@@ -190,6 +92,48 @@ components:
           enum:
           - event_type
           default: event_type
+    address_types:
+      type: string
+      description: Unique identifier referring to status of address
+      enum:
+      - address.created
+      - address.deleted
+    letter_types:
+      type: string
+      description: Unique identifier referring to status of letter
+      enum:
+      - letter.created
+      - letter.rejected
+      - letter.rendered_pdf
+      - letter.rendered_thumbnails
+      - letter.deleted
+      - letter.delivered
+      - letter.failed
+      - letter.mailed
+      - letter.in_transit
+      - letter.in_local_area
+      - letter.international_exit
+      - letter.processed_for_delivery
+      - letter.re-routed
+      - letter.returned_to_sender
+      - letter.certified.mailed
+      - letter.certified.in_transit
+      - letter.certified.in_local_area
+      - letter.certified.processed_for_delivery
+      - letter.certified.re-routed
+      - letter.certified.returned_to_sender
+      - letter.certified.delivered
+      - letter.certified.pickup_available
+      - letter.certified.issue
+      - letter.return_envelope.created
+      - letter.return_envelope.delivered
+      - letter.return_envelope.in_transit
+      - letter.return_envelope.in_local_area
+      - letter.return_envelope.international_exit
+      - letter.return_envelope.processed_for_delivery
+      - letter.return_envelope.re_routed
+      - letter.return_envelope.returned_to_sender
+      - letter.viewed
     self_mailer_types:
       type: string
       description: Unique identifier referring to status of self mailer
@@ -209,6 +153,62 @@ components:
       - self_mailer.re-routed
       - self_mailer.returned_to_sender
       - self_mailer.viewed
+    events:
+      type: object
+      required:
+      - id
+      - body
+      - reference_id
+      - event_type
+      - date_created
+      - object
+      properties:
+        id:
+          type: string
+          description: Unique identifier prefixed with `evt_`.
+          pattern: ^evt_[a-zA-Z0-9_]+$
+        body:
+          type: object
+          description: The body of the associated resource as they were at the time of the event, i.e. the [postcard object](#operation/postcard_retrieve), [the letter object](#operation/letter_retrieve), [the check object](#operation/check_retrieve), [the address object](#operation/address_retrieve), or [the bank account object](#operation/bank_account_retrieve). For `.deleted` events, the body matches the response for the corresponding delete endpoint for that resource (e.g. the [postcard delete response](#operation/postcard_delete)).
+        reference_id:
+          description: Unique identifier of the related resource for the event.
+          type: string
+        event_type:
+          $ref: '#/components/schemas/event_type'
+        date_created:
+          $ref: '#/components/schemas/date_created'
+        object:
+          type: string
+          description: Value is resource type.
+          enum:
+          - event
+          default: event
+    postcard_types:
+      type: string
+      description: Unique identifier referring to status of postcard
+      enum:
+      - postcard.created
+      - postcard.rejected
+      - postcard.rendered_pdf
+      - postcard.rendered_thumbnails
+      - postcard.deleted
+      - postcard.delivered
+      - postcard.failed
+      - postcard.mailed
+      - postcard.in_transit
+      - postcard.in_local_area
+      - postcard.international_exit
+      - postcard.processed_for_delivery
+      - postcard.re-routed
+      - postcard.returned_to_sender
+      - postcard.viewed
+    bank_account_types:
+      type: string
+      description: Unique identifier referring to status of bank account
+      enum:
+      - bank_account.created
+      - bank_account.deleted
+      - bank_account.verified
   responses:
     events:
       description: Returns an `event` object to the specified server.
