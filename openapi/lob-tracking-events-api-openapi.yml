@@ -40,84 +40,13 @@ components:
       type: string
       format: date-time
       description: A timestamp in ISO 8601 format of the date the resource was created.
-    tracking_event_certified:
-      allOf:
-      - $ref: '#/components/schemas/tracking_event_base'
-      - type: object
-        required:
-        - type
-        - name
-        properties:
-          type:
-            description: a Certified letter tracking event
-            type: string
-            enum:
-            - certified
-          name:
-            type: string
-            enum:
-            - Mailed
-            - In Transit
-            - In Local Area
-            - Processed for Delivery
-            - Pickup Available
-            - Delivered
-            - Re-Routed
-            - Returned to Sender
-            - Issue
-            description: "Name of tracking event for Certified letters. Letters sent with USPS Certified Mail are fully tracked by USPS, therefore their tracking events have an additional details object with more detailed information about the tracking event. Some certified tracking event names have multiple meanings, noted in the list here. See the description of the details object for the full set of combined certified tracking event name meanings.\n\n  * `Mailed` - Package has been accepted into the carrier network for delivery.\n\n  * `In Transit` - Maps to four distinct stages of transit.\n\n  * `In Local Area` - Package is at a location near the end destination.\n\n  * `Processed for Delivery` - Maps to two distinct stages of delivery.\n\n  * `Pickup Available` - Package is available for pickup at carrier location.\n\n  * `Delivered` - Package has been delivered.\n\n  * `Re-Routed` - Package has been forwarded.\n\n  * `Returned to Sender` - Package is to be returned to sender.\n\n  * `Issue` - Maps to (at least) 15 possible issues, some of which are actionable.\n"
-          details:
-            $ref: '#/components/schemas/tracking_event_details'
-          location:
-            type:
-            - string
-            - 'null'
-            description: 'The zip code in which the event occurred if it exists, otherwise will be the name of a Regional Distribution Center if it exists, otherwise will be null.
-
-              '
-    tracking_event_normal:
-      allOf:
-      - $ref: '#/components/schemas/tracking_event_base'
-      - type: object
-        required:
-        - type
-        - name
-        properties:
-          type:
-            description: non-Certified postcards, self mailers, letters, checks and snap packs
-            type: string
-            enum:
-            - normal
-          name:
-            type: string
-            enum:
-            - Mailed
-            - In Transit
-            - In Local Area
-            - Processed for Delivery
-            - Delivered
-            - Re-Routed
-            - Returned to Sender
-            - International Exit
-            description: "Name of tracking event (for normal postcards, self mailers, letters, checks and snap packs):\n\n  * `Mailed` - The mailpiece has been handed off to and accepted by USPS\n    and is en route. <a href=\"https://help.lob.com/print-and-mail/getting-data-and-results/tracking-your-mail#mailed-tracking-events-4\" target=\"_blank\">More about\n    Mailed.</a>\n    Note this data is only available in Enterprise editions of\n    Lob. <a href=\"https://lob.com/support/contact#contact\" target=\"_blank\">Contact Sales</a> if\n    you want access to this feature.\n\n  * `In Transit` - The mailpiece is being processed at the entry/origin facility.\n\n  * `In Local Area` - The mailpiece is being processed at the destination facility.\n\n  * `Processed for Delivery` - The mailpiece has been greenlit for\n    delivery at the recipient's nearest postal facility. The mailpiece\n    should reach the mailbox within 1 business day of this tracking\n    event.\n\n  * `Delivered` - The mail piece has been delivered to \n    the recipients address. The final scan is generated when the mail \n    carrier's GPS unit leaves the delivery area.\n\n  * `Re-Routed` - The mailpiece is re-routed due to recipient change of\n    address, address errors, or USPS relabeling of barcode/ID tag\n    area.\n\n  * `Returned to Sender` - The mailpiece is being returned to sender due\n    to barcode, ID tag area, or address errors.\n  \n  * `International Exit` - The mail piece has been processed to \n    ship to a destination abroad. This is typically the last \n    scan a US-originated international mail piece will receive \n    from the USPS.\n\n<a href=\"https://help.lob.com/print-and-mail/getting-data-and-results/tracking-your-mail#mailed-tracking-events-4\" target=\"_blank\">More about tracking</a>\n"
-          details:
-            description: Will be `null` for `type=normal` events
-            type:
-            - object
-            - 'null'
-            enum:
-            - null
-          location:
-            type:
-            - string
-            - 'null'
-            description: 'The zip code in which the scan event occurred. Null for `Mailed` events.
-
-              '
-    date_modified:
+    evnt_id:
       type: string
-      format: date-time
-      description: A timestamp in ISO 8601 format of the date the resource was last modified.
+      description: Unique identifier prefixed with `evnt_`.
+      pattern: ^evnt_[a-zA-Z0-9]+$
+    object:
+      type: string
+      description: Value is resource type.
     tracking_event_details:
       type: object
       required:
@@ -249,13 +178,84 @@ components:
             enum:
             - tracking_event
             default: tracking_event
-    object:
+    tracking_event_normal:
+      allOf:
+      - $ref: '#/components/schemas/tracking_event_base'
+      - type: object
+        required:
+        - type
+        - name
+        properties:
+          type:
+            description: non-Certified postcards, self mailers, letters, checks and snap packs
+            type: string
+            enum:
+            - normal
+          name:
+            type: string
+            enum:
+            - Mailed
+            - In Transit
+            - In Local Area
+            - Processed for Delivery
+            - Delivered
+            - Re-Routed
+            - Returned to Sender
+            - International Exit
+            description: "Name of tracking event (for normal postcards, self mailers, letters, checks and snap packs):\n\n  * `Mailed` - The mailpiece has been handed off to and accepted by USPS\n    and is en route. <a href=\"https://help.lob.com/print-and-mail/getting-data-and-results/tracking-your-mail#mailed-tracking-events-4\" target=\"_blank\">More about\n    Mailed.</a>\n    Note this data is only available in Enterprise editions of\n    Lob. <a href=\"https://lob.com/support/contact#contact\" target=\"_blank\">Contact Sales</a> if\n    you want access to this feature.\n\n  * `In Transit` - The mailpiece is being processed at the entry/origin facility.\n\n  * `In Local Area` - The mailpiece is being processed at the destination facility.\n\n  * `Processed for Delivery` - The mailpiece has been greenlit for\n    delivery at the recipient's nearest postal facility. The mailpiece\n    should reach the mailbox within 1 business day of this tracking\n    event.\n\n  * `Delivered` - The mail piece has been delivered to \n    the recipients address. The final scan is generated when the mail \n    carrier's GPS unit leaves the delivery area.\n\n  * `Re-Routed` - The mailpiece is re-routed due to recipient change of\n    address, address errors, or USPS relabeling of barcode/ID tag\n    area.\n\n  * `Returned to Sender` - The mailpiece is being returned to sender due\n    to barcode, ID tag area, or address errors.\n  \n  * `International Exit` - The mail piece has been processed to \n    ship to a destination abroad. This is typically the last \n    scan a US-originated international mail piece will receive \n    from the USPS.\n\n<a href=\"https://help.lob.com/print-and-mail/getting-data-and-results/tracking-your-mail#mailed-tracking-events-4\" target=\"_blank\">More about tracking</a>\n"
+          details:
+            description: Will be `null` for `type=normal` events
+            type:
+            - object
+            - 'null'
+            enum:
+            - null
+          location:
+            type:
+            - string
+            - 'null'
+            description: 'The zip code in which the scan event occurred. Null for `Mailed` events.
+
+              '
+    date_modified:
       type: string
-      description: Value is resource type.
-    evnt_id:
-      type: string
-      description: Unique identifier prefixed with `evnt_`.
-      pattern: ^evnt_[a-zA-Z0-9]+$
+      format: date-time
+      description: A timestamp in ISO 8601 format of the date the resource was last modified.
+    tracking_event_certified:
+      allOf:
+      - $ref: '#/components/schemas/tracking_event_base'
+      - type: object
+        required:
+        - type
+        - name
+        properties:
+          type:
+            description: a Certified letter tracking event
+            type: string
+            enum:
+            - certified
+          name:
+            type: string
+            enum:
+            - Mailed
+            - In Transit
+            - In Local Area
+            - Processed for Delivery
+            - Pickup Available
+            - Delivered
+            - Re-Routed
+            - Returned to Sender
+            - Issue
+            description: "Name of tracking event for Certified letters. Letters sent with USPS Certified Mail are fully tracked by USPS, therefore their tracking events have an additional details object with more detailed information about the tracking event. Some certified tracking event names have multiple meanings, noted in the list here. See the description of the details object for the full set of combined certified tracking event name meanings.\n\n  * `Mailed` - Package has been accepted into the carrier network for delivery.\n\n  * `In Transit` - Maps to four distinct stages of transit.\n\n  * `In Local Area` - Package is at a location near the end destination.\n\n  * `Processed for Delivery` - Maps to two distinct stages of delivery.\n\n  * `Pickup Available` - Package is available for pickup at carrier location.\n\n  * `Delivered` - Package has been delivered.\n\n  * `Re-Routed` - Package has been forwarded.\n\n  * `Returned to Sender` - Package is to be returned to sender.\n\n  * `Issue` - Maps to (at least) 15 possible issues, some of which are actionable.\n"
+          details:
+            $ref: '#/components/schemas/tracking_event_details'
+          location:
+            type:
+            - string
+            - 'null'
+            description: 'The zip code in which the event occurred if it exists, otherwise will be the name of a Regional Distribution Center if it exists, otherwise will be null.
+
+              '
   responses:
     tracking_events:
       description: Returns a `tracking_event` object to the specified server.

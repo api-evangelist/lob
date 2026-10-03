@@ -245,7 +245,54 @@ paths:
         source: "var context = context.Background()\ncontext = context.WithValue(suite.ctx, lob.ContextBasicAuth, lob.BasicAuth{UserName: os.Getenv(\"<YOUR_API_KEY>\")})\n\nvar apiClient = *lob.NewAPIClient(configuration)\nDomainsList = apiClient.DomainsApi.List(context).Execute()\nif err != nil {\n    return err\n}\n"
         label: GO
 components:
+  parameters:
+    limit:
+      in: query
+      name: limit
+      required: false
+      description: How many results to return.
+      schema:
+        type: integer
+        minimum: 1
+        default: 10
+        maximum: 100
+        example: 10
+    before_after:
+      in: query
+      name: before/after
+      required: false
+      description: '`before` and `after` are both optional but only one of them can be in the query at a time.
+
+        '
+      schema:
+        allOf:
+        - type: object
+          properties:
+            before:
+              type: string
+              description: 'A reference to a list entry used for paginating to the previous set of entries. This field is pre-populated in the `previous_url` field in the return response.
+
+                '
+            after:
+              type: string
+              description: 'A reference to a list entry used for paginating to the next set of entries. This field is pre-populated in the `next_url` field in the return response.
+
+                '
+        - oneOf:
+          - required:
+            - before
+          - required:
+            - after
   schemas:
+    domains:
+      type: object
+      required:
+      - domain
+      properties:
+        domain:
+          $ref: '#/components/schemas/domain'
+        error_redirect_link:
+          $ref: '#/components/schemas/error_redirect_link'
     list:
       type: object
       description: Multiple items returned in order
@@ -267,6 +314,33 @@ components:
         total_count:
           type: integer
           description: Indicates the total number of records. Provided when the request specifies an "include" query parameter
+    count:
+      type: integer
+      description: number of resources in a set
+    failure_status_code:
+      type: integer
+      enum:
+      - 401
+      - 403
+      - 404
+      - 413
+      - 422
+      - 429
+      - 500
+      description: "A conventional HTTP status code:\n  * `401` - Authorization error with your API key or account\n  * `403` - Forbidden error with your API key or account\n  * `404` - The requested item does not exist\n  * `413` - Payload too large\n  * `422` - The query or body parameters did not pass validation\n  * `429` - Too many requests have been sent with an API key in a given amount of time\n  * `500` - An internal server error occurred, please contact support@lob.com\n"
+    object:
+      type: string
+      description: Value is resource type.
+    domains_response:
+      allOf:
+      - $ref: '#/components/schemas/list'
+      - type: object
+        properties:
+          data:
+            type: array
+            description: List of domains.
+            items:
+              $ref: '#/components/schemas/domain_response'
     error:
       type: object
       description: Lob uses RESTful HTTP response codes to indicate success or failure of an API request. In general, 2xx indicates success, 4xx indicate an input error, and 5xx indicates an error on Lob's end.
@@ -445,45 +519,21 @@ components:
                 * `unauthorized_token` - 401: token isn''t authorized.
 
                 '
-    failure_status_code:
-      type: integer
-      enum:
-      - 401
-      - 403
-      - 404
-      - 413
-      - 422
-      - 429
-      - 500
-      description: "A conventional HTTP status code:\n  * `401` - Authorization error with your API key or account\n  * `403` - Forbidden error with your API key or account\n  * `404` - The requested item does not exist\n  * `413` - Payload too large\n  * `422` - The query or body parameters did not pass validation\n  * `429` - Too many requests have been sent with an API key in a given amount of time\n  * `500` - An internal server error occurred, please contact support@lob.com\n"
+    error_redirect_link:
+      type: string
+      description: URL to redirect customers if a short link is broken or inactive.
     domain:
       type: string
       description: The registered domain/hostname.
-    count:
-      type: integer
-      description: number of resources in a set
-    domains:
+    domain_delete:
       type: object
-      required:
-      - domain
       properties:
-        domain:
-          $ref: '#/components/schemas/domain'
-        error_redirect_link:
-          $ref: '#/components/schemas/error_redirect_link'
-    object:
-      type: string
-      description: Value is resource type.
-    domains_response:
-      allOf:
-      - $ref: '#/components/schemas/list'
-      - type: object
-        properties:
-          data:
-            type: array
-            description: List of domains.
-            items:
-              $ref: '#/components/schemas/domain_response'
+        id:
+          description: Unique identifier for a domain.
+          type: string
+        deleted:
+          description: Only returned if the domain was successfully deleted.
+          type: boolean
     domain_response:
       type: object
       properties:
@@ -508,56 +558,6 @@ components:
         updated_at:
           description: The date and time the domain was last updated.
           type: string
-    error_redirect_link:
-      type: string
-      description: URL to redirect customers if a short link is broken or inactive.
-    domain_delete:
-      type: object
-      properties:
-        id:
-          description: Unique identifier for a domain.
-          type: string
-        deleted:
-          description: Only returned if the domain was successfully deleted.
-          type: boolean
-  parameters:
-    before_after:
-      in: query
-      name: before/after
-      required: false
-      description: '`before` and `after` are both optional but only one of them can be in the query at a time.
-
-        '
-      schema:
-        allOf:
-        - type: object
-          properties:
-            before:
-              type: string
-              description: 'A reference to a list entry used for paginating to the previous set of entries. This field is pre-populated in the `previous_url` field in the return response.
-
-                '
-            after:
-              type: string
-              description: 'A reference to a list entry used for paginating to the next set of entries. This field is pre-populated in the `next_url` field in the return response.
-
-                '
-        - oneOf:
-          - required:
-            - before
-          - required:
-            - after
-    limit:
-      in: query
-      name: limit
-      required: false
-      description: How many results to return.
-      schema:
-        type: integer
-        minimum: 1
-        default: 10
-        maximum: 100
-        example: 10
   securitySchemes:
     basicAuth:
       type: http

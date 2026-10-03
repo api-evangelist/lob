@@ -111,6 +111,29 @@ paths:
           $ref: '#/components/responses/billing_group_error'
 components:
   schemas:
+    date_created:
+      type: string
+      format: date-time
+      description: A timestamp in ISO 8601 format of the date the resource was created.
+    name:
+      type: string
+      description: Name of the billing group.
+      maxLength: 255
+    bg_description:
+      type: string
+      description: Description of the billing group.
+      maxLength: 255
+    failure_status_code:
+      type: integer
+      enum:
+      - 401
+      - 403
+      - 404
+      - 413
+      - 422
+      - 429
+      - 500
+      description: "A conventional HTTP status code:\n  * `401` - Authorization error with your API key or account\n  * `403` - Forbidden error with your API key or account\n  * `404` - The requested item does not exist\n  * `413` - Payload too large\n  * `422` - The query or body parameters did not pass validation\n  * `429` - Too many requests have been sent with an API key in a given amount of time\n  * `500` - An internal server error occurred, please contact support@lob.com\n"
     error:
       type: object
       description: Lob uses RESTful HTTP response codes to indicate success or failure of an API request. In general, 2xx indicates success, 4xx indicate an input error, and 5xx indicates an error on Lob's end.
@@ -289,18 +312,21 @@ components:
                 * `unauthorized_token` - 401: token isn''t authorized.
 
                 '
-    date_created:
-      type: string
-      format: date-time
-      description: A timestamp in ISO 8601 format of the date the resource was created.
-    bg_description:
-      type: string
-      description: Description of the billing group.
-      maxLength: 255
+    billing_group_base:
+      type: object
+      properties:
+        description:
+          $ref: '#/components/schemas/bg_description'
+        name:
+          $ref: '#/components/schemas/name'
     date_modified:
       type: string
       format: date-time
       description: A timestamp in ISO 8601 format of the date the resource was last modified.
+    bg_id:
+      type: string
+      description: Unique identifier prefixed with `bg_`.
+      pattern: ^bg_[a-zA-Z0-9]+$
     billing_group:
       allOf:
       - $ref: '#/components/schemas/billing_group_base'
@@ -318,50 +344,6 @@ components:
             enum:
             - billing_group
             default: billing_group
-    billing_group_base:
-      type: object
-      properties:
-        description:
-          $ref: '#/components/schemas/bg_description'
-        name:
-          $ref: '#/components/schemas/name'
-    name:
-      type: string
-      description: Name of the billing group.
-      maxLength: 255
-    failure_status_code:
-      type: integer
-      enum:
-      - 401
-      - 403
-      - 404
-      - 413
-      - 422
-      - 429
-      - 500
-      description: "A conventional HTTP status code:\n  * `401` - Authorization error with your API key or account\n  * `403` - Forbidden error with your API key or account\n  * `404` - The requested item does not exist\n  * `413` - Payload too large\n  * `422` - The query or body parameters did not pass validation\n  * `429` - Too many requests have been sent with an API key in a given amount of time\n  * `500` - An internal server error occurred, please contact support@lob.com\n"
-    bg_id:
-      type: string
-      description: Unique identifier prefixed with `bg_`.
-      pattern: ^bg_[a-zA-Z0-9]+$
-  headers:
-    ratelimit-limit:
-      description: The rate limit for a given endpoint.
-      schema:
-        type: integer
-        example: 150
-    ratelimit-reset:
-      description: 'The time at which the rate limit window resets in  <a href="https://en.wikipedia.org/wiki/Unix_time" target="_blank">UTC epoch seconds</a>
-
-        '
-      schema:
-        type: integer
-        example: 1528749846
-    ratelimit-remaining:
-      description: The number of requests remaining in the current window.
-      schema:
-        type: integer
-        example: 100
   responses:
     post_billing_group:
       description: Returns a billing group object
@@ -405,6 +387,24 @@ components:
               code: invalid
               message: message about incorrect parameter
               status_code: 422
+  headers:
+    ratelimit-limit:
+      description: The rate limit for a given endpoint.
+      schema:
+        type: integer
+        example: 150
+    ratelimit-remaining:
+      description: The number of requests remaining in the current window.
+      schema:
+        type: integer
+        example: 100
+    ratelimit-reset:
+      description: 'The time at which the rate limit window resets in  <a href="https://en.wikipedia.org/wiki/Unix_time" target="_blank">UTC epoch seconds</a>
+
+        '
+      schema:
+        type: integer
+        example: 1528749846
   securitySchemes:
     basicAuth:
       type: http
