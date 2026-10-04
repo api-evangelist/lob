@@ -566,6 +566,45 @@ paths:
         label: GO
 components:
   schemas:
+    card_description:
+      type:
+      - string
+      - 'null'
+      description: Description of the card.
+      maxLength: 255
+    card_base:
+      type: object
+      properties:
+        description:
+          $ref: '#/components/schemas/card_description'
+        size:
+          description: The size of the card
+          enum:
+          - 3.375x2.125
+          - 2.125x3.375
+          type: string
+          default: 2.125x3.375
+    remote_file_url:
+      type: string
+      description: 'The location of a remote file. Remote URLs have a 5 MB file size limit and must be downloaded within 40 seconds.
+
+        '
+      pattern: ^https://[-a-zA-Z0-9@:%._+~#=/]{1,256}.(html?|pdf|png|jpg)$
+    lob_base:
+      type: object
+      required:
+      - date_created
+      - date_modified
+      - object
+      properties:
+        date_created:
+          $ref: '#/components/schemas/date_created'
+        date_modified:
+          $ref: '#/components/schemas/date_modified'
+        deleted:
+          $ref: '#/components/schemas/deleted'
+        object:
+          $ref: '#/components/schemas/object'
     card:
       allOf:
       - $ref: '#/components/schemas/lob_base'
@@ -659,6 +698,17 @@ components:
             - card
             type: string
             default: card
+    card_deletion:
+      description: Lob uses RESTful HTTP response codes to indicate success or failure of an API request. In general, 2xx indicates success, 4xx indicate an input error, and 5xx indicates an error on Lob's end.
+      properties:
+        id:
+          $ref: '#/components/schemas/card_id'
+        deleted:
+          $ref: '#/components/schemas/deleted'
+    date_modified:
+      type: string
+      format: date-time
+      description: A timestamp in ISO 8601 format of the date the resource was last modified.
     card_order:
       allOf:
       - $ref: '#/components/schemas/lob_base'
@@ -700,34 +750,6 @@ components:
             type: string
             format: date-time
             description: The fixed deadline for the cards to be printed.
-    deleted:
-      type: boolean
-      description: Only returned if the resource has been successfully deleted.
-    card_deletion:
-      description: Lob uses RESTful HTTP response codes to indicate success or failure of an API request. In general, 2xx indicates success, 4xx indicate an input error, and 5xx indicates an error on Lob's end.
-      properties:
-        id:
-          $ref: '#/components/schemas/card_id'
-        deleted:
-          $ref: '#/components/schemas/deleted'
-    date_created:
-      type: string
-      format: date-time
-      description: A timestamp in ISO 8601 format of the date the resource was created.
-    count:
-      type: integer
-      description: number of resources in a set
-    failure_status_code:
-      type: integer
-      enum:
-      - 401
-      - 403
-      - 404
-      - 413
-      - 422
-      - 429
-      - 500
-      description: "A conventional HTTP status code:\n  * `401` - Authorization error with your API key or account\n  * `403` - Forbidden error with your API key or account\n  * `404` - The requested item does not exist\n  * `413` - Payload too large\n  * `422` - The query or body parameters did not pass validation\n  * `429` - Too many requests have been sent with an API key in a given amount of time\n  * `500` - An internal server error occurred, please contact support@lob.com\n"
     thumbnail:
       type: object
       properties:
@@ -737,124 +759,9 @@ components:
           $ref: '#/components/schemas/signed_link'
         large:
           $ref: '#/components/schemas/signed_link'
-    card_order_editable:
-      type: object
-      required:
-      - quantity
-      properties:
-        quantity:
-          type: integer
-          description: The quantity of cards in the order (minimum 10,000).
-          minimum: 10000
-          maximum: 10000000
-    card_updatable:
-      type: object
-      properties:
-        description:
-          $ref: '#/components/schemas/card_description'
-        auto_reorder:
-          description: Allows for auto reordering
-          type: boolean
-        reorder_quantity:
-          description: The quantity of items to be reordered (only required when auto_reorder is true).
-          type: number
-          minimum: 10000
-          maximum: 10000000
-    card_base:
-      type: object
-      properties:
-        description:
-          $ref: '#/components/schemas/card_description'
-        size:
-          description: The size of the card
-          enum:
-          - 3.375x2.125
-          - 2.125x3.375
-          type: string
-          default: 2.125x3.375
-    signed_link:
-      type: string
-      description: A [signed link](#section/Asset-URLs) served over HTTPS. The link returned will expire in 30 days to prevent mis-sharing. Each time a GET request is initiated, a new signed URL will be generated.
-      pattern: ^https://lob-assets.com/(letters|postcards|bank-accounts|checks|self-mailers|cards|order-creatives)/([a-z]{3,4}_[a-z0-9]{15,16}|[a-z]{3}_[a-z0-9]{26}_[a-z]{4}_[a-z0-9]{26})('|_signature)(.pdf|_thumb_[a-z]+_[0-9]+.png|.png)?(version=[a-z0-9]*&)expires=[0-9]{10}&signature=[a-zA-Z0-9-_]+
-    card_editable:
-      allOf:
-      - $ref: '#/components/schemas/card_base'
-      - type: object
-        required:
-        - front
-        properties:
-          front:
-            description: A PDF template for the front of the card
-            oneOf:
-            - $ref: '#/components/schemas/remote_file_url'
-            - $ref: '#/components/schemas/local_file_path'
-          back:
-            description: A PDF template for the back of the card
-            oneOf:
-            - $ref: '#/components/schemas/remote_file_url'
-            - $ref: '#/components/schemas/local_file_path'
-            default: https://s3.us-west-2.amazonaws.com/public.lob.com/assets/card_blank_horizontal.pdf
-    remote_file_url:
-      type: string
-      description: 'The location of a remote file. Remote URLs have a 5 MB file size limit and must be downloaded within 40 seconds.
-
-        '
-      pattern: ^https://[-a-zA-Z0-9@:%._+~#=/]{1,256}.(html?|pdf|png|jpg)$
-    date_modified:
-      type: string
-      format: date-time
-      description: A timestamp in ISO 8601 format of the date the resource was last modified.
-    list:
-      type: object
-      description: Multiple items returned in order
-      properties:
-        object:
-          $ref: '#/components/schemas/object'
-        next_url:
-          type:
-          - string
-          - 'null'
-          description: Url of next page of items in list.
-        previous_url:
-          type:
-          - string
-          - 'null'
-          description: Url of previous page of items in list.
-        count:
-          $ref: '#/components/schemas/count'
-        total_count:
-          type: integer
-          description: Indicates the total number of records. Provided when the request specifies an "include" query parameter
-    local_file_path:
-      type: string
-      description: The path to a local file.
-      pattern: ^(?!https://)[a-zA-Z0-9@:%._+~#=/]{1,256}.(html?|pdf|png|jpg)$
     object:
       type: string
       description: Value is resource type.
-    lob_base:
-      type: object
-      required:
-      - date_created
-      - date_modified
-      - object
-      properties:
-        date_created:
-          $ref: '#/components/schemas/date_created'
-        date_modified:
-          $ref: '#/components/schemas/date_modified'
-        deleted:
-          $ref: '#/components/schemas/deleted'
-        object:
-          $ref: '#/components/schemas/object'
-    card_id:
-      type: string
-      description: Unique identifier prefixed with `card_`.
-      pattern: ^card_[a-zA-Z0-9]+$
-    co_id:
-      type: string
-      description: Unique identifier prefixed with `co_`.
-      pattern: ^co_[a-zA-Z0-9]+$
     error:
       type: object
       description: Lob uses RESTful HTTP response codes to indicate success or failure of an API request. In general, 2xx indicates success, 4xx indicate an input error, and 5xx indicates an error on Lob's end.
@@ -1033,12 +940,105 @@ components:
                 * `unauthorized_token` - 401: token isn''t authorized.
 
                 '
-    card_description:
-      type:
-      - string
-      - 'null'
-      description: Description of the card.
-      maxLength: 255
+    card_updatable:
+      type: object
+      properties:
+        description:
+          $ref: '#/components/schemas/card_description'
+        auto_reorder:
+          description: Allows for auto reordering
+          type: boolean
+        reorder_quantity:
+          description: The quantity of items to be reordered (only required when auto_reorder is true).
+          type: number
+          minimum: 10000
+          maximum: 10000000
+    card_editable:
+      allOf:
+      - $ref: '#/components/schemas/card_base'
+      - type: object
+        required:
+        - front
+        properties:
+          front:
+            description: A PDF template for the front of the card
+            oneOf:
+            - $ref: '#/components/schemas/remote_file_url'
+            - $ref: '#/components/schemas/local_file_path'
+          back:
+            description: A PDF template for the back of the card
+            oneOf:
+            - $ref: '#/components/schemas/remote_file_url'
+            - $ref: '#/components/schemas/local_file_path'
+            default: https://s3.us-west-2.amazonaws.com/public.lob.com/assets/card_blank_horizontal.pdf
+    co_id:
+      type: string
+      description: Unique identifier prefixed with `co_`.
+      pattern: ^co_[a-zA-Z0-9]+$
+    signed_link:
+      type: string
+      description: A [signed link](#section/Asset-URLs) served over HTTPS. The link returned will expire in 30 days to prevent mis-sharing. Each time a GET request is initiated, a new signed URL will be generated.
+      pattern: ^https://lob-assets.com/(letters|postcards|bank-accounts|checks|self-mailers|cards|order-creatives)/([a-z]{3,4}_[a-z0-9]{15,16}|[a-z]{3}_[a-z0-9]{26}_[a-z]{4}_[a-z0-9]{26})('|_signature)(.pdf|_thumb_[a-z]+_[0-9]+.png|.png)?(version=[a-z0-9]*&)expires=[0-9]{10}&signature=[a-zA-Z0-9-_]+
+    local_file_path:
+      type: string
+      description: The path to a local file.
+      pattern: ^(?!https://)[a-zA-Z0-9@:%._+~#=/]{1,256}.(html?|pdf|png|jpg)$
+    deleted:
+      type: boolean
+      description: Only returned if the resource has been successfully deleted.
+    card_id:
+      type: string
+      description: Unique identifier prefixed with `card_`.
+      pattern: ^card_[a-zA-Z0-9]+$
+    failure_status_code:
+      type: integer
+      enum:
+      - 401
+      - 403
+      - 404
+      - 413
+      - 422
+      - 429
+      - 500
+      description: "A conventional HTTP status code:\n  * `401` - Authorization error with your API key or account\n  * `403` - Forbidden error with your API key or account\n  * `404` - The requested item does not exist\n  * `413` - Payload too large\n  * `422` - The query or body parameters did not pass validation\n  * `429` - Too many requests have been sent with an API key in a given amount of time\n  * `500` - An internal server error occurred, please contact support@lob.com\n"
+    card_order_editable:
+      type: object
+      required:
+      - quantity
+      properties:
+        quantity:
+          type: integer
+          description: The quantity of cards in the order (minimum 10,000).
+          minimum: 10000
+          maximum: 10000000
+    count:
+      type: integer
+      description: number of resources in a set
+    date_created:
+      type: string
+      format: date-time
+      description: A timestamp in ISO 8601 format of the date the resource was created.
+    list:
+      type: object
+      description: Multiple items returned in order
+      properties:
+        object:
+          $ref: '#/components/schemas/object'
+        next_url:
+          type:
+          - string
+          - 'null'
+          description: Url of next page of items in list.
+        previous_url:
+          type:
+          - string
+          - 'null'
+          description: Url of previous page of items in list.
+        count:
+          $ref: '#/components/schemas/count'
+        total_count:
+          type: integer
+          description: Indicates the total number of records. Provided when the request specifies an "include" query parameter
   parameters:
     include:
       in: query
@@ -1059,17 +1059,6 @@ components:
       schema:
         type: integer
         default: 0
-    limit:
-      in: query
-      name: limit
-      required: false
-      description: How many results to return.
-      schema:
-        type: integer
-        minimum: 1
-        default: 10
-        maximum: 100
-        example: 10
     before_after:
       in: query
       name: before/after
@@ -1096,6 +1085,17 @@ components:
             - before
           - required:
             - after
+    limit:
+      in: query
+      name: limit
+      required: false
+      description: How many results to return.
+      schema:
+        type: integer
+        minimum: 1
+        default: 10
+        maximum: 100
+        example: 10
   responses:
     card_deleted:
       description: Deleted the card
@@ -1106,17 +1106,6 @@ components:
           example:
             id: card_123456789
             deleted: true
-    mailpiece_error:
-      description: Error
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/error'
-          example:
-            error:
-              code: not_found
-              message: to address not found
-              status_code: 404
     card_order_error:
       description: Error
       content:
@@ -1127,6 +1116,17 @@ components:
             error:
               code: not_found
               message: card not found
+              status_code: 404
+    mailpiece_error:
+      description: Error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/error'
+          example:
+            error:
+              code: not_found
+              message: to address not found
               status_code: 404
   securitySchemes:
     basicAuth:

@@ -247,47 +247,153 @@ paths:
         label: CSHARP
 components:
   schemas:
-    multiple_components_intl:
+    recipient:
+      type:
+      - string
+      - 'null'
+      description: The intended recipient, typically a person's or firm's name.
+      maxLength: 500
+    state:
+      type: string
+      description: 'The <a href="https://en.wikipedia.org/wiki/ISO_3166-2" target="_blank">ISO 3166-2</a> two letter code for the state.
+
+        '
+      maxLength: 2
+    intl_verification:
       allOf:
       - $ref: '#/components/schemas/intl_verification_base'
       - type: object
-        required:
-        - primary_line
-        - country
         properties:
-          city:
-            $ref: '#/components/schemas/city'
-          state:
+          id:
+            $ref: '#/components/schemas/intl_ver_id'
+          last_line:
             type: string
-            description: The name of the state.
-          postal_code:
-            $ref: '#/components/schemas/postal_code'
-          country:
-            $ref: '#/components/schemas/country_extended'
-    intl_verifications:
-      type: object
-      required:
-      - addresses
-      - errors
-      properties:
-        addresses:
-          type: array
-          items:
-            oneOf:
-            - $ref: '#/components/schemas/intl_verification'
-            - $ref: '#/components/schemas/error'
-        errors:
-          description: Indicates whether any errors occurred during the verification process.
-          type: boolean
-    city_no_description:
-      type: string
-      maxLength: 200
-    primary_line:
-      type: string
-      description: 'The primary delivery line (usually the street address) of the address.
+            description: 'Combination of the following applicable `components`:
 
-        '
-      maxLength: 200
+              * `city`
+
+              * `state`
+
+              * `zip_code`
+
+              * `zip_code_plus_4`
+
+              '
+          country:
+            $ref: '#/components/schemas/country_short'
+          coverage:
+            type: string
+            enum:
+            - SUBBUILDING
+            - HOUSENUMBER/BUILDING
+            - STREET
+            - LOCALITY
+            - SPARSE
+            description: 'The coverage level for the country. This represents the maximum level of
+
+              accuracy an input address can be verified to.
+
+
+              * `SUBBUILDING` - Coverage down to unit numbers. For example, in an apartment or a large building
+
+              * `HOUSENUMBER/BUILDING` - Coverage down to house number. For example, the address where a house or building may be located
+
+              * `STREET` - Coverage down to street. This means that we can verify that an street exists in a city, state, country
+
+              * `LOCALITY` - Coverage down to city, state, or village or province. This means that we can verify that a city, village, province, or state exists in a country. Countries differ in how they define what is a province, state, city, village, etc. This attempts to group eveyrthing together.
+
+              * `SPARSE` - Some addresses for this country exist in our databases
+
+              '
+          deliverability:
+            type: string
+            enum:
+            - deliverable
+            - deliverable_missing_info
+            - undeliverable
+            - no_match
+            description: 'Summarizes the deliverability of the `intl_verification` object. Possible values are:
+
+              * `deliverable`  The address is deliverable.
+
+              * `deliverable_missing_info`  The address is missing some information, but is most likely deliverable.
+
+              * `undeliverable`  The address is most likely not deliverable. Some components of the address (such as city or postal code) may have been found.
+
+              * `no_match`  This address is not deliverable. No matching street could be found within the city or postal code.
+
+              '
+          status:
+            type: string
+            enum:
+            - LV4
+            - LV3
+            - LV2
+            - LV1
+            - LF4
+            - LF3
+            - LF2
+            - LF1
+            - LM4
+            - LM3
+            - LM2
+            - LU1
+            description: 'The status level for the country. This represents the maximum level of
+
+              accuracy an input address can be verified to.
+
+
+              * `LV4` - Verified. The input data is correct. All input data was able to match in databases.
+
+              * `LV3` - Verified. The input data is correct. All input data was able to match in databases <em>after</em> some or all elements were standarized. The input data may also be using outdated city, state, or country names.
+
+              * `LV2` - Verified. The input data is correct although some input data is unverifiable due to incomplete data.
+
+              * `LV1` - Verified. The input data is acceptable but in an attempt to standarize user input, errors were introduced.
+
+              * `LF4` - Fixed. The input data is matched and fixed. (Example: Brighon, UK -> Brighton, UK)
+
+              * `LF3` - Fixed. The input data is matched and fixed but some elements such as Subbuilding number and house number cannot be checked.
+
+              * `LF2` - Fixed. The input data is matched but some elements such as Street cannot be checked.
+
+              * `LF1` - Fixed. The input data is acceptable but in an attempt to standarize user input, errors were introduced.
+
+              * `LM4` - Missing Info. The input data cannot be corrected completely.
+
+              * `LM3` - Missing Info. The input data cannot be corrected completely and there were multiple matches found in databases.
+
+              * `LM2` - Missing Info. The input data cannot be corrected completely and only some elements were found.
+
+              * `LU1` - Unverified. The input data cannot be corrected or matched.
+
+              '
+          components:
+            $ref: '#/components/schemas/intl_components'
+          object:
+            type: string
+            description: Value is resource type.
+            enum:
+            - intl_verification
+            default: intl_verification
+    intl_components:
+      type: object
+      description: A nested object containing a breakdown of each component of an address.
+      properties:
+        primary_number:
+          $ref: '#/components/schemas/primary_number'
+        street_name:
+          $ref: '#/components/schemas/street_name'
+        city:
+          $ref: '#/components/schemas/city'
+        state:
+          $ref: '#/components/schemas/state'
+        postal_code:
+          $ref: '#/components/schemas/postal_code'
+    postal_code:
+      type: string
+      description: The postal code.
+      maxLength: 12
     country_extended:
       type: string
       description: Must be a 2 letter country short-name code (ISO 3166). Does not accept `US`, `AS`, `PR`, `FM`, `GU`, `MH`, `MP`, `PW`, or `VI`. For these addresses, please use the US verification API. Also does not accept `PS`, which is not currently supported.
@@ -509,222 +615,10 @@ components:
       - ZA
       - ZM
       - ZW
-    intl_verification_base:
-      type: object
-      properties:
-        recipient:
-          $ref: '#/components/schemas/recipient'
-        primary_line:
-          $ref: '#/components/schemas/primary_line'
-        secondary_line:
-          $ref: '#/components/schemas/secondary_line'
-    recipient:
-      type:
-      - string
-      - 'null'
-      description: The intended recipient, typically a person's or firm's name.
-      maxLength: 500
     intl_verification_writable:
       oneOf:
       - $ref: '#/components/schemas/multiple_components_intl'
       - $ref: '#/components/schemas/single_line_address_intl'
-    state:
-      type: string
-      description: 'The <a href="https://en.wikipedia.org/wiki/ISO_3166-2" target="_blank">ISO 3166-2</a> two letter code for the state.
-
-        '
-      maxLength: 2
-    failure_status_code:
-      type: integer
-      enum:
-      - 401
-      - 403
-      - 404
-      - 413
-      - 422
-      - 429
-      - 500
-      description: "A conventional HTTP status code:\n  * `401` - Authorization error with your API key or account\n  * `403` - Forbidden error with your API key or account\n  * `404` - The requested item does not exist\n  * `413` - Payload too large\n  * `422` - The query or body parameters did not pass validation\n  * `429` - Too many requests have been sent with an API key in a given amount of time\n  * `500` - An internal server error occurred, please contact support@lob.com\n"
-    single_line_address_intl:
-      type: object
-      required:
-      - address
-      - country
-      properties:
-        address:
-          type: string
-          description: 'The entire address in one string (e.g., "370 Water St C1N 1C4").
-
-            '
-          maxLength: 500
-        country:
-          $ref: '#/components/schemas/country_extended'
-    country_short:
-      type: string
-      description: The country of the address. Will be returned as a 2 letter country short-name code (ISO 3166).
-      example: CA
-    postal_code:
-      type: string
-      description: The postal code.
-      maxLength: 12
-    primary_number:
-      type: string
-      description: The numeric or alphanumeric part of an address preceding the street name. Often the house, building, or PO Box number.
-    intl_components:
-      type: object
-      description: A nested object containing a breakdown of each component of an address.
-      properties:
-        primary_number:
-          $ref: '#/components/schemas/primary_number'
-        street_name:
-          $ref: '#/components/schemas/street_name'
-        city:
-          $ref: '#/components/schemas/city'
-        state:
-          $ref: '#/components/schemas/state'
-        postal_code:
-          $ref: '#/components/schemas/postal_code'
-    intl_ver_id:
-      type: string
-      description: Unique identifier prefixed with `intl_ver_`.
-      pattern: ^intl_ver_[a-zA-Z0-9]+$
-    intl_verification:
-      allOf:
-      - $ref: '#/components/schemas/intl_verification_base'
-      - type: object
-        properties:
-          id:
-            $ref: '#/components/schemas/intl_ver_id'
-          last_line:
-            type: string
-            description: 'Combination of the following applicable `components`:
-
-              * `city`
-
-              * `state`
-
-              * `zip_code`
-
-              * `zip_code_plus_4`
-
-              '
-          country:
-            $ref: '#/components/schemas/country_short'
-          coverage:
-            type: string
-            enum:
-            - SUBBUILDING
-            - HOUSENUMBER/BUILDING
-            - STREET
-            - LOCALITY
-            - SPARSE
-            description: 'The coverage level for the country. This represents the maximum level of
-
-              accuracy an input address can be verified to.
-
-
-              * `SUBBUILDING` - Coverage down to unit numbers. For example, in an apartment or a large building
-
-              * `HOUSENUMBER/BUILDING` - Coverage down to house number. For example, the address where a house or building may be located
-
-              * `STREET` - Coverage down to street. This means that we can verify that an street exists in a city, state, country
-
-              * `LOCALITY` - Coverage down to city, state, or village or province. This means that we can verify that a city, village, province, or state exists in a country. Countries differ in how they define what is a province, state, city, village, etc. This attempts to group eveyrthing together.
-
-              * `SPARSE` - Some addresses for this country exist in our databases
-
-              '
-          deliverability:
-            type: string
-            enum:
-            - deliverable
-            - deliverable_missing_info
-            - undeliverable
-            - no_match
-            description: 'Summarizes the deliverability of the `intl_verification` object. Possible values are:
-
-              * `deliverable`  The address is deliverable.
-
-              * `deliverable_missing_info`  The address is missing some information, but is most likely deliverable.
-
-              * `undeliverable`  The address is most likely not deliverable. Some components of the address (such as city or postal code) may have been found.
-
-              * `no_match`  This address is not deliverable. No matching street could be found within the city or postal code.
-
-              '
-          status:
-            type: string
-            enum:
-            - LV4
-            - LV3
-            - LV2
-            - LV1
-            - LF4
-            - LF3
-            - LF2
-            - LF1
-            - LM4
-            - LM3
-            - LM2
-            - LU1
-            description: 'The status level for the country. This represents the maximum level of
-
-              accuracy an input address can be verified to.
-
-
-              * `LV4` - Verified. The input data is correct. All input data was able to match in databases.
-
-              * `LV3` - Verified. The input data is correct. All input data was able to match in databases <em>after</em> some or all elements were standarized. The input data may also be using outdated city, state, or country names.
-
-              * `LV2` - Verified. The input data is correct although some input data is unverifiable due to incomplete data.
-
-              * `LV1` - Verified. The input data is acceptable but in an attempt to standarize user input, errors were introduced.
-
-              * `LF4` - Fixed. The input data is matched and fixed. (Example: Brighon, UK -> Brighton, UK)
-
-              * `LF3` - Fixed. The input data is matched and fixed but some elements such as Subbuilding number and house number cannot be checked.
-
-              * `LF2` - Fixed. The input data is matched but some elements such as Street cannot be checked.
-
-              * `LF1` - Fixed. The input data is acceptable but in an attempt to standarize user input, errors were introduced.
-
-              * `LM4` - Missing Info. The input data cannot be corrected completely.
-
-              * `LM3` - Missing Info. The input data cannot be corrected completely and there were multiple matches found in databases.
-
-              * `LM2` - Missing Info. The input data cannot be corrected completely and only some elements were found.
-
-              * `LU1` - Unverified. The input data cannot be corrected or matched.
-
-              '
-          components:
-            $ref: '#/components/schemas/intl_components'
-          object:
-            type: string
-            description: Value is resource type.
-            enum:
-            - intl_verification
-            default: intl_verification
-    street_name:
-      type: string
-      description: The name of the street.
-    secondary_line:
-      type: string
-      description: 'The secondary delivery line of the address. This field is typically empty but may contain information if `primary_line` is too long.
-
-        '
-      maxLength: 200
-    intl_verifications_payload:
-      type: object
-      required:
-      - addresses
-      properties:
-        addresses:
-          type: array
-          minItems: 1
-          maxItems: 20
-          items:
-            $ref: '#/components/schemas/multiple_components_intl'
     error:
       type: object
       description: Lob uses RESTful HTTP response codes to indicate success or failure of an API request. In general, 2xx indicates success, 4xx indicate an input error, and 5xx indicates an error on Lob's end.
@@ -903,55 +797,118 @@ components:
                 * `unauthorized_token` - 401: token isn''t authorized.
 
                 '
+    intl_ver_id:
+      type: string
+      description: Unique identifier prefixed with `intl_ver_`.
+      pattern: ^intl_ver_[a-zA-Z0-9]+$
+    intl_verification_base:
+      type: object
+      properties:
+        recipient:
+          $ref: '#/components/schemas/recipient'
+        primary_line:
+          $ref: '#/components/schemas/primary_line'
+        secondary_line:
+          $ref: '#/components/schemas/secondary_line'
+    multiple_components_intl:
+      allOf:
+      - $ref: '#/components/schemas/intl_verification_base'
+      - type: object
+        required:
+        - primary_line
+        - country
+        properties:
+          city:
+            $ref: '#/components/schemas/city'
+          state:
+            type: string
+            description: The name of the state.
+          postal_code:
+            $ref: '#/components/schemas/postal_code'
+          country:
+            $ref: '#/components/schemas/country_extended'
     city:
       allOf:
       - $ref: '#/components/schemas/city_no_description'
       - type: string
         description: The name of the city.
+    secondary_line:
+      type: string
+      description: 'The secondary delivery line of the address. This field is typically empty but may contain information if `primary_line` is too long.
+
+        '
+      maxLength: 200
+    country_short:
+      type: string
+      description: The country of the address. Will be returned as a 2 letter country short-name code (ISO 3166).
+      example: CA
+    primary_number:
+      type: string
+      description: The numeric or alphanumeric part of an address preceding the street name. Often the house, building, or PO Box number.
+    intl_verifications_payload:
+      type: object
+      required:
+      - addresses
+      properties:
+        addresses:
+          type: array
+          minItems: 1
+          maxItems: 20
+          items:
+            $ref: '#/components/schemas/multiple_components_intl'
+    street_name:
+      type: string
+      description: The name of the street.
+    intl_verifications:
+      type: object
+      required:
+      - addresses
+      - errors
+      properties:
+        addresses:
+          type: array
+          items:
+            oneOf:
+            - $ref: '#/components/schemas/intl_verification'
+            - $ref: '#/components/schemas/error'
+        errors:
+          description: Indicates whether any errors occurred during the verification process.
+          type: boolean
+    single_line_address_intl:
+      type: object
+      required:
+      - address
+      - country
+      properties:
+        address:
+          type: string
+          description: 'The entire address in one string (e.g., "370 Water St C1N 1C4").
+
+            '
+          maxLength: 500
+        country:
+          $ref: '#/components/schemas/country_extended'
+    failure_status_code:
+      type: integer
+      enum:
+      - 401
+      - 403
+      - 404
+      - 413
+      - 422
+      - 429
+      - 500
+      description: "A conventional HTTP status code:\n  * `401` - Authorization error with your API key or account\n  * `403` - Forbidden error with your API key or account\n  * `404` - The requested item does not exist\n  * `413` - Payload too large\n  * `422` - The query or body parameters did not pass validation\n  * `429` - Too many requests have been sent with an API key in a given amount of time\n  * `500` - An internal server error occurred, please contact support@lob.com\n"
+    city_no_description:
+      type: string
+      maxLength: 200
+    primary_line:
+      type: string
+      description: 'The primary delivery line (usually the street address) of the address.
+
+        '
+      maxLength: 200
   responses:
-    bulk_intl_verifications:
-      description: Returns an array of international verification objects.
-      headers:
-        ratelimit-limit:
-          $ref: '#/components/headers/ratelimit-limit'
-        ratelimit-remaining:
-          $ref: '#/components/headers/ratelimit-remaining'
-        ratelimit-reset:
-          $ref: '#/components/headers/ratelimit-reset'
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/intl_verifications'
-          example:
-            addresses:
-            - id: intl_ver_c7cb63d68f8d6
-              recipient: null
-              primary_line: 370 WATER ST
-              secondary_line: ''
-              last_line: SUMMERSIDE PE C1N 1C4
-              country: CA
-              coverage: SUBBUILDING
-              deliverability: deliverable
-              status: LV4
-              components:
-                primary_number: '370'
-                street_name: WATER ST
-                city: SUMMERSIDE
-                state: PE
-                postal_code: C1N 1C4
-              object: intl_verification
-            errors: false
-    intl_verifications_error:
-      description: Error
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/error'
-          example:
-            error:
-              code: invalid
-              message: country is required
-              status_code: 422
     intl_verifications:
       description: Returns an international verification object.
       headers:
@@ -1002,24 +959,49 @@ components:
                   state: PE
                   postal_code: C1N 1C4
                 object: intl_verification
-  headers:
-    ratelimit-limit:
-      description: The rate limit for a given endpoint.
-      schema:
-        type: integer
-        example: 150
-    ratelimit-remaining:
-      description: The number of requests remaining in the current window.
-      schema:
-        type: integer
-        example: 100
-    ratelimit-reset:
-      description: 'The time at which the rate limit window resets in  <a href="https://en.wikipedia.org/wiki/Unix_time" target="_blank">UTC epoch seconds</a>
-
-        '
-      schema:
-        type: integer
-        example: 1528749846
+    bulk_intl_verifications:
+      description: Returns an array of international verification objects.
+      headers:
+        ratelimit-limit:
+          $ref: '#/components/headers/ratelimit-limit'
+        ratelimit-remaining:
+          $ref: '#/components/headers/ratelimit-remaining'
+        ratelimit-reset:
+          $ref: '#/components/headers/ratelimit-reset'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/intl_verifications'
+          example:
+            addresses:
+            - id: intl_ver_c7cb63d68f8d6
+              recipient: null
+              primary_line: 370 WATER ST
+              secondary_line: ''
+              last_line: SUMMERSIDE PE C1N 1C4
+              country: CA
+              coverage: SUBBUILDING
+              deliverability: deliverable
+              status: LV4
+              components:
+                primary_number: '370'
+                street_name: WATER ST
+                city: SUMMERSIDE
+                state: PE
+                postal_code: C1N 1C4
+              object: intl_verification
+            errors: false
+    intl_verifications_error:
+      description: Error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/error'
+          example:
+            error:
+              code: invalid
+              message: country is required
+              status_code: 422
   parameters:
     lang_spec:
       in: header
@@ -1038,6 +1020,24 @@ components:
         enum:
         - native
         - match
+  headers:
+    ratelimit-reset:
+      description: 'The time at which the rate limit window resets in  <a href="https://en.wikipedia.org/wiki/Unix_time" target="_blank">UTC epoch seconds</a>
+
+        '
+      schema:
+        type: integer
+        example: 1528749846
+    ratelimit-remaining:
+      description: The number of requests remaining in the current window.
+      schema:
+        type: integer
+        example: 100
+    ratelimit-limit:
+      description: The rate limit for a given endpoint.
+      schema:
+        type: integer
+        example: 150
   securitySchemes:
     basicAuth:
       type: http

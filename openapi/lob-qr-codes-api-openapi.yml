@@ -95,66 +95,7 @@ paths:
 
           '
 components:
-  schemas:
-    date_created:
-      type: string
-      format: date-time
-      description: A timestamp in ISO 8601 format of the date the resource was created.
-    scans:
-      type: object
-      properties:
-        ip_location:
-          type: string
-        scan_date:
-          type: string
-    object:
-      type: string
-      description: Value is resource type.
-    count:
-      type: integer
-      description: number of resources in a set
-    date_filter:
-      type: object
-      additionalProperties:
-        type: string
-      description: 'Filter by ISO-8601 date or datetime, e.g. `{ "gt": "2012-01-01", "lt": "2012-01-31T12:34:56Z" }` where `gt` is >, `lt` is <, `gte` is e, and `lte` is d.'
-    qr_code_scans:
-      allOf:
-      - type: object
-        properties:
-          resource_id:
-            type: string
-            description: Unique identifier for each mail piece.
-          date_created:
-            $ref: '#/components/schemas/date_created'
-          number_of_scans:
-            type: number
-            description: Number of times the QR Code associated with this mail piece was scanned.
-          scans:
-            type: array
-            description: Detailed scan information associated with each mail piece.
-            items:
-              $ref: '#/components/schemas/scans'
   parameters:
-    offset:
-      in: query
-      name: offset
-      required: false
-      description: An integer that designates the offset at which to begin returning results. Defaults to 0.
-      schema:
-        type: integer
-        default: 0
-    limit:
-      in: query
-      name: limit
-      required: false
-      description: How many results to return.
-      schema:
-        type: integer
-        minimum: 1
-        default: 10
-        maximum: 100
-        example: 10
     date_created:
       in: query
       name: date_created
@@ -174,6 +115,65 @@ components:
         items:
           type: string
       explode: true
+    limit:
+      in: query
+      name: limit
+      required: false
+      description: How many results to return.
+      schema:
+        type: integer
+        minimum: 1
+        default: 10
+        maximum: 100
+        example: 10
+    offset:
+      in: query
+      name: offset
+      required: false
+      description: An integer that designates the offset at which to begin returning results. Defaults to 0.
+      schema:
+        type: integer
+        default: 0
+  schemas:
+    date_filter:
+      type: object
+      additionalProperties:
+        type: string
+      description: 'Filter by ISO-8601 date or datetime, e.g. `{ "gt": "2012-01-01", "lt": "2012-01-31T12:34:56Z" }` where `gt` is >, `lt` is <, `gte` is e, and `lte` is d.'
+    scans:
+      type: object
+      properties:
+        ip_location:
+          type: string
+        scan_date:
+          type: string
+    qr_code_scans:
+      allOf:
+      - type: object
+        properties:
+          resource_id:
+            type: string
+            description: Unique identifier for each mail piece.
+          date_created:
+            $ref: '#/components/schemas/date_created'
+          number_of_scans:
+            type: number
+            description: Number of times the QR Code associated with this mail piece was scanned.
+          scans:
+            type: array
+            description: Detailed scan information associated with each mail piece.
+            items:
+              $ref: '#/components/schemas/scans'
+    object:
+      type: string
+      description: Value is resource type.
+    count:
+      type: integer
+      description: number of resources in a set
+    date_created:
+      type: string
+      format: date-time
+      description: A timestamp in ISO 8601 format of the date the resource was created.
   securitySchemes:
     basicAuth:
       type: http

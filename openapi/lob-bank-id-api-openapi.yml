@@ -213,65 +213,6 @@ paths:
         label: GO
 components:
   schemas:
-    metadata:
-      type: object
-      additionalProperties:
-        type: string
-      description: 'Use metadata to store custom information for tagging and labeling back to your internal systems. Must be an object with up to 20 key-value pairs. Keys must be at most 40 characters and values must be at most 500 characters. Neither can contain the characters `"` and `\`. i.e. ''{"customer_id" : "NEWYORK2015"}'' Nested objects are not supported.  See [Metadata](#section/Metadata) for more information.'
-      maxLength: 500
-      pattern: '[^"\\]{0,500}'
-    cents:
-      type: integer
-      minimum: 1
-      maximum: 100
-    deleted:
-      type: boolean
-      description: Only returned if the resource has been successfully deleted.
-    date_created:
-      type: string
-      format: date-time
-      description: A timestamp in ISO 8601 format of the date the resource was created.
-    bank_account_verify:
-      type: object
-      required:
-      - amounts
-      properties:
-        amounts:
-          description: In live mode, an array containing the two micro deposits (in cents) placed in the bank account. In test mode, no micro deposits will be placed, so any two integers between `1` and `100` will work.
-          type: array
-          minItems: 2
-          maxItems: 2
-          items:
-            $ref: '#/components/schemas/cents'
-    bank_id_no_description:
-      type: string
-      pattern: ^bank_[a-zA-Z0-9]+$
-    bank_deletion:
-      description: Lob uses RESTful HTTP response codes to indicate success or failure of an API request. In general, 2xx indicates success, 4xx indicate an input error, and 5xx indicates an error on Lob's end.
-      properties:
-        id:
-          $ref: '#/components/schemas/bank_id'
-        deleted:
-          $ref: '#/components/schemas/deleted'
-    failure_status_code:
-      type: integer
-      enum:
-      - 401
-      - 403
-      - 404
-      - 413
-      - 422
-      - 429
-      - 500
-      description: "A conventional HTTP status code:\n  * `401` - Authorization error with your API key or account\n  * `403` - Forbidden error with your API key or account\n  * `404` - The requested item does not exist\n  * `413` - Payload too large\n  * `422` - The query or body parameters did not pass validation\n  * `429` - Too many requests have been sent with an API key in a given amount of time\n  * `500` - An internal server error occurred, please contact support@lob.com\n"
-    resource_description:
-      type:
-      - string
-      - 'null'
-      description: 'An internal description that identifies this resource. Must be no longer than 255 characters.
-
-        '
-      maxLength: 255
     bank_account_base:
       type: object
       required:
@@ -320,67 +261,6 @@ components:
           description: The zipcode associated with your home bank account. Required for the `jpm` check template only. Please contact a bank representative if you do not know the zipcode associated with your home bank institution.
         metadata:
           $ref: '#/components/schemas/metadata'
-    bank_account:
-      allOf:
-      - $ref: '#/components/schemas/bank_account_base'
-      - $ref: '#/components/schemas/lob_base'
-      - type: object
-        required:
-        - id
-        properties:
-          id:
-            $ref: '#/components/schemas/bank_id'
-          signature_url:
-            allOf:
-            - type:
-              - string
-              - 'null'
-              description: A [signed link](#section/Asset-URLs) to the signature image.
-            - $ref: '#/components/schemas/signed_link'
-          bank_name:
-            description: The name of the bank based on the provided routing number, e.g. `JPMORGAN CHASE BANK`.
-            type: string
-          verified:
-            description: A bank account must be verified before a check can be created. More info [here](#operation/bank_account_verify).
-            type: boolean
-            default: false
-          object:
-            type: string
-            description: Value is resource type.
-            enum:
-            - bank_account
-            default: bank_account
-      example:
-        id: bank_a
-        signature_url: https://lob-assets.com/bank-accounts/asd_asdfghjkqwertyui.pdf?expires=1234567890&signature=aksdf
-        bank_name: JPMORGAN CHASE BANK
-        verified: true
-        object: bank_account
-        description: Test Bank Account
-        routing_number: '322271627'
-        account_number: '123456789'
-        signatory: Jane Doe
-        account_type: individual
-        metadat:
-          spiffy: 'true'
-        date_created: '2019-08-08T19:34:47.571Z'
-        date_modified: '2019-08-08T19:34:47.571Z'
-    signed_link:
-      type: string
-      description: A [signed link](#section/Asset-URLs) served over HTTPS. The link returned will expire in 30 days to prevent mis-sharing. Each time a GET request is initiated, a new signed URL will be generated.
-      pattern: ^https://lob-assets.com/(letters|postcards|bank-accounts|checks|self-mailers|cards|order-creatives)/([a-z]{3,4}_[a-z0-9]{15,16}|[a-z]{3}_[a-z0-9]{26}_[a-z]{4}_[a-z0-9]{26})('|_signature)(.pdf|_thumb_[a-z]+_[0-9]+.png|.png)?(version=[a-z0-9]*&)expires=[0-9]{10}&signature=[a-zA-Z0-9-_]+
-    date_modified:
-      type: string
-      format: date-time
-      description: A timestamp in ISO 8601 format of the date the resource was last modified.
-    bank_id:
-      allOf:
-      - $ref: '#/components/schemas/bank_id_no_description'
-      - type: string
-        description: Unique identifier prefixed with `bank_`.
-    object:
-      type: string
-      description: Value is resource type.
     lob_base:
       type: object
       required:
@@ -396,6 +276,20 @@ components:
           $ref: '#/components/schemas/deleted'
         object:
           $ref: '#/components/schemas/object'
+    bank_deletion:
+      description: Lob uses RESTful HTTP response codes to indicate success or failure of an API request. In general, 2xx indicates success, 4xx indicate an input error, and 5xx indicates an error on Lob's end.
+      properties:
+        id:
+          $ref: '#/components/schemas/bank_id'
+        deleted:
+          $ref: '#/components/schemas/deleted'
+    date_modified:
+      type: string
+      format: date-time
+      description: A timestamp in ISO 8601 format of the date the resource was last modified.
+    object:
+      type: string
+      description: Value is resource type.
     error:
       type: object
       description: Lob uses RESTful HTTP response codes to indicate success or failure of an API request. In general, 2xx indicates success, 4xx indicate an input error, and 5xx indicates an error on Lob's end.
@@ -574,18 +468,113 @@ components:
                 * `unauthorized_token` - 401: token isn''t authorized.
 
                 '
+    metadata:
+      type: object
+      additionalProperties:
+        type: string
+      description: 'Use metadata to store custom information for tagging and labeling back to your internal systems. Must be an object with up to 20 key-value pairs. Keys must be at most 40 characters and values must be at most 500 characters. Neither can contain the characters `"` and `\`. i.e. ''{"customer_id" : "NEWYORK2015"}'' Nested objects are not supported.  See [Metadata](#section/Metadata) for more information.'
+      maxLength: 500
+      pattern: '[^"\\]{0,500}'
+    resource_description:
+      type:
+      - string
+      - 'null'
+      description: 'An internal description that identifies this resource. Must be no longer than 255 characters.
+
+        '
+      maxLength: 255
+    bank_id:
+      allOf:
+      - $ref: '#/components/schemas/bank_id_no_description'
+      - type: string
+        description: Unique identifier prefixed with `bank_`.
+    cents:
+      type: integer
+      minimum: 1
+      maximum: 100
+    bank_account:
+      allOf:
+      - $ref: '#/components/schemas/bank_account_base'
+      - $ref: '#/components/schemas/lob_base'
+      - type: object
+        required:
+        - id
+        properties:
+          id:
+            $ref: '#/components/schemas/bank_id'
+          signature_url:
+            allOf:
+            - type:
+              - string
+              - 'null'
+              description: A [signed link](#section/Asset-URLs) to the signature image.
+            - $ref: '#/components/schemas/signed_link'
+          bank_name:
+            description: The name of the bank based on the provided routing number, e.g. `JPMORGAN CHASE BANK`.
+            type: string
+          verified:
+            description: A bank account must be verified before a check can be created. More info [here](#operation/bank_account_verify).
+            type: boolean
+            default: false
+          object:
+            type: string
+            description: Value is resource type.
+            enum:
+            - bank_account
+            default: bank_account
+      example:
+        id: bank_a
+        signature_url: https://lob-assets.com/bank-accounts/asd_asdfghjkqwertyui.pdf?expires=1234567890&signature=aksdf
+        bank_name: JPMORGAN CHASE BANK
+        verified: true
+        object: bank_account
+        description: Test Bank Account
+        routing_number: '322271627'
+        account_number: '123456789'
+        signatory: Jane Doe
+        account_type: individual
+        metadat:
+          spiffy: 'true'
+        date_created: '2019-08-08T19:34:47.571Z'
+        date_modified: '2019-08-08T19:34:47.571Z'
+    signed_link:
+      type: string
+      description: A [signed link](#section/Asset-URLs) served over HTTPS. The link returned will expire in 30 days to prevent mis-sharing. Each time a GET request is initiated, a new signed URL will be generated.
+      pattern: ^https://lob-assets.com/(letters|postcards|bank-accounts|checks|self-mailers|cards|order-creatives)/([a-z]{3,4}_[a-z0-9]{15,16}|[a-z]{3}_[a-z0-9]{26}_[a-z]{4}_[a-z0-9]{26})('|_signature)(.pdf|_thumb_[a-z]+_[0-9]+.png|.png)?(version=[a-z0-9]*&)expires=[0-9]{10}&signature=[a-zA-Z0-9-_]+
+    bank_id_no_description:
+      type: string
+      pattern: ^bank_[a-zA-Z0-9]+$
+    deleted:
+      type: boolean
+      description: Only returned if the resource has been successfully deleted.
+    failure_status_code:
+      type: integer
+      enum:
+      - 401
+      - 403
+      - 404
+      - 413
+      - 422
+      - 429
+      - 500
+      description: "A conventional HTTP status code:\n  * `401` - Authorization error with your API key or account\n  * `403` - Forbidden error with your API key or account\n  * `404` - The requested item does not exist\n  * `413` - Payload too large\n  * `422` - The query or body parameters did not pass validation\n  * `429` - Too many requests have been sent with an API key in a given amount of time\n  * `500` - An internal server error occurred, please contact support@lob.com\n"
+    bank_account_verify:
+      type: object
+      required:
+      - amounts
+      properties:
+        amounts:
+          description: In live mode, an array containing the two micro deposits (in cents) placed in the bank account. In test mode, no micro deposits will be placed, so any two integers between `1` and `100` will work.
+          type: array
+          minItems: 2
+          maxItems: 2
+          items:
+            $ref: '#/components/schemas/cents'
+    date_created:
+      type: string
+      format: date-time
+      description: A timestamp in ISO 8601 format of the date the resource was created.
   responses:
-    bank_account_error:
-      description: Error
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/error'
-          example:
-            error:
-              code: invalid
-              message: routing_number is required
-              status_code: 422
     bank_account_deleted:
       description: Deleted
       content:
@@ -627,17 +616,18 @@ components:
             date_created: '2015-11-06T19:24:24.440Z'
             date_modified: '2015-11-06T19:24:24.440Z'
             object: bank_account
+    bank_account_error:
+      description: Error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/error'
+          example:
+            error:
+              code: invalid
+              message: routing_number is required
+              status_code: 422
   headers:
-    ratelimit-limit:
-      description: The rate limit for a given endpoint.
-      schema:
-        type: integer
-        example: 150
-    ratelimit-remaining:
-      description: The number of requests remaining in the current window.
-      schema:
-        type: integer
-        example: 100
     ratelimit-reset:
       description: 'The time at which the rate limit window resets in  <a href="https://en.wikipedia.org/wiki/Unix_time" target="_blank">UTC epoch seconds</a>
 
@@ -645,6 +635,16 @@ components:
       schema:
         type: integer
         example: 1528749846
+    ratelimit-remaining:
+      description: The number of requests remaining in the current window.
+      schema:
+        type: integer
+        example: 100
+    ratelimit-limit:
+      description: The rate limit for a given endpoint.
+      schema:
+        type: integer
+        example: 150
   securitySchemes:
     basicAuth:
       type: http

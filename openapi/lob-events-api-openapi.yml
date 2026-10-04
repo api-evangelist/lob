@@ -36,138 +36,6 @@ webhooks:
       description: production
 components:
   schemas:
-    address_types:
-      type: string
-      description: Unique identifier referring to status of address
-      enum:
-      - address.created
-      - address.deleted
-    date_created:
-      type: string
-      format: date-time
-      description: A timestamp in ISO 8601 format of the date the resource was created.
-    self_mailer_types:
-      type: string
-      description: Unique identifier referring to status of self mailer
-      enum:
-      - self_mailer.created
-      - self_mailer.rejected
-      - self_mailer.rendered_pdf
-      - self_mailer.rendered_thumbnails
-      - self_mailer.deleted
-      - self_mailer.delivered
-      - self_mailer.failed
-      - self_mailer.mailed
-      - self_mailer.in_transit
-      - self_mailer.in_local_area
-      - self_mailer.international_exit
-      - self_mailer.processed_for_delivery
-      - self_mailer.re-routed
-      - self_mailer.returned_to_sender
-      - self_mailer.viewed
-    check_types:
-      type: string
-      description: Unique identifier referring to status of check
-      enum:
-      - check.created
-      - check.rejected
-      - check.rendered_pdf
-      - check.rendered_thumbnails
-      - check.deleted
-      - check.delivered
-      - check.failed
-      - check.mailed
-      - check.in_transit
-      - check.in_local_area
-      - check.international_exit
-      - check.processed_for_delivery
-      - check.re-routed
-      - check.returned_to_sender
-    postcard_types:
-      type: string
-      description: Unique identifier referring to status of postcard
-      enum:
-      - postcard.created
-      - postcard.rejected
-      - postcard.rendered_pdf
-      - postcard.rendered_thumbnails
-      - postcard.deleted
-      - postcard.delivered
-      - postcard.failed
-      - postcard.mailed
-      - postcard.in_transit
-      - postcard.in_local_area
-      - postcard.international_exit
-      - postcard.processed_for_delivery
-      - postcard.re-routed
-      - postcard.returned_to_sender
-      - postcard.viewed
-    letter_types:
-      type: string
-      description: Unique identifier referring to status of letter
-      enum:
-      - letter.created
-      - letter.rejected
-      - letter.rendered_pdf
-      - letter.rendered_thumbnails
-      - letter.deleted
-      - letter.delivered
-      - letter.failed
-      - letter.mailed
-      - letter.in_transit
-      - letter.in_local_area
-      - letter.international_exit
-      - letter.processed_for_delivery
-      - letter.re-routed
-      - letter.returned_to_sender
-      - letter.certified.mailed
-      - letter.certified.in_transit
-      - letter.certified.in_local_area
-      - letter.certified.processed_for_delivery
-      - letter.certified.re-routed
-      - letter.certified.returned_to_sender
-      - letter.certified.delivered
-      - letter.certified.pickup_available
-      - letter.certified.issue
-      - letter.return_envelope.created
-      - letter.return_envelope.delivered
-      - letter.return_envelope.in_transit
-      - letter.return_envelope.in_local_area
-      - letter.return_envelope.international_exit
-      - letter.return_envelope.processed_for_delivery
-      - letter.return_envelope.re_routed
-      - letter.return_envelope.returned_to_sender
-      - letter.viewed
-    events:
-      type: object
-      required:
-      - id
-      - body
-      - reference_id
-      - event_type
-      - date_created
-      - object
-      properties:
-        id:
-          type: string
-          description: Unique identifier prefixed with `evt_`.
-          pattern: ^evt_[a-zA-Z0-9_]+$
-        body:
-          type: object
-          description: The body of the associated resource as they were at the time of the event, i.e. the [postcard object](#operation/postcard_retrieve), [the letter object](#operation/letter_retrieve), [the check object](#operation/check_retrieve), [the address object](#operation/address_retrieve), or [the bank account object](#operation/bank_account_retrieve). For `.deleted` events, the body matches the response for the corresponding delete endpoint for that resource (e.g. the [postcard delete response](#operation/postcard_delete)).
-        reference_id:
-          description: Unique identifier of the related resource for the event.
-          type: string
-        event_type:
-          $ref: '#/components/schemas/event_type'
-        date_created:
-          $ref: '#/components/schemas/date_created'
-        object:
-          type: string
-          description: Value is resource type.
-          enum:
-          - event
-          default: event
     bank_account_types:
       type: string
       description: Unique identifier referring to status of bank account
@@ -209,6 +77,138 @@ components:
           enum:
           - event_type
           default: event_type
+    self_mailer_types:
+      type: string
+      description: Unique identifier referring to status of self mailer
+      enum:
+      - self_mailer.created
+      - self_mailer.rejected
+      - self_mailer.rendered_pdf
+      - self_mailer.rendered_thumbnails
+      - self_mailer.deleted
+      - self_mailer.delivered
+      - self_mailer.failed
+      - self_mailer.mailed
+      - self_mailer.in_transit
+      - self_mailer.in_local_area
+      - self_mailer.international_exit
+      - self_mailer.processed_for_delivery
+      - self_mailer.re-routed
+      - self_mailer.returned_to_sender
+      - self_mailer.viewed
+    letter_types:
+      type: string
+      description: Unique identifier referring to status of letter
+      enum:
+      - letter.created
+      - letter.rejected
+      - letter.rendered_pdf
+      - letter.rendered_thumbnails
+      - letter.deleted
+      - letter.delivered
+      - letter.failed
+      - letter.mailed
+      - letter.in_transit
+      - letter.in_local_area
+      - letter.international_exit
+      - letter.processed_for_delivery
+      - letter.re-routed
+      - letter.returned_to_sender
+      - letter.certified.mailed
+      - letter.certified.in_transit
+      - letter.certified.in_local_area
+      - letter.certified.processed_for_delivery
+      - letter.certified.re-routed
+      - letter.certified.returned_to_sender
+      - letter.certified.delivered
+      - letter.certified.pickup_available
+      - letter.certified.issue
+      - letter.return_envelope.created
+      - letter.return_envelope.delivered
+      - letter.return_envelope.in_transit
+      - letter.return_envelope.in_local_area
+      - letter.return_envelope.international_exit
+      - letter.return_envelope.processed_for_delivery
+      - letter.return_envelope.re_routed
+      - letter.return_envelope.returned_to_sender
+      - letter.viewed
+    address_types:
+      type: string
+      description: Unique identifier referring to status of address
+      enum:
+      - address.created
+      - address.deleted
+    postcard_types:
+      type: string
+      description: Unique identifier referring to status of postcard
+      enum:
+      - postcard.created
+      - postcard.rejected
+      - postcard.rendered_pdf
+      - postcard.rendered_thumbnails
+      - postcard.deleted
+      - postcard.delivered
+      - postcard.failed
+      - postcard.mailed
+      - postcard.in_transit
+      - postcard.in_local_area
+      - postcard.international_exit
+      - postcard.processed_for_delivery
+      - postcard.re-routed
+      - postcard.returned_to_sender
+      - postcard.viewed
+    check_types:
+      type: string
+      description: Unique identifier referring to status of check
+      enum:
+      - check.created
+      - check.rejected
+      - check.rendered_pdf
+      - check.rendered_thumbnails
+      - check.deleted
+      - check.delivered
+      - check.failed
+      - check.mailed
+      - check.in_transit
+      - check.in_local_area
+      - check.international_exit
+      - check.processed_for_delivery
+      - check.re-routed
+      - check.returned_to_sender
+    date_created:
+      type: string
+      format: date-time
+      description: A timestamp in ISO 8601 format of the date the resource was created.
+    events:
+      type: object
+      required:
+      - id
+      - body
+      - reference_id
+      - event_type
+      - date_created
+      - object
+      properties:
+        id:
+          type: string
+          description: Unique identifier prefixed with `evt_`.
+          pattern: ^evt_[a-zA-Z0-9_]+$
+        body:
+          type: object
+          description: The body of the associated resource as they were at the time of the event, i.e. the [postcard object](#operation/postcard_retrieve), [the letter object](#operation/letter_retrieve), [the check object](#operation/check_retrieve), [the address object](#operation/address_retrieve), or [the bank account object](#operation/bank_account_retrieve). For `.deleted` events, the body matches the response for the corresponding delete endpoint for that resource (e.g. the [postcard delete response](#operation/postcard_delete)).
+        reference_id:
+          description: Unique identifier of the related resource for the event.
+          type: string
+        event_type:
+          $ref: '#/components/schemas/event_type'
+        date_created:
+          $ref: '#/components/schemas/date_created'
+        object:
+          type: string
+          description: Value is resource type.
+          enum:
+          - event
+          default: event
   responses:
     events:
       description: Returns an `event` object to the specified server.

@@ -184,311 +184,6 @@ paths:
         label: GO
 components:
   schemas:
-    metadata:
-      type: object
-      additionalProperties:
-        type: string
-      description: 'Use metadata to store custom information for tagging and labeling back to your internal systems. Must be an object with up to 20 key-value pairs. Keys must be at most 40 characters and values must be at most 500 characters. Neither can contain the characters `"` and `\`. i.e. ''{"customer_id" : "NEWYORK2015"}'' Nested objects are not supported.  See [Metadata](#section/Metadata) for more information.'
-      maxLength: 500
-      pattern: '[^"\\]{0,500}'
-    campaign_id:
-      title: campaign_id
-      description: Denotes resources created by the provided campaign id, prefixed with `cmp_`. In the case of snap packs, booklets, and letters with size `us_legal`, however, the campaign id is prefixed with `camp_` instead of `cmp_`.
-      type:
-      - string
-      - 'null'
-      pattern: ^(cmp|camp)_[a-zA-Z0-9]+$
-    editable:
-      type: object
-      properties:
-        description:
-          $ref: '#/components/schemas/resource_description'
-        metadata:
-          $ref: '#/components/schemas/metadata'
-        mail_type:
-          $ref: '#/components/schemas/mail_type'
-        merge_variables:
-          $ref: '#/components/schemas/merge_variables'
-        send_date:
-          $ref: '#/components/schemas/send_date'
-    merge_variables:
-      type:
-      - object
-      - 'null'
-      description: 'You can input a merge variable payload object to your template or QR code redirect URLs to render dynamic content. For example, if you have a template like: `{{variable_name}}`, pass in `{"variable_name": "Harry"}` to render `Harry`. `merge_variables` must be an object. Any type of value is accepted as long as the object is valid JSON; you can use `strings`, `numbers`, `booleans`, `arrays`, `objects`, or `null`. The max length of the object is 25,000 characters. If you call `JSON.stringify` on your object, it can be no longer than 25,000 characters. Your variable names cannot contain any whitespace or any of the following special characters: `!`, `"`, `#`, `%`, `&`, `''`, `(`, `)`, `*`, `+`, `,`, `/`, `;`, `<`, `=`, `>`, `@`, `[`, `\`, `]`, `^`, `` ` ``, `{`, `|`, `}`, `~`. More instructions can be found in <a href="https://help.lob.com/print-and-mail/designing-mail-creatives/dynamic-personalization#using-html-and-merge-variables-10" target="_blank">our guide to using html and merge variables</a>. Depending on your <a href="https://dashboard.lob.com/#/settings/account" target="_blank">Merge Variable strictness</a> setting, if you define variables in your HTML but do not pass them here, you will either receive an error or the variable will render as an empty string. These settings only apply on HTML templates and not on QR code redirect URLs.'
-      maxLength: 25000
-    deleted:
-      type: boolean
-      description: Only returned if the resource has been successfully deleted.
-    from_us:
-      type: object
-      properties:
-        from:
-          $ref: '#/components/schemas/address_us'
-    sfm_id:
-      type: string
-      description: Unique identifier prefixed with `sfm_`.
-      pattern: ^sfm_[a-zA-Z0-9]+$
-    date_created:
-      type: string
-      format: date-time
-      description: A timestamp in ISO 8601 format of the date the resource was created.
-    evnt_id:
-      type: string
-      description: Unique identifier prefixed with `evnt_`.
-      pattern: ^evnt_[a-zA-Z0-9]+$
-    self_mailer_size:
-      type: string
-      enum:
-      - 6x18_bifold
-      - 11x9_bifold
-      - 12x9_bifold
-      - 17.75x9_trifold
-      description: Specifies the size of the self mailer. The `17.75x9_trifold` size is in beta. Contact support@lob.com or your account contact to learn more.
-      default: 6x18_bifold
-    status:
-      type: string
-      enum:
-      - processed
-      - rendered
-      - failed
-      description: 'A string describing the PDF render status:
-
-        * `processed` - the rendering process is currently in progress.
-
-        * `rendered` - a PDF has been successfully rendered of the mailpiece.
-
-        * `failed` - one or more issues has caused the rendering process to fail.
-
-        '
-    generated:
-      type: object
-      required:
-      - to
-      - carrier
-      properties:
-        to:
-          $ref: '#/components/schemas/address'
-        carrier:
-          type: string
-          enum:
-          - USPS
-          default: USPS
-        thumbnails:
-          type: array
-          items:
-            $ref: '#/components/schemas/thumbnail'
-        expected_delivery_date:
-          $ref: '#/components/schemas/expected_delivery_date'
-        date_created:
-          $ref: '#/components/schemas/date_created'
-        date_modified:
-          $ref: '#/components/schemas/date_modified'
-        deleted:
-          $ref: '#/components/schemas/deleted'
-    failure_status_code:
-      type: integer
-      enum:
-      - 401
-      - 403
-      - 404
-      - 413
-      - 422
-      - 429
-      - 500
-      description: "A conventional HTTP status code:\n  * `401` - Authorization error with your API key or account\n  * `403` - Forbidden error with your API key or account\n  * `404` - The requested item does not exist\n  * `413` - Payload too large\n  * `422` - The query or body parameters did not pass validation\n  * `429` - Too many requests have been sent with an API key in a given amount of time\n  * `500` - An internal server error occurred, please contact support@lob.com\n"
-    adr_id:
-      type: string
-      description: Unique identifier prefixed with `adr_`.
-      pattern: ^adr_[a-zA-Z0-9]+$
-    thumbnail:
-      type: object
-      properties:
-        small:
-          $ref: '#/components/schemas/signed_link'
-        medium:
-          $ref: '#/components/schemas/signed_link'
-        large:
-          $ref: '#/components/schemas/signed_link'
-    tracking_event_details:
-      type: object
-      required:
-      - event
-      - description
-      - action_required
-      properties:
-        event:
-          type: string
-          enum:
-          - package_accepted
-          - package_arrived
-          - package_departed
-          - package_processing
-          - package_processed
-          - package_in_local_area
-          - delivery_scheduled
-          - out_for_delivery
-          - pickup_available
-          - delivered
-          - package_forwarded
-          - returned_to_sender
-          - address_issue
-          - contact_carrier
-          - delayed
-          - delivery_attempted
-          - delivery_rescheduled
-          - location_inaccessible
-          - notice_left
-          - package_damaged
-          - package_disposed
-          - package_held
-          - package_lost
-          - package_unclaimed
-          - package_undeliverable
-          - reschedule_delivery
-          - other
-          description: 'Find the full table [here](#tag/Tracking-Events). A detailed substatus about the event:
-
-            * `package_accepted` - Package has been accepted into the carrier network for delivery.
-
-            * `package_arrived` - Package has arrived at an intermediate location in the carrier network.
-
-            * `package_departed` - Package has departed from an intermediate location in the carrier network.
-
-            * `package_processing` - Package is processing at an intermediate location in the carrier network.
-
-            * `package_processed` - Package has been processed at an intermediate location.
-
-            * `package_in_local_area` - Package is at a location near the end destination.
-
-            * `delivery_scheduled` - Package is scheduled for delivery.
-
-            * `out_for_delivery` - Package is out for delivery.
-
-            * `pickup_available` - Package is available for pickup at carrier location.
-
-            * `delivered` - Package has been delivered.
-
-            * `package_forwarded` - Package has been forwarded.
-
-            * `returned_to_sender` - Package is to be returned to sender.
-
-            * `address_issue` - Address information is incorrect. Contact carrier to ensure delivery.
-
-            * `contact_carrier` - Contact the carrier for more information.
-
-            * `delayed` - Delivery of package is delayed.
-
-            * `delivery_attempted` - Delivery of package has been attempted. Contact carrier to ensure delivery.
-
-            * `delivery_rescheduled` - Delivery of package has been rescheduled.
-
-            * `location_inaccessible` - Delivery location inaccessible to carrier. Contact carrier to ensure delivery.
-
-            * `notice_left` - Carrier left notice during attempted delivery. Follow carrier instructions on notice.
-
-            * `package_damaged` - Package has been damaged. Contact carrier for more details.
-
-            * `package_disposed` - Package has been disposed.
-
-            * `package_held` - Package held at carrier location. Contact carrier for more details.
-
-            * `package_lost` - Package has been lost. Contact carrier for more details.
-
-            * `package_unclaimed` - Package is unclaimed.
-
-            * `package_undeliverable` - Package is not able to be delivered.
-
-            * `reschedule_delivery` - Contact carrier to reschedule delivery.
-
-            * `other` - Unrecognized carrier status.
-
-            '
-        description:
-          type: string
-          description: The description as listed in the description for event.
-        notes:
-          type: string
-          description: Event-specific notes from USPS about the tracking event.
-        action_required:
-          type: boolean
-          description: '`true` if action is required by the end recipient, `false` otherwise.
-
-            '
-    send_date:
-      type: string
-      description: A timestamp in ISO 8601 format which specifies a date after the current time and up to 180 days in the future to send the letter off for production. Setting a send date overrides the default [cancellation window](#section/Cancellation-Windows) applied to the mailpiece. Until the `send_date` has passed, the mailpiece can be canceled. If a date in the format `2017-11-01` is passed, it will evaluate to midnight UTC of that date (`2017-11-01T00:00:00.000Z`). If a datetime is passed, that exact time will be used. A `send_date` passed with no time zone will default to UTC, while a `send_date` passed with a time zone will be converted to UTC.
-      anyOf:
-      - format: date-time
-      - format: date
-    failure_reason:
-      type: object
-      description: An object describing the reason for failure if the resource failed to render.
-      properties:
-        remediation:
-          type: string
-          description: Instructions on how to resolve the error
-        failure_reason:
-          type: string
-          description: Reason failure occurred
-        errors:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/failure_reason_error'
-    mail_type:
-      type: string
-      enum:
-      - usps_first_class
-      - usps_standard
-      description: 'A string designating the mail postage type:
-
-        * `usps_first_class` - (default)
-
-        * `usps_standard` - a <a href="https://lob.com/pricing/print-mail#compare" target="_blank">cheaper option</a> which is
-
-        less predictable and takes longer to deliver. `usps_standard` cannot be used with `4x6`
-
-        postcards or for any postcards sent outside of the United States.
-
-        '
-      default: usps_first_class
-    self_mailer_deletion:
-      description: Lob uses RESTful HTTP response codes to indicate success or failure of an API request. In general, 2xx indicates success, 4xx indicate an input error, and 5xx indicates an error on Lob's end.
-      properties:
-        id:
-          $ref: '#/components/schemas/sfm_id'
-        deleted:
-          $ref: '#/components/schemas/deleted'
-    resource_description:
-      type:
-      - string
-      - 'null'
-      description: 'An internal description that identifies this resource. Must be no longer than 255 characters.
-
-        '
-      maxLength: 255
-    signed_link:
-      type: string
-      description: A [signed link](#section/Asset-URLs) served over HTTPS. The link returned will expire in 30 days to prevent mis-sharing. Each time a GET request is initiated, a new signed URL will be generated.
-      pattern: ^https://lob-assets.com/(letters|postcards|bank-accounts|checks|self-mailers|cards|order-creatives)/([a-z]{3,4}_[a-z0-9]{15,16}|[a-z]{3}_[a-z0-9]{26}_[a-z]{4}_[a-z0-9]{26})('|_signature)(.pdf|_thumb_[a-z]+_[0-9]+.png|.png)?(version=[a-z0-9]*&)expires=[0-9]{10}&signature=[a-zA-Z0-9-_]+
-    vrsn_id:
-      type: string
-      description: Unique identifier prefixed with `vrsn_`.
-      pattern: ^vrsn_[a-zA-Z0-9]+$
-    expected_delivery_date:
-      type: string
-      description: A date in YYYY-MM-DD format of the mailpiece's expected delivery date based on its `send_date`.
-      format: date
-    tmpl_id:
-      type: string
-      description: Unique identifier prefixed with `tmpl_`. ID of a saved [HTML template](#section/HTML-Templates).
-      pattern: ^tmpl_[a-zA-Z0-9]+$
-    date_modified:
-      type: string
-      format: date-time
-      description: A timestamp in ISO 8601 format of the date the resource was last modified.
     address_us:
       allOf:
       - $ref: '#/components/schemas/lob_base'
@@ -602,6 +297,352 @@ components:
           date_created: '2019-08-12T00:16:00.361Z'
           date_modified: '2019-08-12T00:16:00.361Z'
           object: address
+    self_mailer_size:
+      type: string
+      enum:
+      - 6x18_bifold
+      - 11x9_bifold
+      - 12x9_bifold
+      - 17.75x9_trifold
+      description: Specifies the size of the self mailer. The `17.75x9_trifold` size is in beta. Contact support@lob.com or your account contact to learn more.
+      default: 6x18_bifold
+    company:
+      type:
+      - string
+      - 'null'
+      description: 'Either `name` or `company` is required, you may also add both. Must be no longer than 40 characters. If both `name` and `company` are provided, they will be printed on two separate lines above the rest of the address. This field can be used for any secondary recipient information which is not part of the actual mailing address (Company Name, Department, Attention Line, etc).
+
+        '
+      maxLength: 40
+    from_us:
+      type: object
+      properties:
+        from:
+          $ref: '#/components/schemas/address_us'
+    generated:
+      type: object
+      required:
+      - to
+      - carrier
+      properties:
+        to:
+          $ref: '#/components/schemas/address'
+        carrier:
+          type: string
+          enum:
+          - USPS
+          default: USPS
+        thumbnails:
+          type: array
+          items:
+            $ref: '#/components/schemas/thumbnail'
+        expected_delivery_date:
+          $ref: '#/components/schemas/expected_delivery_date'
+        date_created:
+          $ref: '#/components/schemas/date_created'
+        date_modified:
+          $ref: '#/components/schemas/date_modified'
+        deleted:
+          $ref: '#/components/schemas/deleted'
+    tmpl_id:
+      type: string
+      description: Unique identifier prefixed with `tmpl_`. ID of a saved [HTML template](#section/HTML-Templates).
+      pattern: ^tmpl_[a-zA-Z0-9]+$
+    self_mailer_deletion:
+      description: Lob uses RESTful HTTP response codes to indicate success or failure of an API request. In general, 2xx indicates success, 4xx indicate an input error, and 5xx indicates an error on Lob's end.
+      properties:
+        id:
+          $ref: '#/components/schemas/sfm_id'
+        deleted:
+          $ref: '#/components/schemas/deleted'
+    tracking_event_details:
+      type: object
+      required:
+      - event
+      - description
+      - action_required
+      properties:
+        event:
+          type: string
+          enum:
+          - package_accepted
+          - package_arrived
+          - package_departed
+          - package_processing
+          - package_processed
+          - package_in_local_area
+          - delivery_scheduled
+          - out_for_delivery
+          - pickup_available
+          - delivered
+          - package_forwarded
+          - returned_to_sender
+          - address_issue
+          - contact_carrier
+          - delayed
+          - delivery_attempted
+          - delivery_rescheduled
+          - location_inaccessible
+          - notice_left
+          - package_damaged
+          - package_disposed
+          - package_held
+          - package_lost
+          - package_unclaimed
+          - package_undeliverable
+          - reschedule_delivery
+          - other
+          description: 'Find the full table [here](#tag/Tracking-Events). A detailed substatus about the event:
+
+            * `package_accepted` - Package has been accepted into the carrier network for delivery.
+
+            * `package_arrived` - Package has arrived at an intermediate location in the carrier network.
+
+            * `package_departed` - Package has departed from an intermediate location in the carrier network.
+
+            * `package_processing` - Package is processing at an intermediate location in the carrier network.
+
+            * `package_processed` - Package has been processed at an intermediate location.
+
+            * `package_in_local_area` - Package is at a location near the end destination.
+
+            * `delivery_scheduled` - Package is scheduled for delivery.
+
+            * `out_for_delivery` - Package is out for delivery.
+
+            * `pickup_available` - Package is available for pickup at carrier location.
+
+            * `delivered` - Package has been delivered.
+
+            * `package_forwarded` - Package has been forwarded.
+
+            * `returned_to_sender` - Package is to be returned to sender.
+
+            * `address_issue` - Address information is incorrect. Contact carrier to ensure delivery.
+
+            * `contact_carrier` - Contact the carrier for more information.
+
+            * `delayed` - Delivery of package is delayed.
+
+            * `delivery_attempted` - Delivery of package has been attempted. Contact carrier to ensure delivery.
+
+            * `delivery_rescheduled` - Delivery of package has been rescheduled.
+
+            * `location_inaccessible` - Delivery location inaccessible to carrier. Contact carrier to ensure delivery.
+
+            * `notice_left` - Carrier left notice during attempted delivery. Follow carrier instructions on notice.
+
+            * `package_damaged` - Package has been damaged. Contact carrier for more details.
+
+            * `package_disposed` - Package has been disposed.
+
+            * `package_held` - Package held at carrier location. Contact carrier for more details.
+
+            * `package_lost` - Package has been lost. Contact carrier for more details.
+
+            * `package_unclaimed` - Package is unclaimed.
+
+            * `package_undeliverable` - Package is not able to be delivered.
+
+            * `reschedule_delivery` - Contact carrier to reschedule delivery.
+
+            * `other` - Unrecognized carrier status.
+
+            '
+        description:
+          type: string
+          description: The description as listed in the description for event.
+        notes:
+          type: string
+          description: Event-specific notes from USPS about the tracking event.
+        action_required:
+          type: boolean
+          description: '`true` if action is required by the end recipient, `false` otherwise.
+
+            '
+    adr_id:
+      type: string
+      description: Unique identifier prefixed with `adr_`.
+      pattern: ^adr_[a-zA-Z0-9]+$
+    sfm_use_type:
+      description: The use type for each mailpiece. Can be one of marketing, operational, or null. Null use_type is only allowed if an account default use_type is selected in Account Settings. For more information on use_type, see our  [Help Center article](https://help.lob.com/print-and-mail/building-a-mail-strategy/managing-mail-settings/declaring-mail-use-type).
+      type:
+      - string
+      - 'null'
+      enum:
+      - marketing
+      - operational
+      - null
+    lob_base:
+      type: object
+      required:
+      - date_created
+      - date_modified
+      - object
+      properties:
+        date_created:
+          $ref: '#/components/schemas/date_created'
+        date_modified:
+          $ref: '#/components/schemas/date_modified'
+        deleted:
+          $ref: '#/components/schemas/deleted'
+        object:
+          $ref: '#/components/schemas/object'
+    failure_reason:
+      type: object
+      description: An object describing the reason for failure if the resource failed to render.
+      properties:
+        remediation:
+          type: string
+          description: Instructions on how to resolve the error
+        failure_reason:
+          type: string
+          description: Reason failure occurred
+        errors:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/failure_reason_error'
+    editable:
+      type: object
+      properties:
+        description:
+          $ref: '#/components/schemas/resource_description'
+        metadata:
+          $ref: '#/components/schemas/metadata'
+        mail_type:
+          $ref: '#/components/schemas/mail_type'
+        merge_variables:
+          $ref: '#/components/schemas/merge_variables'
+        send_date:
+          $ref: '#/components/schemas/send_date'
+    send_date:
+      type: string
+      description: A timestamp in ISO 8601 format which specifies a date after the current time and up to 180 days in the future to send the letter off for production. Setting a send date overrides the default [cancellation window](#section/Cancellation-Windows) applied to the mailpiece. Until the `send_date` has passed, the mailpiece can be canceled. If a date in the format `2017-11-01` is passed, it will evaluate to midnight UTC of that date (`2017-11-01T00:00:00.000Z`). If a datetime is passed, that exact time will be used. A `send_date` passed with no time zone will default to UTC, while a `send_date` passed with a time zone will be converted to UTC.
+      anyOf:
+      - format: date-time
+      - format: date
+    tracking_event_certified:
+      allOf:
+      - $ref: '#/components/schemas/tracking_event_base'
+      - type: object
+        required:
+        - type
+        - name
+        properties:
+          type:
+            description: a Certified letter tracking event
+            type: string
+            enum:
+            - certified
+          name:
+            type: string
+            enum:
+            - Mailed
+            - In Transit
+            - In Local Area
+            - Processed for Delivery
+            - Pickup Available
+            - Delivered
+            - Re-Routed
+            - Returned to Sender
+            - Issue
+            description: "Name of tracking event for Certified letters. Letters sent with USPS Certified Mail are fully tracked by USPS, therefore their tracking events have an additional details object with more detailed information about the tracking event. Some certified tracking event names have multiple meanings, noted in the list here. See the description of the details object for the full set of combined certified tracking event name meanings.\n\n  * `Mailed` - Package has been accepted into the carrier network for delivery.\n\n  * `In Transit` - Maps to four distinct stages of transit.\n\n  * `In Local Area` - Package is at a location near the end destination.\n\n  * `Processed for Delivery` - Maps to two distinct stages of delivery.\n\n  * `Pickup Available` - Package is available for pickup at carrier location.\n\n  * `Delivered` - Package has been delivered.\n\n  * `Re-Routed` - Package has been forwarded.\n\n  * `Returned to Sender` - Package is to be returned to sender.\n\n  * `Issue` - Maps to (at least) 15 possible issues, some of which are actionable.\n"
+          details:
+            $ref: '#/components/schemas/tracking_event_details'
+          location:
+            type:
+            - string
+            - 'null'
+            description: 'The zip code in which the event occurred if it exists, otherwise will be the name of a Regional Distribution Center if it exists, otherwise will be null.
+
+              '
+    date_modified:
+      type: string
+      format: date-time
+      description: A timestamp in ISO 8601 format of the date the resource was last modified.
+    sfm_id:
+      type: string
+      description: Unique identifier prefixed with `sfm_`.
+      pattern: ^sfm_[a-zA-Z0-9]+$
+    self_mailer:
+      allOf:
+      - $ref: '#/components/schemas/self_mailer_base'
+      - $ref: '#/components/schemas/generated'
+      - $ref: '#/components/schemas/from_us'
+      - type: object
+        required:
+        - id
+        - url
+        - use_type
+        properties:
+          id:
+            $ref: '#/components/schemas/sfm_id'
+          outside_template_id:
+            description: The unique ID of the HTML template used for the outside of the self mailer.
+            allOf:
+            - $ref: '#/components/schemas/tmpl_id'
+            - type:
+              - string
+              - 'null'
+          inside_template_id:
+            description: The unique ID of the HTML template used for the inside of the self mailer.
+            allOf:
+            - $ref: '#/components/schemas/tmpl_id'
+            - type:
+              - string
+              - 'null'
+          outside_template_version_id:
+            description: The unique ID of the specific version of the HTML template used for the outside of the self mailer.
+            allOf:
+            - $ref: '#/components/schemas/vrsn_id'
+            - type:
+              - string
+              - 'null'
+          inside_template_version_id:
+            description: The unique ID of the specific version of the HTML template used for the inside of the self mailer.
+            allOf:
+            - $ref: '#/components/schemas/vrsn_id'
+            - type:
+              - string
+              - 'null'
+          object:
+            type: string
+            description: Value is resource type.
+            enum:
+            - self_mailer
+            default: self_mailer
+          tracking_events:
+            description: An array of certified tracking events ordered by ascending `time`. Not populated in test mode.
+            type: array
+            items:
+              $ref: '#/components/schemas/tracking_event_certified'
+          use_type:
+            $ref: '#/components/schemas/sfm_use_type'
+          url:
+            $ref: '#/components/schemas/signed_link'
+          fsc:
+            type: boolean
+            description: This is in beta. Contact support@lob.com or your account contact to learn more. Not available for `11x9_bifold` self-mailer size.
+            default: false
+          status:
+            $ref: '#/components/schemas/status'
+          campaign_id:
+            $ref: '#/components/schemas/campaign_id'
+          failure_reason:
+            allOf:
+            - $ref: '#/components/schemas/failure_reason'
+            - {}
+    thumbnail:
+      type: object
+      properties:
+        small:
+          $ref: '#/components/schemas/signed_link'
+        medium:
+          $ref: '#/components/schemas/signed_link'
+        large:
+          $ref: '#/components/schemas/signed_link'
     address_intl:
       allOf:
       - $ref: '#/components/schemas/lob_base'
@@ -914,168 +955,48 @@ components:
           address_state: PRINCE EDWARD ISLAND
           address_zip: C1N 1C4
           address_country: CANADA
-    address:
-      oneOf:
-      - $ref: '#/components/schemas/address_us'
-      - $ref: '#/components/schemas/address_intl'
     object:
       type: string
       description: Value is resource type.
-    self_mailer:
-      allOf:
-      - $ref: '#/components/schemas/self_mailer_base'
-      - $ref: '#/components/schemas/generated'
-      - $ref: '#/components/schemas/from_us'
-      - type: object
-        required:
-        - id
-        - url
-        - use_type
-        properties:
-          id:
-            $ref: '#/components/schemas/sfm_id'
-          outside_template_id:
-            description: The unique ID of the HTML template used for the outside of the self mailer.
-            allOf:
-            - $ref: '#/components/schemas/tmpl_id'
-            - type:
-              - string
-              - 'null'
-          inside_template_id:
-            description: The unique ID of the HTML template used for the inside of the self mailer.
-            allOf:
-            - $ref: '#/components/schemas/tmpl_id'
-            - type:
-              - string
-              - 'null'
-          outside_template_version_id:
-            description: The unique ID of the specific version of the HTML template used for the outside of the self mailer.
-            allOf:
-            - $ref: '#/components/schemas/vrsn_id'
-            - type:
-              - string
-              - 'null'
-          inside_template_version_id:
-            description: The unique ID of the specific version of the HTML template used for the inside of the self mailer.
-            allOf:
-            - $ref: '#/components/schemas/vrsn_id'
-            - type:
-              - string
-              - 'null'
-          object:
-            type: string
-            description: Value is resource type.
-            enum:
-            - self_mailer
-            default: self_mailer
-          tracking_events:
-            description: An array of certified tracking events ordered by ascending `time`. Not populated in test mode.
-            type: array
-            items:
-              $ref: '#/components/schemas/tracking_event_certified'
-          use_type:
-            $ref: '#/components/schemas/sfm_use_type'
-          url:
-            $ref: '#/components/schemas/signed_link'
-          fsc:
-            type: boolean
-            description: This is in beta. Contact support@lob.com or your account contact to learn more. Not available for `11x9_bifold` self-mailer size.
-            default: false
-          status:
-            $ref: '#/components/schemas/status'
-          campaign_id:
-            $ref: '#/components/schemas/campaign_id'
-          failure_reason:
-            allOf:
-            - $ref: '#/components/schemas/failure_reason'
-            - {}
-    lob_base:
-      type: object
-      required:
-      - date_created
-      - date_modified
-      - object
-      properties:
-        date_created:
-          $ref: '#/components/schemas/date_created'
-        date_modified:
-          $ref: '#/components/schemas/date_modified'
-        deleted:
-          $ref: '#/components/schemas/deleted'
-        object:
-          $ref: '#/components/schemas/object'
-    self_mailer_base:
-      allOf:
-      - $ref: '#/components/schemas/editable'
-      - type: object
-        properties:
-          size:
-            $ref: '#/components/schemas/self_mailer_size'
-    failure_reason_error:
-      type: object
-      description: Failure error details
-      properties:
-        url:
-          type:
-          - string
-          - 'null'
-          description: Failed URL of asset
-        host:
-          type:
-          - string
-          - 'null'
-          description: URL host
-        path:
-          type:
-          - string
-          - 'null'
-          description: URL path
-        protocol:
-          type:
-          - string
-          - 'null'
-          description: Network protocol
-        remediation:
-          type:
-          - string
-          - 'null'
-          description: Instructions on how to resolve the error
-        error_type:
-          type:
-          - string
-          - 'null'
-          description: HTTP response status code message or service defined error
-        status_code:
-          type:
-          - number
-          - 'null'
-          description: HTTP response status codes if the error is asset related
-    tracking_event_base:
-      type: object
-      description: As mail pieces travel through the mail stream, USPS scans their unique barcodes, and Lob processes these mail scans to generate tracking events.
-      required:
-      - id
-      - date_created
-      - date_modified
-      - object
-      properties:
-        id:
-          $ref: '#/components/schemas/evnt_id'
-        time:
-          type: string
-          format: date-time
-          description: A timestamp in ISO 8601 format of the date USPS registered the event.
-        date_created:
-          $ref: '#/components/schemas/date_created'
-        date_modified:
-          $ref: '#/components/schemas/date_modified'
-        object:
-          allOf:
-          - $ref: '#/components/schemas/object'
-          - type: string
-            enum:
-            - tracking_event
-            default: tracking_event
+    campaign_id:
+      title: campaign_id
+      description: Denotes resources created by the provided campaign id, prefixed with `cmp_`. In the case of snap packs, booklets, and letters with size `us_legal`, however, the campaign id is prefixed with `camp_` instead of `cmp_`.
+      type:
+      - string
+      - 'null'
+      pattern: ^(cmp|camp)_[a-zA-Z0-9]+$
+    status:
+      type: string
+      enum:
+      - processed
+      - rendered
+      - failed
+      description: 'A string describing the PDF render status:
+
+        * `processed` - the rendering process is currently in progress.
+
+        * `rendered` - a PDF has been successfully rendered of the mailpiece.
+
+        * `failed` - one or more issues has caused the rendering process to fail.
+
+        '
+    mail_type:
+      type: string
+      enum:
+      - usps_first_class
+      - usps_standard
+      description: 'A string designating the mail postage type:
+
+        * `usps_first_class` - (default)
+
+        * `usps_standard` - a <a href="https://lob.com/pricing/print-mail#compare" target="_blank">cheaper option</a> which is
+
+        less predictable and takes longer to deliver. `usps_standard` cannot be used with `4x6`
+
+        postcards or for any postcards sent outside of the United States.
+
+        '
+      default: usps_first_class
     error:
       type: object
       description: Lob uses RESTful HTTP response codes to indicate success or failure of an API request. In general, 2xx indicates success, 4xx indicate an input error, and 5xx indicates an error on Lob's end.
@@ -1254,58 +1175,137 @@ components:
                 * `unauthorized_token` - 401: token isn''t authorized.
 
                 '
-    company:
+    metadata:
+      type: object
+      additionalProperties:
+        type: string
+      description: 'Use metadata to store custom information for tagging and labeling back to your internal systems. Must be an object with up to 20 key-value pairs. Keys must be at most 40 characters and values must be at most 500 characters. Neither can contain the characters `"` and `\`. i.e. ''{"customer_id" : "NEWYORK2015"}'' Nested objects are not supported.  See [Metadata](#section/Metadata) for more information.'
+      maxLength: 500
+      pattern: '[^"\\]{0,500}'
+    address:
+      oneOf:
+      - $ref: '#/components/schemas/address_us'
+      - $ref: '#/components/schemas/address_intl'
+    self_mailer_base:
+      allOf:
+      - $ref: '#/components/schemas/editable'
+      - type: object
+        properties:
+          size:
+            $ref: '#/components/schemas/self_mailer_size'
+    tracking_event_base:
+      type: object
+      description: As mail pieces travel through the mail stream, USPS scans their unique barcodes, and Lob processes these mail scans to generate tracking events.
+      required:
+      - id
+      - date_created
+      - date_modified
+      - object
+      properties:
+        id:
+          $ref: '#/components/schemas/evnt_id'
+        time:
+          type: string
+          format: date-time
+          description: A timestamp in ISO 8601 format of the date USPS registered the event.
+        date_created:
+          $ref: '#/components/schemas/date_created'
+        date_modified:
+          $ref: '#/components/schemas/date_modified'
+        object:
+          allOf:
+          - $ref: '#/components/schemas/object'
+          - type: string
+            enum:
+            - tracking_event
+            default: tracking_event
+    resource_description:
       type:
       - string
       - 'null'
-      description: 'Either `name` or `company` is required, you may also add both. Must be no longer than 40 characters. If both `name` and `company` are provided, they will be printed on two separate lines above the rest of the address. This field can be used for any secondary recipient information which is not part of the actual mailing address (Company Name, Department, Attention Line, etc).
+      description: 'An internal description that identifies this resource. Must be no longer than 255 characters.
 
         '
-      maxLength: 40
-    tracking_event_certified:
-      allOf:
-      - $ref: '#/components/schemas/tracking_event_base'
-      - type: object
-        required:
-        - type
-        - name
-        properties:
-          type:
-            description: a Certified letter tracking event
-            type: string
-            enum:
-            - certified
-          name:
-            type: string
-            enum:
-            - Mailed
-            - In Transit
-            - In Local Area
-            - Processed for Delivery
-            - Pickup Available
-            - Delivered
-            - Re-Routed
-            - Returned to Sender
-            - Issue
-            description: "Name of tracking event for Certified letters. Letters sent with USPS Certified Mail are fully tracked by USPS, therefore their tracking events have an additional details object with more detailed information about the tracking event. Some certified tracking event names have multiple meanings, noted in the list here. See the description of the details object for the full set of combined certified tracking event name meanings.\n\n  * `Mailed` - Package has been accepted into the carrier network for delivery.\n\n  * `In Transit` - Maps to four distinct stages of transit.\n\n  * `In Local Area` - Package is at a location near the end destination.\n\n  * `Processed for Delivery` - Maps to two distinct stages of delivery.\n\n  * `Pickup Available` - Package is available for pickup at carrier location.\n\n  * `Delivered` - Package has been delivered.\n\n  * `Re-Routed` - Package has been forwarded.\n\n  * `Returned to Sender` - Package is to be returned to sender.\n\n  * `Issue` - Maps to (at least) 15 possible issues, some of which are actionable.\n"
-          details:
-            $ref: '#/components/schemas/tracking_event_details'
-          location:
-            type:
-            - string
-            - 'null'
-            description: 'The zip code in which the event occurred if it exists, otherwise will be the name of a Regional Distribution Center if it exists, otherwise will be null.
-
-              '
-    sfm_use_type:
-      description: The use type for each mailpiece. Can be one of marketing, operational, or null. Null use_type is only allowed if an account default use_type is selected in Account Settings. For more information on use_type, see our  [Help Center article](https://help.lob.com/print-and-mail/building-a-mail-strategy/managing-mail-settings/declaring-mail-use-type).
+      maxLength: 255
+    expected_delivery_date:
+      type: string
+      description: A date in YYYY-MM-DD format of the mailpiece's expected delivery date based on its `send_date`.
+      format: date
+    merge_variables:
       type:
-      - string
+      - object
       - 'null'
+      description: 'You can input a merge variable payload object to your template or QR code redirect URLs to render dynamic content. For example, if you have a template like: `{{variable_name}}`, pass in `{"variable_name": "Harry"}` to render `Harry`. `merge_variables` must be an object. Any type of value is accepted as long as the object is valid JSON; you can use `strings`, `numbers`, `booleans`, `arrays`, `objects`, or `null`. The max length of the object is 25,000 characters. If you call `JSON.stringify` on your object, it can be no longer than 25,000 characters. Your variable names cannot contain any whitespace or any of the following special characters: `!`, `"`, `#`, `%`, `&`, `''`, `(`, `)`, `*`, `+`, `,`, `/`, `;`, `<`, `=`, `>`, `@`, `[`, `\`, `]`, `^`, `` ` ``, `{`, `|`, `}`, `~`. More instructions can be found in <a href="https://help.lob.com/print-and-mail/designing-mail-creatives/dynamic-personalization#using-html-and-merge-variables-10" target="_blank">our guide to using html and merge variables</a>. Depending on your <a href="https://dashboard.lob.com/#/settings/account" target="_blank">Merge Variable strictness</a> setting, if you define variables in your HTML but do not pass them here, you will either receive an error or the variable will render as an empty string. These settings only apply on HTML templates and not on QR code redirect URLs.'
+      maxLength: 25000
+    signed_link:
+      type: string
+      description: A [signed link](#section/Asset-URLs) served over HTTPS. The link returned will expire in 30 days to prevent mis-sharing. Each time a GET request is initiated, a new signed URL will be generated.
+      pattern: ^https://lob-assets.com/(letters|postcards|bank-accounts|checks|self-mailers|cards|order-creatives)/([a-z]{3,4}_[a-z0-9]{15,16}|[a-z]{3}_[a-z0-9]{26}_[a-z]{4}_[a-z0-9]{26})('|_signature)(.pdf|_thumb_[a-z]+_[0-9]+.png|.png)?(version=[a-z0-9]*&)expires=[0-9]{10}&signature=[a-zA-Z0-9-_]+
+    failure_reason_error:
+      type: object
+      description: Failure error details
+      properties:
+        url:
+          type:
+          - string
+          - 'null'
+          description: Failed URL of asset
+        host:
+          type:
+          - string
+          - 'null'
+          description: URL host
+        path:
+          type:
+          - string
+          - 'null'
+          description: URL path
+        protocol:
+          type:
+          - string
+          - 'null'
+          description: Network protocol
+        remediation:
+          type:
+          - string
+          - 'null'
+          description: Instructions on how to resolve the error
+        error_type:
+          type:
+          - string
+          - 'null'
+          description: HTTP response status code message or service defined error
+        status_code:
+          type:
+          - number
+          - 'null'
+          description: HTTP response status codes if the error is asset related
+    deleted:
+      type: boolean
+      description: Only returned if the resource has been successfully deleted.
+    evnt_id:
+      type: string
+      description: Unique identifier prefixed with `evnt_`.
+      pattern: ^evnt_[a-zA-Z0-9]+$
+    failure_status_code:
+      type: integer
       enum:
-      - marketing
-      - operational
-      - null
+      - 401
+      - 403
+      - 404
+      - 413
+      - 422
+      - 429
+      - 500
+      description: "A conventional HTTP status code:\n  * `401` - Authorization error with your API key or account\n  * `403` - Forbidden error with your API key or account\n  * `404` - The requested item does not exist\n  * `413` - Payload too large\n  * `422` - The query or body parameters did not pass validation\n  * `429` - Too many requests have been sent with an API key in a given amount of time\n  * `500` - An internal server error occurred, please contact support@lob.com\n"
+    vrsn_id:
+      type: string
+      description: Unique identifier prefixed with `vrsn_`.
+      pattern: ^vrsn_[a-zA-Z0-9]+$
+    date_created:
+      type: string
+      format: date-time
+      description: A timestamp in ISO 8601 format of the date the resource was created.
   responses:
     self_mailer_deleted:
       description: Deleted
