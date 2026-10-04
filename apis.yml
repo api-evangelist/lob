@@ -31,6 +31,10 @@ accessModel:
   method: derived
 image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/lob.png
 url: https://raw.githubusercontent.com/api-evangelist/lob/refs/heads/main/apis.yml
+x-docs-platform: redocly
+x-docs-platform-confidence: medium
+x-docs-platform-checked: 2026-10-03
+x-docs-hosting: netlify
 tags:
 - Direct Mail
 - Print
@@ -643,6 +647,8 @@ apis:
   description: The URL Shortener API from Lob — 2 operation(s) for url shortener.
   humanURL: https://docs.lob.com/
   tags:
+  - URL Shorteners
+  tags_raw:
   - URL Shortener
   properties:
   - type: OpenAPI
