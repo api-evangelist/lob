@@ -654,6 +654,10 @@ apis:
   - type: Documentation
     url: https://docs.lob.com/
 common:
+- type: Plans
+  url: plans/lob-plans-pricing.yml
+- type: FinOps
+  url: finops/lob-finops.yml
 - type: CapabilityMap
   url: capabilities/lob-capability-edges.yml
   name: Lob Business Capability Map
