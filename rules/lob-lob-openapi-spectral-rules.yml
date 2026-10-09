@@ -1,0 +1,45 @@
+# harvested from https://github.com/lob/lob-openapi/blob/3d9baefb710ae474cae38d6d5b3a28bea5859944/.spectral.yml on 2026-10-09 — a Spectral ruleset published in the provider's own GitHub repository (lob/lob-openapi); found by GitHub code search, fetched verbatim
+x-method: harvested
+x-stamped: 2026-10-09
+x-source-url: https://github.com/lob/lob-openapi/blob/3d9baefb710ae474cae38d6d5b3a28bea5859944/.spectral.yml
+extends: [[spectral:oas, all]]
+rules:
+  path-item-must-be-ref:
+    description: Path Item Object value must be a $ref
+    message: "{{description}}; {{property}} incorrect"
+    severity: error
+    resolved: false
+    given: $.paths.*
+    then:
+      - field: $ref
+        function: truthy
+
+  path-item-ref-must-be-file:
+    description: Path Item must $ref to a file under resources/<resource_name>/
+    message: "{{description}}; {{value}} incorrect"
+    severity: error
+    resolved: false
+    given: $.paths.*.$ref
+    then:
+      function: pattern
+      functionOptions:
+        match: "^resources\/[a-zA-Z-_]+\/"
+
+  must-use-intl:
+    description: "Use Intl rather than Int'l"
+    message: "{{description}}"
+    severity: warn
+    given: $..*
+    then:
+      function: pattern
+      functionOptions:
+        notMatch: "int'l|Int'l"
+
+  oas3-valid-media-example:
+    description: "This format violates OpenAPI 3.1 rules"
+    message: "{{description}}"
+    severity: warn
+    given: "$"
+    then:
+      field: example
+      function: truthy

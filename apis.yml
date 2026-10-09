@@ -703,6 +703,8 @@ common:
   url: https://www.lob.com/integrations
 - type: PublicAPIsListing
   url: https://github.com/public-apis/public-apis
+- type: SpectralRules
+  url: https://github.com/lob/lob-openapi/blob/3d9baefb710ae474cae38d6d5b3a28bea5859944/.spectral.yml
 integrations:
 - name: Braze
 - name: Figma
