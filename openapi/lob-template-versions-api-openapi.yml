@@ -204,51 +204,82 @@ paths:
         source: "var context = context.Background()\ncontext = context.WithValue(suite.ctx, lob.ContextBasicAuth, lob.BasicAuth{UserName: os.Getenv(\"<YOUR_API_KEY>\")})\n\nvar apiClient = *lob.NewAPIClient(configuration)\n\ndeletedTemplateVersion, _, err := apiClient.TemplateVersionsApi.Delete(context, \"tmpl_4aa14648113e45b\", \"vrsn_534e339882d2282\").Execute()\n\nif err != nil {\n    return err\n}\n"
         label: GO
 components:
+  headers:
+    ratelimit-reset:
+      description: 'The time at which the rate limit window resets in  <a href="https://en.wikipedia.org/wiki/Unix_time" target="_blank">UTC epoch seconds</a>
+
+        '
+      schema:
+        type: integer
+        example: 1528749846
+    ratelimit-limit:
+      description: The rate limit for a given endpoint.
+      schema:
+        type: integer
+        example: 150
+    ratelimit-remaining:
+      description: The number of requests remaining in the current window.
+      schema:
+        type: integer
+        example: 100
   schemas:
-    engine:
+    template_version:
+      allOf:
+      - $ref: '#/components/schemas/template_version_writable'
+      - $ref: '#/components/schemas/lob_base'
+      - type: object
+        required:
+        - id
+        properties:
+          id:
+            $ref: '#/components/schemas/vrsn_id'
+          suggest_json_editor:
+            type: boolean
+            description: 'Used by frontend, true if the template uses advanced features.
+
+              '
+          merge_variables:
+            type: object
+            description: 'Object representing the keys of every merge variable present in the template. It has one key named ''keys'', and its value is an array of strings.
+
+              '
+          object:
+            type: string
+            description: Value is resource type.
+            enum:
+            - version
+            default: version
+    resource_description:
       type:
       - string
       - 'null'
-      description: "The engine used to combine HTML template with merge variables.\n  * `legacy` - Lob's original engine\n  * `handlebars`\n"
+      description: 'An internal description that identifies this resource. Must be no longer than 255 characters.
+
+        '
+      maxLength: 255
+    failure_status_code:
+      type: integer
       enum:
-      - legacy
-      - handlebars
-      default: legacy
-    template_version_deletion:
-      description: Lob uses RESTful HTTP response codes to indicate success or failure of an API request. In general, 2xx indicates success, 4xx indicate an input error, and 5xx indicates an error on Lob's end.
-      properties:
-        id:
-          $ref: '#/components/schemas/vrsn_id'
-        deleted:
-          $ref: '#/components/schemas/deleted'
-    tmpl_id:
-      type: string
-      description: Unique identifier prefixed with `tmpl_`. ID of a saved [HTML template](#section/HTML-Templates).
-      pattern: ^tmpl_[a-zA-Z0-9]+$
-    lob_base:
+      - 401
+      - 403
+      - 404
+      - 413
+      - 422
+      - 429
+      - 500
+      description: "A conventional HTTP status code:\n  * `401` - Authorization error with your API key or account\n  * `403` - Forbidden error with your API key or account\n  * `404` - The requested item does not exist\n  * `413` - Payload too large\n  * `422` - The query or body parameters did not pass validation\n  * `429` - Too many requests have been sent with an API key in a given amount of time\n  * `500` - An internal server error occurred, please contact support@lob.com\n"
+    template_required_vars:
+      type: array
+      items:
+        type: string
+      description: 'An array of required variables to be used in a template. Only available for `handlebars` templates.
+
+        '
+    template_version_updatable:
       type: object
-      required:
-      - date_created
-      - date_modified
-      - object
-      properties:
-        date_created:
-          $ref: '#/components/schemas/date_created'
-        date_modified:
-          $ref: '#/components/schemas/date_modified'
-        deleted:
-          $ref: '#/components/schemas/deleted'
-        object:
-          $ref: '#/components/schemas/object'
-    template_version_writable:
-      type: object
-      required:
-      - html
       properties:
         description:
           $ref: '#/components/schemas/resource_description'
-        html:
-          $ref: '#/components/schemas/template_html'
         engine:
           $ref: '#/components/schemas/engine'
         required_vars:
@@ -257,28 +288,6 @@ components:
       type: string
       format: date-time
       description: A timestamp in ISO 8601 format of the date the resource was last modified.
-    object:
-      type: string
-      description: Value is resource type.
-    template_html:
-      type: string
-      description: 'An HTML string of less than 100,000 characters to be used as the `published_version` of this template. See [here](#section/HTML-Examples) for guidance on designing HTML templates. Please see endpoint specific documentation for any other product-specific HTML details:
-
-        - [Postcards](#operation/postcard_create) - `front` and `back`
-
-        - [Self Mailers](#operation/self_mailer_create) - `inside` and `outside`
-
-        - [Letters](#operation/letter_create) - `file`
-
-        - [Checks](#operation/check_create) - `check_bottom` and `attachment`
-
-        - [Cards](#operation/card_create) - `front` and `back`
-
-
-        If there is a syntax error with your variable names within your HTML, then an error will be thrown, e.g. using a `{{#users}}` opening tag without the corresponding closing tag `{{/users}}`.
-
-        '
-      maxLength: 100000
     error:
       type: object
       description: Lob uses RESTful HTTP response codes to indicate success or failure of an API request. In general, 2xx indicates success, 4xx indicate an input error, and 5xx indicates an error on Lob's end.
@@ -457,78 +466,87 @@ components:
                 * `unauthorized_token` - 401: token isn''t authorized.
 
                 '
-    template_version_updatable:
-      type: object
-      properties:
-        description:
-          $ref: '#/components/schemas/resource_description'
-        engine:
-          $ref: '#/components/schemas/engine'
-        required_vars:
-          $ref: '#/components/schemas/template_required_vars'
-    resource_description:
-      type:
-      - string
-      - 'null'
-      description: 'An internal description that identifies this resource. Must be no longer than 255 characters.
-
-        '
-      maxLength: 255
-    template_version:
-      allOf:
-      - $ref: '#/components/schemas/template_version_writable'
-      - $ref: '#/components/schemas/lob_base'
-      - type: object
-        required:
-        - id
-        properties:
-          id:
-            $ref: '#/components/schemas/vrsn_id'
-          suggest_json_editor:
-            type: boolean
-            description: 'Used by frontend, true if the template uses advanced features.
-
-              '
-          merge_variables:
-            type: object
-            description: 'Object representing the keys of every merge variable present in the template. It has one key named ''keys'', and its value is an array of strings.
-
-              '
-          object:
-            type: string
-            description: Value is resource type.
-            enum:
-            - version
-            default: version
     deleted:
       type: boolean
       description: Only returned if the resource has been successfully deleted.
-    template_required_vars:
-      type: array
-      items:
-        type: string
-      description: 'An array of required variables to be used in a template. Only available for `handlebars` templates.
+    template_html:
+      type: string
+      description: 'An HTML string of less than 100,000 characters to be used as the `published_version` of this template. See [here](#section/HTML-Examples) for guidance on designing HTML templates. Please see endpoint specific documentation for any other product-specific HTML details:
+
+        - [Postcards](#operation/postcard_create) - `front` and `back`
+
+        - [Self Mailers](#operation/self_mailer_create) - `inside` and `outside`
+
+        - [Letters](#operation/letter_create) - `file`
+
+        - [Checks](#operation/check_create) - `check_bottom` and `attachment`
+
+        - [Cards](#operation/card_create) - `front` and `back`
+
+
+        If there is a syntax error with your variable names within your HTML, then an error will be thrown, e.g. using a `{{#users}}` opening tag without the corresponding closing tag `{{/users}}`.
 
         '
-    failure_status_code:
-      type: integer
-      enum:
-      - 401
-      - 403
-      - 404
-      - 413
-      - 422
-      - 429
-      - 500
-      description: "A conventional HTTP status code:\n  * `401` - Authorization error with your API key or account\n  * `403` - Forbidden error with your API key or account\n  * `404` - The requested item does not exist\n  * `413` - Payload too large\n  * `422` - The query or body parameters did not pass validation\n  * `429` - Too many requests have been sent with an API key in a given amount of time\n  * `500` - An internal server error occurred, please contact support@lob.com\n"
-    vrsn_id:
-      type: string
-      description: Unique identifier prefixed with `vrsn_`.
-      pattern: ^vrsn_[a-zA-Z0-9]+$
+      maxLength: 100000
     date_created:
       type: string
       format: date-time
       description: A timestamp in ISO 8601 format of the date the resource was created.
+    lob_base:
+      type: object
+      required:
+      - date_created
+      - date_modified
+      - object
+      properties:
+        date_created:
+          $ref: '#/components/schemas/date_created'
+        date_modified:
+          $ref: '#/components/schemas/date_modified'
+        deleted:
+          $ref: '#/components/schemas/deleted'
+        object:
+          $ref: '#/components/schemas/object'
+    template_version_deletion:
+      description: Lob uses RESTful HTTP response codes to indicate success or failure of an API request. In general, 2xx indicates success, 4xx indicate an input error, and 5xx indicates an error on Lob's end.
+      properties:
+        id:
+          $ref: '#/components/schemas/vrsn_id'
+        deleted:
+          $ref: '#/components/schemas/deleted'
+    tmpl_id:
+      type: string
+      description: Unique identifier prefixed with `tmpl_`. ID of a saved [HTML template](#section/HTML-Templates).
+      pattern: ^tmpl_[a-zA-Z0-9]+$
+    vrsn_id:
+      type: string
+      description: Unique identifier prefixed with `vrsn_`.
+      pattern: ^vrsn_[a-zA-Z0-9]+$
+    engine:
+      type:
+      - string
+      - 'null'
+      description: "The engine used to combine HTML template with merge variables.\n  * `legacy` - Lob's original engine\n  * `handlebars`\n"
+      enum:
+      - legacy
+      - handlebars
+      default: legacy
+    template_version_writable:
+      type: object
+      required:
+      - html
+      properties:
+        description:
+          $ref: '#/components/schemas/resource_description'
+        html:
+          $ref: '#/components/schemas/template_html'
+        engine:
+          $ref: '#/components/schemas/engine'
+        required_vars:
+          $ref: '#/components/schemas/template_required_vars'
+    object:
+      type: string
+      description: Value is resource type.
   responses:
     template_error:
       description: Error
@@ -541,16 +559,6 @@ components:
               code: invalid
               message: html is required
               status_code: 422
-    template_version_deleted:
-      description: Deleted
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/template_version_deletion'
-          example:
-            value:
-              id: vrsn_123456789
-              deleted: true
     post_template_version:
       description: Returns the template version with the given template and version ids.
       headers:
@@ -571,24 +579,16 @@ components:
             date_created: '2017-11-09T04:49:38.016Z'
             date_modified: '2017-11-09T04:49:38.016Z'
             object: version
-  headers:
-    ratelimit-reset:
-      description: 'The time at which the rate limit window resets in  <a href="https://en.wikipedia.org/wiki/Unix_time" target="_blank">UTC epoch seconds</a>
-
-        '
-      schema:
-        type: integer
-        example: 1528749846
-    ratelimit-remaining:
-      description: The number of requests remaining in the current window.
-      schema:
-        type: integer
-        example: 100
-    ratelimit-limit:
-      description: The rate limit for a given endpoint.
-      schema:
-        type: integer
-        example: 150
+    template_version_deleted:
+      description: Deleted
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/template_version_deletion'
+          example:
+            value:
+              id: vrsn_123456789
+              deleted: true
   securitySchemes:
     basicAuth:
       type: http

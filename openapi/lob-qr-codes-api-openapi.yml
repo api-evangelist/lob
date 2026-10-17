@@ -95,6 +95,46 @@ paths:
 
           '
 components:
+  schemas:
+    qr_code_scans:
+      allOf:
+      - type: object
+        properties:
+          resource_id:
+            type: string
+            description: Unique identifier for each mail piece.
+          date_created:
+            $ref: '#/components/schemas/date_created'
+          number_of_scans:
+            type: number
+            description: Number of times the QR Code associated with this mail piece was scanned.
+          scans:
+            type: array
+            description: Detailed scan information associated with each mail piece.
+            items:
+              $ref: '#/components/schemas/scans'
+    date_filter:
+      type: object
+      additionalProperties:
+        type: string
+      description: 'Filter by ISO-8601 date or datetime, e.g. `{ "gt": "2012-01-01", "lt": "2012-01-31T12:34:56Z" }` where `gt` is >, `lt` is <, `gte` is e, and `lte` is d.'
+    scans:
+      type: object
+      properties:
+        ip_location:
+          type: string
+        scan_date:
+          type: string
+    count:
+      type: integer
+      description: number of resources in a set
+    object:
+      type: string
+      description: Value is resource type.
+    date_created:
+      type: string
+      format: date-time
+      description: A timestamp in ISO 8601 format of the date the resource was created.
   parameters:
     date_created:
       in: query
@@ -134,46 +174,6 @@ components:
       schema:
         type: integer
         default: 0
-  schemas:
-    date_filter:
-      type: object
-      additionalProperties:
-        type: string
-      description: 'Filter by ISO-8601 date or datetime, e.g. `{ "gt": "2012-01-01", "lt": "2012-01-31T12:34:56Z" }` where `gt` is >, `lt` is <, `gte` is e, and `lte` is d.'
-    scans:
-      type: object
-      properties:
-        ip_location:
-          type: string
-        scan_date:
-          type: string
-    qr_code_scans:
-      allOf:
-      - type: object
-        properties:
-          resource_id:
-            type: string
-            description: Unique identifier for each mail piece.
-          date_created:
-            $ref: '#/components/schemas/date_created'
-          number_of_scans:
-            type: number
-            description: Number of times the QR Code associated with this mail piece was scanned.
-          scans:
-            type: array
-            description: Detailed scan information associated with each mail piece.
-            items:
-              $ref: '#/components/schemas/scans'
-    object:
-      type: string
-      description: Value is resource type.
-    count:
-      type: integer
-      description: number of resources in a set
-    date_created:
-      type: string
-      format: date-time
-      description: A timestamp in ISO 8601 format of the date the resource was created.
   securitySchemes:
     basicAuth:
       type: http
