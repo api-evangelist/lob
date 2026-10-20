@@ -1,5 +1,9 @@
-generated: '2026-10-14'
+generated: '2026-10-20'
 method: searched
+source:
+- https://github.com/marketplace?type=actions
+- https://zapier.com/apps/lob/integrations
+- https://composio.dev/toolkits/lob
 checked:
 - https://cloudsecurityalliance.org/star/registry
 - https://connectors.airbyte.com/files/registries/v0/cloud_registry.json
@@ -12,7 +16,52 @@ checked:
 - https://github.com/marketplace?type=actions
 - https://zapier.com/api/v4/apps/
 - shopify/integrations/shopify-integration-edges.yml
-marketplace_apps: []
+- https://composio.dev/toolkits/lob
+- https://monid.ai/tools/lob
+- https://n8n.io/integrations/lob/
+- https://zapier.com/apps/lob/integrations
+summary: null
+marketplace_apps:
+- marketplace: zapier
+  channel: ipaas-listing
+  app: lob
+  url: https://zapier.com/apps/lob/integrations
+  external_url: https://www.lob.com/
+  partner_tier: SILVER
+  triggers: []
+  actions:
+  - key: send_letter_20200211
+    label: Send Letter
+  - key: send_postcard_20200211
+    label: Send Postcard
+  - key: send_self_mailer
+    label: Send Self-Mailer
+  - key: verify_international_address
+    label: Verify International Address
+  - key: verify_single_line_us_address
+    label: Verify Single Line US Address
+  - key: verify_us_address
+    label: Verify US Address
+  searches: []
+- marketplace: composio
+  channel: agent-gateway
+  app: lob
+  url: https://composio.dev/toolkits/lob
+  identity: action-prefix
+  actions:
+  - key: LOB_CREATE_DOMAIN
+  - key: LOB_CREATE_LINK
+  - key: LOB_DELETE_DOMAIN
+  - key: LOB_DELETE_LINK
+  - key: LOB_DELETE_UPLOAD
+  - key: LOB_GET_DOMAIN
+  - key: LOB_GET_LINK
+  - key: LOB_LIST_DOMAINS
+  - key: LOB_LIST_LINKS
+  - key: LOB_LIST_QR_CODE_ANALYTICS
+  - key: LOB_LIST_UPLOADS
+  - key: LOB_UPDATE_LINK
+  - key: LOB_VALIDATE_IDENTITY
 edges:
 - partner_name: GitHub Marketplace (actions)
   partner: github-actions
@@ -186,5 +235,428 @@ edges:
     detected: '2026-10-20'
   detected_by: sweep-compliance-assurance.py
   first_seen: '2026-10-20'
-source:
-- https://github.com/marketplace?type=actions
+- partner_name: Follow Up Boss
+  partner: follow-up-boss
+  partner_match: domain
+  partner_candidate: null
+  type: marketplace
+  marketplace: zapier
+  channel: ipaas-usage
+  relationship: ipaas-bridge
+  evidence: https://zapier.com/apps/lob/integrations/follow-up-boss
+  direction: third-party
+  category: CRM (Customer Relationship Management)
+  partner_url: http://www.followupboss.com/
+- partner_name: HubSpot
+  partner: hubspot
+  partner_match: domain
+  partner_candidate: null
+  type: marketplace
+  marketplace: zapier
+  channel: ipaas-usage
+  relationship: ipaas-bridge
+  evidence: https://zapier.com/apps/lob/integrations/hubspot
+  direction: third-party
+  category: Marketing Automation
+  partner_url: http://www.hubspot.com/
+- partner_name: Google Sheets
+  partner: google-sheets
+  partner_match: domain+name-among-holders
+  partner_candidate: null
+  type: marketplace
+  marketplace: zapier
+  channel: ipaas-usage
+  relationship: ipaas-bridge
+  evidence: https://zapier.com/apps/lob/integrations/google-sheets
+  direction: third-party
+  category: Google
+  partner_url: http://sheets.google.com/
+- partner_name: Formsite
+  partner: null
+  partner_match: null
+  partner_candidate: null
+  type: marketplace
+  marketplace: zapier
+  channel: ipaas-usage
+  relationship: ipaas-bridge
+  evidence: https://zapier.com/apps/lob/integrations/formsite
+  direction: third-party
+  category: Forms & Surveys
+  partner_url: https://www.formsite.com/
+- partner_name: Google Forms (Legacy)
+  partner: google-forms
+  partner_match: domain+name-among-holders
+  partner_candidate: null
+  type: marketplace
+  marketplace: zapier
+  channel: ipaas-usage
+  relationship: ipaas-bridge
+  evidence: https://zapier.com/apps/lob/integrations/google-forms-legacy
+  direction: third-party
+  category: Forms & Surveys
+  partner_url: http://google.com/
+- partner_name: Typeform
+  partner: typeform
+  partner_match: domain
+  partner_candidate: null
+  type: marketplace
+  marketplace: zapier
+  channel: ipaas-usage
+  relationship: ipaas-bridge
+  evidence: https://zapier.com/apps/lob/integrations/typeform
+  direction: third-party
+  category: Forms & Surveys
+  partner_url: https://www.typeform.com/signup?utm_medium=referral&utm_source=zapier&utm_campaign=zapier_integration&utm_content=marketplace
+- partner_name: Google Drive
+  partner: google-drive
+  partner_match: domain+name-among-holders
+  partner_candidate: null
+  type: marketplace
+  marketplace: zapier
+  channel: ipaas-usage
+  relationship: ipaas-bridge
+  evidence: https://zapier.com/apps/lob/integrations/google-drive
+  direction: third-party
+  category: File Management & Storage
+  partner_url: https://www.google.com/drive/
+- partner_name: ClickFunnels Classic
+  partner: clickfunnels
+  partner_match: domain
+  partner_candidate: null
+  type: marketplace
+  marketplace: zapier
+  channel: ipaas-usage
+  relationship: ipaas-bridge
+  evidence: https://zapier.com/apps/lob/integrations/clickfunnels-classic
+  direction: third-party
+  category: Marketing Automation
+  partner_url: https://www.clickfunnels.com/
+- partner_name: MySQL
+  partner: mysql
+  partner_match: domain
+  partner_candidate: null
+  type: marketplace
+  marketplace: zapier
+  channel: ipaas-usage
+  relationship: ipaas-bridge
+  evidence: https://zapier.com/apps/lob/integrations/mysql
+  direction: third-party
+  category: Databases
+  partner_url: https://www.mysql.com/
+- partner_name: Agile CRM
+  partner: agile-crm
+  partner_match: domain
+  partner_candidate: null
+  type: marketplace
+  marketplace: zapier
+  channel: ipaas-usage
+  relationship: ipaas-bridge
+  evidence: https://zapier.com/apps/lob/integrations/agile-crm
+  direction: third-party
+  category: CRM (Customer Relationship Management)
+  partner_url: http://www.agilecrm.com/
+- partner_name: Jotform
+  partner: jotform
+  partner_match: domain
+  partner_candidate: null
+  type: marketplace
+  marketplace: zapier
+  channel: ipaas-usage
+  relationship: ipaas-bridge
+  evidence: https://zapier.com/apps/lob/integrations/jotform
+  direction: third-party
+  category: Forms & Surveys
+  partner_url: http://www.jotform.com/
+- partner_name: Facebook Lead Ads (for Business admins)
+  partner: facebook-lead-ads
+  partner_match: domain+name-among-holders
+  partner_candidate: null
+  type: marketplace
+  marketplace: zapier
+  channel: ipaas-usage
+  relationship: ipaas-bridge
+  evidence: https://zapier.com/apps/lob/integrations/facebook-lead-ads-beta
+  direction: third-party
+  category: Ads & Conversion
+  partner_url: https://facebook.com/
+- partner_name: Podio
+  partner: podio
+  partner_match: domain
+  partner_candidate: null
+  type: marketplace
+  marketplace: zapier
+  channel: ipaas-usage
+  relationship: ipaas-bridge
+  evidence: https://zapier.com/apps/lob/integrations/podio
+  direction: third-party
+  category: Project Management
+  partner_url: https://podio.com/
+- partner_name: Smartsheet
+  partner: smartsheet
+  partner_match: domain
+  partner_candidate: null
+  type: marketplace
+  marketplace: zapier
+  channel: ipaas-usage
+  relationship: ipaas-bridge
+  evidence: https://zapier.com/apps/lob/integrations/smartsheet
+  direction: third-party
+  category: Spreadsheets
+  partner_url: https://www.smartsheet.com/
+- partner_name: Formidable Forms
+  partner: null
+  partner_match: null
+  partner_candidate: null
+  type: marketplace
+  marketplace: zapier
+  channel: ipaas-usage
+  relationship: ipaas-bridge
+  evidence: https://zapier.com/apps/lob/integrations/formidable
+  direction: third-party
+  category: Forms & Surveys
+  partner_url: http://formidableforms.com/
+- partner_name: pdfFiller
+  partner: pdffiller
+  partner_match: domain
+  partner_candidate: null
+  type: marketplace
+  marketplace: zapier
+  channel: ipaas-usage
+  relationship: ipaas-bridge
+  evidence: https://zapier.com/apps/lob/integrations/pdffiller
+  direction: third-party
+  category: Documents
+  partner_url: https://www.pdffiller.com/
+- partner_name: Amazon Seller Central
+  partner: amazon
+  partner_match: domain+name-among-holders
+  partner_candidate: null
+  type: marketplace
+  marketplace: zapier
+  channel: ipaas-usage
+  relationship: ipaas-bridge
+  evidence: https://zapier.com/apps/lob/integrations/amazon-seller-central
+  direction: third-party
+  category: Amazon
+  partner_url: https://sellercentral.amazon.com/
+- partner_name: Landbot
+  partner: landbot
+  partner_match: domain
+  partner_candidate: null
+  type: marketplace
+  marketplace: zapier
+  channel: ipaas-usage
+  relationship: ipaas-bridge
+  evidence: https://zapier.com/apps/lob/integrations/landbot
+  direction: third-party
+  category: Marketing Automation
+  partner_url: https://landbot.io/
+- partner_name: Google Docs
+  partner: google-docs
+  partner_match: domain+name-among-holders
+  partner_candidate: null
+  type: marketplace
+  marketplace: zapier
+  channel: ipaas-usage
+  relationship: ipaas-bridge
+  evidence: https://zapier.com/apps/lob/integrations/google-docs
+  direction: third-party
+  category: Documents
+  partner_url: http://google.com/
+- partner_name: Shopify
+  partner: shopify
+  partner_match: domain
+  partner_candidate: null
+  type: marketplace
+  marketplace: zapier
+  channel: ipaas-usage
+  relationship: ipaas-bridge
+  evidence: https://zapier.com/apps/lob/integrations/shopify
+  direction: third-party
+  category: eCommerce
+  partner_url: https://www.shopify.com/
+- partner_name: WPForms
+  partner: null
+  partner_match: null
+  partner_candidate: null
+  type: marketplace
+  marketplace: zapier
+  channel: ipaas-usage
+  relationship: ipaas-bridge
+  evidence: https://zapier.com/apps/lob/integrations/wpforms
+  direction: third-party
+  category: Forms & Surveys
+  partner_url: https://wpforms.com/
+- partner_name: Wufoo
+  partner: wufoo
+  partner_match: domain
+  partner_candidate: null
+  type: marketplace
+  marketplace: zapier
+  channel: ipaas-usage
+  relationship: ipaas-bridge
+  evidence: https://zapier.com/apps/lob/integrations/wufoo
+  direction: third-party
+  category: Forms & Surveys
+  partner_url: https://www.wufoo.com/
+- partner_name: Docparser
+  partner: docparser
+  partner_match: domain
+  partner_candidate: null
+  type: marketplace
+  marketplace: zapier
+  channel: ipaas-usage
+  relationship: ipaas-bridge
+  evidence: https://zapier.com/apps/lob/integrations/docparser
+  direction: third-party
+  category: Documents
+  partner_url: https://docparser.com/?ref=otkjl
+- partner_name: Trello
+  partner: trello
+  partner_match: domain
+  partner_candidate: null
+  type: marketplace
+  marketplace: zapier
+  channel: ipaas-usage
+  relationship: ipaas-bridge
+  evidence: https://zapier.com/apps/lob/integrations/trello
+  direction: third-party
+  category: Project Management
+  partner_url: https://trello.com/
+- partner_name: Snowflake
+  partner: snowflake
+  partner_match: domain
+  partner_candidate: null
+  type: marketplace
+  marketplace: zapier
+  channel: ipaas-usage
+  relationship: ipaas-bridge
+  evidence: https://zapier.com/apps/lob/integrations/snowflake
+  direction: third-party
+  category: Databases
+  partner_url: https://www.snowflake.com/
+- partner_name: zBuyer.com
+  partner: null
+  partner_match: null
+  partner_candidate: null
+  type: marketplace
+  marketplace: zapier
+  channel: ipaas-usage
+  relationship: ipaas-bridge
+  evidence: https://zapier.com/apps/lob/integrations/zbuyer
+  direction: third-party
+  category: Product Management
+  partner_url: https://zbuyer.com/
+- partner_name: Microsoft Excel
+  partner: null
+  partner_match: null
+  partner_candidate: zapier
+  type: marketplace
+  marketplace: zapier
+  channel: ipaas-usage
+  relationship: ipaas-bridge
+  evidence: https://zapier.com/apps/lob/integrations/excel
+  direction: third-party
+  category: Microsoft
+  partner_url: https://zapier.com/office.com
+- partner_name: ActiveCampaign
+  partner: activecampaign
+  partner_match: domain
+  partner_candidate: null
+  type: marketplace
+  marketplace: zapier
+  channel: ipaas-usage
+  relationship: ipaas-bridge
+  evidence: https://zapier.com/apps/lob/integrations/activecampaign
+  direction: third-party
+  category: Marketing Automation
+  partner_url: https://www.activecampaign.com/?utm_source=unpaid_syndication_website&utm_medium=referral&utm_campaign=zapier_listing
+- partner_name: Twilio
+  partner: twilio
+  partner_match: domain
+  partner_candidate: null
+  type: marketplace
+  marketplace: zapier
+  channel: ipaas-usage
+  relationship: ipaas-bridge
+  evidence: https://zapier.com/apps/lob/integrations/twilio
+  direction: third-party
+  category: Phone & SMS
+  partner_url: https://www.twilio.com/
+- partner_name: PayPal
+  partner: paypal
+  partner_match: domain
+  partner_candidate: null
+  type: marketplace
+  marketplace: zapier
+  channel: ipaas-usage
+  relationship: ipaas-bridge
+  evidence: https://zapier.com/apps/lob/integrations/paypal
+  direction: third-party
+  category: Payment Processing
+  partner_url: https://www.paypal.com/
+templates:
+- title: Send letters on Lob for new actions on Podio
+  url: https://zapier.com/apps/lob/integrations/podio/7961/send-letters-on-lob-for-new-actions-on-podio
+  apps:
+  - podio
+  - lob
+- title: Send Lob postcards for new actions on Podio
+  url: https://zapier.com/apps/lob/integrations/podio/7962/send-lob-postcards-for-new-actions-on-podio
+  apps:
+  - podio
+  - lob
+- title: Send Lob postcards for new Gravity Forms submissions
+  url: https://zapier.com/apps/gravity-forms/integrations/lob/7963/send-lob-postcards-for-new-gravity-forms-submissions
+  apps:
+  - gravity-forms
+  - lob
+- title: Send Lob postcards with new rows in Google Sheets
+  url: https://zapier.com/apps/google-sheets/integrations/lob/7964/send-lob-postcards-with-new-rows-in-google-sheets
+  apps:
+  - google-sheets
+  - lob
+- title: Send Lob postcards for new Webhook payloads
+  url: https://zapier.com/apps/lob/integrations/webhook/7965/send-lob-postcards-for-new-webhook-payloads
+  apps:
+  - webhook
+  - lob
+- title: Send postcard when ConvertFlow form is submitted
+  url: https://zapier.com/apps/convertflow/integrations/lob/96415/send-postcard-when-convertflow-form-is-submitted
+  apps:
+  - convertflow
+  - lob
+- title: Verify US Addresses in Lob for new Typeform entries and add them to Google Sheets
+  url: https://zapier.com/apps/google-sheets/integrations/typeform/141771/verify-us-addresses-in-lob-for-new-typeform-entries-and-add-them-to-google-sheets
+  apps:
+  - typeform
+  - lob
+  - google-sheets
+- title: Verify US Addresses in Lob for new Typeform entries
+  url: https://zapier.com/apps/lob/integrations/typeform/142687/verify-us-addresses-in-lob-for-new-typeform-entries
+  apps:
+  - typeform
+  - lob
+- title: Create Google Sheets rows for new Lob-verified Typeform entries
+  url: https://zapier.com/apps/google-sheets/integrations/typeform/142865/create-google-sheets-rows-for-new-lob-verified-typeform-entries
+  apps:
+  - typeform
+  - lob
+  - google-sheets
+- title: Send postcards in Lob for new process changes stages in LeadSimple
+  url: https://zapier.com/apps/leadsimple/integrations/lob/435731/send-postcards-in-lob-for-new-process-changes-stages-in-leadsimple
+  apps:
+  - leadsimple
+  - filter
+  - lob
+- title: Verify US addresses in Lob for new CabinPanda submissions
+  url: https://zapier.com/apps/cabinpanda/integrations/lob/538922/verify-us-addresses-in-lob-for-new-cabinpanda-submissions
+  apps:
+  - cabinpanda
+  - lob
+- title: Send letters in Lob for new CabinPanda submissions
+  url: https://zapier.com/apps/cabinpanda/integrations/lob/538924/send-letters-in-lob-for-new-cabinpanda-submissions
+  apps:
+  - cabinpanda
+  - lob
+template_total: 103
