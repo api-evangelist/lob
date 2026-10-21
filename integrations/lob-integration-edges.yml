@@ -20,6 +20,11 @@ checked:
 - https://monid.ai/tools/lob
 - https://n8n.io/integrations/lob/
 - https://zapier.com/apps/lob/integrations
+- https://500.co/api/startups
+- https://500.co/companies
+- https://www.antler.co/portfolio
+- https://www.techstars.com/portfolio
+- https://www.ycombinator.com/companies
 summary: null
 marketplace_apps:
 - marketplace: zapier
@@ -595,6 +600,34 @@ edges:
   direction: third-party
   category: Payment Processing
   partner_url: https://www.paypal.com/
+- partner_name: Y Combinator
+  partner: y-combinator
+  partner_match: register
+  type: register
+  channel: standard-directory
+  relationship: standard-participant
+  direction: partner-built
+  evidence: https://www.ycombinator.com/companies/lob
+  category: accelerator portfolio participation
+  contract_reference:
+    register: Y Combinator company directory (ycombinator.com/companies/<slug>)
+    standard: null
+    spec_file: null
+    role: accelerator-portfolio-company
+    registered_name: Lob
+    register_id: https://www.ycombinator.com/companies/lob
+    register_country: US
+    register_website: http://lob.com
+    matched_domain: lob.com
+    matched_by: domain
+    signal_note: 'participation only: the accelerator''s own portfolio register lists the company (cohort / investment);
+      an ownership and participation record, not conformance or certification'
+    detected_by: sweep-accelerator-portfolios.py
+    detected: '2026-10-21'
+    batch: Summer 2013
+    status: Active
+  detected_by: sweep-accelerator-portfolios.py
+  first_seen: '2026-10-21'
 templates:
 - title: Send letters on Lob for new actions on Podio
   url: https://zapier.com/apps/lob/integrations/podio/7961/send-letters-on-lob-for-new-actions-on-podio
