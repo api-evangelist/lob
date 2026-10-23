@@ -25,6 +25,7 @@ checked:
 - https://www.antler.co/portfolio
 - https://www.techstars.com/portfolio
 - https://www.ycombinator.com/companies
+- airtable/integrations/airtable-integration-edges.yml
 summary: null
 marketplace_apps:
 - marketplace: zapier
@@ -628,6 +629,23 @@ edges:
     status: Active
   detected_by: sweep-accelerator-portfolios.py
   first_seen: '2026-10-21'
+- partner_name: Airtable (own)
+  partner: airtable
+  partner_match: mirror
+  mirror_match: domain
+  type: marketplace
+  relationship: platform-app
+  direction: third-party
+  channel: partner-built
+  marketplace: own
+  evidence: https://airtable.com/marketplace/blk3bzbNyiDRvWqWB/address-cleanser
+  mirror_of: airtable/integrations/airtable-integration-edges.yml
+  apps:
+  - Address Cleanser by Lob
+  listing_count: 1
+  detected: '2026-10-23'
+  detected_by: mirror-platform-listings.py
+  category: Airtable extension
 templates:
 - title: Send letters on Lob for new actions on Podio
   url: https://zapier.com/apps/lob/integrations/podio/7961/send-letters-on-lob-for-new-actions-on-podio
