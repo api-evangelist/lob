@@ -1,4 +1,4 @@
-# Lob (lob)
+# Lob
 
 <!-- API-EVANGELIST-PROVENANCE:BEGIN -->
 > ### About this repository
@@ -66,87 +66,194 @@
 
 Lob is a software platform that automates the process of sending direct mail, allowing businesses to create, personalize, and track physical mail pieces at scale through a digital interface, essentially bringing the convenience of email marketing to traditional mail by integrating with existing CRM systems and automating printing, addressing, and postage processes.
 
-**APIs.json:** [https://raw.githubusercontent.com/api-evangelist/lob/refs/heads/main/apis.yml](https://raw.githubusercontent.com/api-evangelist/lob/refs/heads/main/apis.yml)
+**Areas:** Direct Mail · Print · Address Verification
 
-## Scope
+## Lob on APIs.io
 
-- **Position:** Consuming
-- **Access:** 3rd-Party
+Everything profiled for Lob is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/lob/](https://apis.io/providers/lob/)** — or go straight to one of the APIs or properties below.
 
-## Tags
+### APIs (48)
 
-- Direct Mail
-- Print
-- Address Verification
+- [Lob Accounts API](https://apis.io/apis/lob/lob-accounts-api/) — The Accounts API from Lob — 1 operation(s) for accounts.
+- [Lob Addresses API](https://apis.io/apis/lob/lob-addresses-api/) — To add an address to your address book, you create a new address object. You can retrieve and delete individual addresses as well as get a list of…
+- [Lob Bank  Accounts API](https://apis.io/apis/lob/lob-bank-accounts-api/) — The Bank Accounts API from Lob — 1 operation(s) for bank accounts.
+- [Lob Bank_id API](https://apis.io/apis/lob/lob-bank-id-api/) — The Bank_id API from Lob — 2 operation(s) for bank_id.
+- [Lob Bg_id API](https://apis.io/apis/lob/lob-bg-id-api/) — The Bg_id API from Lob — 1 operation(s) for bg_id.
+- [Lob Billing  Groups API](https://apis.io/apis/lob/lob-billing-groups-api/) — The Billing Groups API from Lob — 1 operation(s) for billing groups.
+- [Lob Booklet_id API](https://apis.io/apis/lob/lob-booklet-id-api/) — The Booklet_id API from Lob — 1 operation(s) for booklet_id.
+- [Lob Booklets API](https://apis.io/apis/lob/lob-booklets-api/) — The Booklets API from Lob — 1 operation(s) for booklets.
+- [Lob Buckslip_id API](https://apis.io/apis/lob/lob-buckslip-id-api/) — The Buckslip_id API from Lob — 2 operation(s) for buckslip_id.
+- [Lob Buckslips API](https://apis.io/apis/lob/lob-buckslips-api/) — The Buckslips endpoint allows you to easily create buckslips that can later be used as add-ons for Letters Campaigns. Note that a Letter Campaign with…
+- [Lob Bulk API](https://apis.io/apis/lob/lob-bulk-api/) — The Bulk API from Lob — 2 operation(s) for bulk.
+- [Lob Campaigns API](https://apis.io/apis/lob/lob-campaigns-api/) — The campaigns endpoint allows you to create and view campaigns that can be used to send multiple letters or postcards. The API provides endpoints for…
+- [Lob Cards API](https://apis.io/apis/lob/lob-cards-api/) — The cards endpoint allows you to easily create cards that can later be affixed to Letters. The API provides endpoints for creating cards, retrieving…
+- [Lob Checks API](https://apis.io/apis/lob/lob-checks-api/) — Checks allow you to send payments via physical checks. The API provides endpoints for creating checks, retrieving individual checks, canceling checks, and…
+- [Lob Creatives API](https://apis.io/apis/lob/lob-creatives-api/) — The creatives endpoint allows you to create and view creatives. Creatives are used to create reusable letter and postcard templates. The API provides…
+- [Lob Crv_id API](https://apis.io/apis/lob/lob-crv-id-api/) — The Crv_id API from Lob — 1 operation(s) for crv_id.
+- [Lob Domains API](https://apis.io/apis/lob/lob-domains-api/) — The Domains API from Lob — 2 operation(s) for domains.
+- [Lob Exports API](https://apis.io/apis/lob/lob-exports-api/) — The Exports API from Lob — 2 operation(s) for exports.
+- [Lob Files API](https://apis.io/apis/lob/lob-files-api/) — The Files API from Lob — 1 operation(s) for files.
+- [Lob Identity  Validation API](https://apis.io/apis/lob/lob-identity-validation-api/) — The Identity Validation API from Lob — 1 operation(s) for identity validation.
+- [Lob Informed  Delivery  Campaign API](https://apis.io/apis/lob/lob-informed-delivery-campaign-api/) — The Informed Delivery Campaign API from Lob — 1 operation(s) for informed delivery campaign.
+- [Lob Intl  Verifications API](https://apis.io/apis/lob/lob-intl-verifications-api/) — The Intl Verifications API from Lob — 2 operation(s) for intl verifications.
+- [Lob Letters API](https://apis.io/apis/lob/lob-letters-api/) — The letters endpoint allows you to easily print and mail letters. The API provides endpoints for creating letters, retrieving individual letters, canceling…
+- [Lob Links API](https://apis.io/apis/lob/lob-links-api/) — The Links API from Lob — 2 operation(s) for links.
+- [Lob Ltr_id API](https://apis.io/apis/lob/lob-ltr-id-api/) — The Ltr_id API from Lob — 1 operation(s) for ltr_id.
+- [Lob Orders API](https://apis.io/apis/lob/lob-orders-api/) — The Orders API from Lob — 2 operation(s) for orders.
+- [Lob Postcards API](https://apis.io/apis/lob/lob-postcards-api/) — The postcards endpoint allows you to easily print and mail postcards. The API provides endpoints for creating postcards, retrieving individual postcards,…
+- [Lob Psc_id API](https://apis.io/apis/lob/lob-psc-id-api/) — The Psc_id API from Lob — 1 operation(s) for psc_id.
+- [Lob Reports API](https://apis.io/apis/lob/lob-reports-api/) — The Reports API from Lob — 1 operation(s) for reports.
+- [Lob Reverse  Geocode  Lookups API](https://apis.io/apis/lob/lob-reverse-geocode-lookups-api/) — The Reverse Geocode Lookups API from Lob — 1 operation(s) for reverse geocode lookups.
+- [Lob Self  Mailers API](https://apis.io/apis/lob/lob-self-mailers-api/) — The Self Mailers API from Lob — 1 operation(s) for self mailers.
+- [Lob Send API](https://apis.io/apis/lob/lob-send-api/) — The Send API from Lob — 1 operation(s) for send.
+- [Lob Sfm_id API](https://apis.io/apis/lob/lob-sfm-id-api/) — The Sfm_id API from Lob — 1 operation(s) for sfm_id.
+- [Lob Snap_pack_id API](https://apis.io/apis/lob/lob-snap-pack-id-api/) — The Snap_pack_id API from Lob — 1 operation(s) for snap_pack_id.
+- [Lob Snap  Packs API](https://apis.io/apis/lob/lob-snap-packs-api/) — The Snap Packs API from Lob — 1 operation(s) for snap packs.
+- [Lob Template  Versions API](https://apis.io/apis/lob/lob-template-versions-api/) — The Template Versions API from Lob — 1 operation(s) for template versions.
+- [Lob Templates API](https://apis.io/apis/lob/lob-templates-api/) — These API endpoints allow you to create, retrieve, update and delete reusable HTML templates for use with the Print & Mail API. <div class="back-to-top" ><a…
+- [Lob U S  Autocompletions API](https://apis.io/apis/lob/lob-u-s-autocompletions-api/) — The U S Autocompletions API from Lob — 1 operation(s) for u s autocompletions.
+- [Lob U S  Verifications API](https://apis.io/apis/lob/lob-u-s-verifications-api/) — The U S Verifications API from Lob — 2 operation(s) for u s verifications.
+- [Lob Uploads API](https://apis.io/apis/lob/lob-uploads-api/) — The uploads endpoint allows you to upload audience files that are then associated with a given campaign. At this time, only CSV files are allowed. The API…
+- [Lob Usps_campaign_id API](https://apis.io/apis/lob/lob-usps-campaign-id-api/) — The Usps_campaign_id API from Lob — 1 operation(s) for usps_campaign_id.
+- [Lob Verify API](https://apis.io/apis/lob/lob-verify-api/) — The Verify API from Lob — 1 operation(s) for verify.
+- [Lob Versions API](https://apis.io/apis/lob/lob-versions-api/) — The Versions API from Lob — 2 operation(s) for versions.
+- [Lob Zip  Lookups API](https://apis.io/apis/lob/lob-zip-lookups-api/) — The Zip Lookups API from Lob — 1 operation(s) for zip lookups.
+- [Lob Events API](https://apis.io/apis/lob/lob-events-api/) — The Events API from Lob — 0 operation(s) for events.
+- [Lob Tracking Events API](https://apis.io/apis/lob/lob-tracking-events-api/) — The Tracking Events API from Lob — 0 operation(s) for tracking events.
+- [Lob QR Codes API](https://apis.io/apis/lob/lob-qr-codes-api/) — The QR Codes API from Lob — 1 operation(s) for qr codes.
+- [Lob URL Shortener API](https://apis.io/apis/lob/lob-url-shortener-api/) — The URL Shortener API from Lob — 2 operation(s) for url shortener.
 
-## Timestamps
+### Published properties
 
-- **Created:** 2024-07-02
-- **Modified:** 2026-04-28
+Each property below is a page on APIs.io carrying the machine-readable artifact and what it says.
 
-## APIs
+#### Collections (46)
 
-### Lob API
+Postman and Open Collection request collections.
 
-Experience direct mail like never before, with unmatched personalization and scalability all in one intuitive platform. Send postcards, letters, checks, self mailers, snap packs, and verify US and international addresses via API.
+- [Lob Accounts API](https://apis.io/collections/lob/open-lob-accounts-api/)
+- [Lob Addresses API](https://apis.io/collections/lob/open-lob-addresses-api/)
+- [Lob Bank  Accounts API](https://apis.io/collections/lob/open-lob-bank-accounts-api/)
+- [Lob Bank_id API](https://apis.io/collections/lob/open-lob-bank-id-api/)
+- [Lob Bg_id API](https://apis.io/collections/lob/open-lob-bg-id-api/)
+- [Lob Billing  Groups API](https://apis.io/collections/lob/open-lob-billing-groups-api/)
+- [Lob Booklet_id API](https://apis.io/collections/lob/open-lob-booklet-id-api/)
+- [Lob Booklets API](https://apis.io/collections/lob/open-lob-booklets-api/)
+- [Lob Buckslip_id API](https://apis.io/collections/lob/open-lob-buckslip-id-api/)
+- [Lob Buckslips API](https://apis.io/collections/lob/open-lob-buckslips-api/)
+- [Lob Bulk API](https://apis.io/collections/lob/open-lob-bulk-api/)
+- [Lob Campaigns API](https://apis.io/collections/lob/open-lob-campaigns-api/)
+- [Lob Cards API](https://apis.io/collections/lob/open-lob-cards-api/)
+- [Lob Checks API](https://apis.io/collections/lob/open-lob-checks-api/)
+- [Lob Creatives API](https://apis.io/collections/lob/open-lob-creatives-api/)
+- [Lob Crv_id API](https://apis.io/collections/lob/open-lob-crv-id-api/)
+- [Lob Domains API](https://apis.io/collections/lob/open-lob-domains-api/)
+- [Lob Exports API](https://apis.io/collections/lob/open-lob-exports-api/)
+- [Lob Files API](https://apis.io/collections/lob/open-lob-files-api/)
+- [Lob Identity  Validation API](https://apis.io/collections/lob/open-lob-identity-validation-api/)
+- [Lob Informed  Delivery  Campaign API](https://apis.io/collections/lob/open-lob-informed-delivery-campaign-api/)
+- [Lob Intl  Verifications API](https://apis.io/collections/lob/open-lob-intl-verifications-api/)
+- [Lob Letters API](https://apis.io/collections/lob/open-lob-letters-api/)
+- [Lob Links API](https://apis.io/collections/lob/open-lob-links-api/)
+- [Lob Ltr_id API](https://apis.io/collections/lob/open-lob-ltr-id-api/)
+- …and 21 more published on APIs.io
 
-- **Human URL:** [https://docs.lob.com/](https://docs.lob.com/)
+#### Governance rules (1)
 
-#### Tags
+Spectral rulesets for the provider's contracts.
 
-- Accounts
-- Addresses
-- Bank Accounts
-- Billing Groups
-- Postcards
-- Letters
-- Cards
-- Checks
-- Self Mailers
-- Snap Packs
-- Booklets
-- Buckslips
-- Templates
-- Template Versions
-- Campaigns
-- Uploads
-- Identity Validation
-- Informed Delivery
-- QR Codes
-- URL Shortener
-- US Verifications
-- International Verifications
-- US Autocompletions
-- Reverse Geocode Lookups
-- Zip Lookups
+- [Lob — lob openapi rules](https://apis.io/rules/lob/lob-lob-openapi-spectral-rules/)
 
-#### Properties
+#### Security (2)
 
-- [Documentation](https://docs.lob.com/)
-- [OpenAPI](openapi/lob-api-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
+Authentication, trust centre, and vulnerability disclosure.
 
-## Common Properties
+- [Lob Domain Security](https://apis.io/security/lob/lob-domain-security/)
+- [Lob Trust Center](https://apis.io/security/lob/lob-trust-center/)
 
-- [GitHub Organization](https://github.com/lob)
-- [LinkedIn](https://www.linkedin.com/company/lob)
-- [Authentication](https://docs.lob.com/#tag/Authentication)
-- [Getting Started](https://docs.lob.com/#tag/Getting-Started)
-- [S D Ks](https://docs.lob.com/#tag/SDKs-and-Tools)
-- [Webhooks](https://docs.lob.com/#tag/Webhooks)
-- [Errors](https://docs.lob.com/#tag/Errors)
-- [Rate Limits](https://docs.lob.com/#tag/Rate-Limiting)
-- [Beta Program](https://docs.lob.com/#tag/Beta-Program)
-- [Changelog](https://docs.lob.com/#tag/Versioning-and-Changelog)
-- [Pricing](https://www.lob.com/pricing)
-- [Case Studies](https://www.lob.com/case-studies)
-- [Support](https://help.lob.com/)
-- [Privacy Policy](https://www.lob.com/privacy)
-- [Terms of Service](https://www.lob.com/terms)
-- [Blog](https://www.lob.com/blog)
+#### Plans and pricing (1)
+
+Published plans, tiers and prices.
+
+- [Lob Plans Pricing](https://apis.io/plans/lob/lob-plans-pricing/)
+
+#### Rate limits (1)
+
+Published request limits.
+
+- [Lob Rate Limits](https://apis.io/rate-limits/lob/lob-rate-limits/)
+
+#### FinOps (1)
+
+What the API costs to run, by operation.
+
+- [Lob Finops](https://apis.io/finops/lob/lob-finops/)
+
+## Where to find this API
+
+Links to the company's own pages. This repository publishes no copy of their specifications — the canonical document is theirs and lives at the URLs below.
+
 - [Website](https://www.lob.com)
-- [Integrations](https://www.lob.com/integrations)
+- [Getting started](https://docs.lob.com/#tag/Getting-Started)
+- [Pricing](https://www.lob.com/pricing)
+- [Support](https://help.lob.com/)
+- [Changelog](https://docs.lob.com/#tag/Versioning-and-Changelog)
+- [Blog](https://www.lob.com/blog)
+- [Terms of service](https://www.lob.com/terms)
+- [Privacy policy](https://www.lob.com/privacy)
+- [GitHub](https://github.com/lob)
 
-## Maintainers
+## API Evangelist rating
 
-**FN:** Kin Lane
-**Email:** kin@apievangelist.com
+**Kin Score 46.6** — developing · rubric 0.25.0 · scored 2026-10-23
+
+| Facet | Score |
+|---|---|
+| Discoverability | 48.2 |
+| Contract quality | 53.1 |
+| Contract governance | 45.5 |
+| Operational transparency | 22.4 |
+| Developer ergonomics | 35.7 |
+| Access clarity | 47.4 |
+
+**Agent readiness 42.4** — agent-native
+
+| Agent-readiness dimension | Result |
+|---|---|
+| Spec Presence | yes |
+| Agentic Access | — |
+| Reversibility Documented | verified |
+| MCP Server | — |
+| Auth Clarity | bearer (partial credit) |
+| Idempotency | verified |
+| Error Semantics | documented (partial credit) |
+| OpenAPI Examples | verified |
+| Rate Limit Signal | verified |
+| Event Surface Described | unknown |
+| Agent Skills | — |
+| Well Known Catalog | — |
+| Consent Identity | — |
+| Agent Card | — |
+| Dry Run Mode | — |
+| Delegated Identity | — |
+| Protected Resource Metadata | — |
+| Dynamic Client Registration | — |
+| Agentic Commerce | — |
+| Pagination Ratio | partial |
+| Operation Distinctiveness | — |
+
+**Regulatory alignment 24.5** — Horizontal (data, software, accessibility, platform)
+
+The rubric is published at [github.com/api-evangelist/kin-score](https://github.com/api-evangelist/kin-score). The per-check breakdown behind these numbers — which checks were earned, partial or missed — along with score history and how this provider compares to its peers, is available at [apis.io/providers/lob/](https://apis.io/providers/lob/).
+
+## How this profile is made
+
+API Evangelist profiles a company's public API surface the way a developer would find it: the website, developer portal and documentation, the specifications it publishes, its public repositories, and its pricing, status and changelog pages. From that it derives the properties above — contracts split per API, workflows, schemas, collections, governance rules, plans and rate limits — and scores them against the published [Kin Score rubric](https://github.com/api-evangelist/kin-score).
+
+The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for Lob: the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
+
+## Open an issue
+
+- **Something about this listing** — a wrong description, a missing API, a stale artifact or a question about the rating: [open an issue on this repository](https://github.com/api-evangelist/lob/issues/new).
+- **A new API, or one that is not in the catalog yet** — [submit it on APIs.io](https://apis.io/add/).
+- **Anything else** — [the APIs.io inbox](https://github.com/api-search/inbox/issues/new) or [info@apievangelist.com](mailto:info@apievangelist.com).
